@@ -33,8 +33,6 @@ struct		t_parsecub3dfile
 	char	*we_t;
 	char	*ea_t;
 	char	*sp_t;
-	char	*st_t;
-	char	*ft_t;
 	int		f_t;
 	int		c_t;
 }			t_cub3d;
