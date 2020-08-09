@@ -6,6 +6,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -framework OpenGL -framework AppKit -I minil
 include_directories(minilibx)
 
 add_executable(cub3d
+        libft/ft_lstsize.c
+        libft/ft_strtrim.c
+        libft/ft_calloc.c
+        libft/ft_bzero.c
         libft/ft_lstadd_front.c
         libft/ft_lstiter.c
         libft/ft_lstadd_back.c
@@ -15,4 +19,4 @@ add_executable(cub3d
         libft/ft_strlen.c
         get_next_line/get_next_line.c
         get_next_line/get_next_line_utils.c
-        cub3d.c parse_cub3dfile.c)
+        cub3d.c parse_cub3dfile.c create_map.c)

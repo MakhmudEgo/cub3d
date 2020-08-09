@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:56:21 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/06 16:38:16 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/09 17:46:53 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef CUB3D_CUB3D_H
+
 # define CUB3D_CUB3D_H
+# define N 6
+# define S 7
+# define E 8
+# define W 9
+# define GAME 1
 
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -23,7 +28,7 @@
 # include "minilibx/mlx.h"
 # include <fcntl.h>
 
-struct		t_parsecub3dfile
+struct		s_parsecub3dfile
 {
 	int		**map;
 	int		x_r;
@@ -35,8 +40,10 @@ struct		t_parsecub3dfile
 	char	*sp_t;
 	int		f_t;
 	int		c_t;
+	int		orien;
 }			t_cub3d;
 
 void		prs_cub3d(char *argv);
+void		create_map(t_list *t_map);
 
 #endif

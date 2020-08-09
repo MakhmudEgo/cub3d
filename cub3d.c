@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:53:39 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/06 17:18:32 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/09 18:28:01 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,9 @@ int main(int argc, char **argv)
 {
 //	prs_cub3d(argv[1]);
 	prs_cub3d("../cub3d.pub");
+	while (GAME)
+	{
+
+		break;
+	}
 }
