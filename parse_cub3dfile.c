@@ -15,6 +15,7 @@
 void t_cub3d_init()
 {
 	t_cub3d.map = 0x0;
+	t_cub3d.map_int = 0x0;
 	t_cub3d.x_r = 0x0;
 	t_cub3d.y_r = 0x0;
 	t_cub3d.no_t = 0x0;
@@ -109,6 +110,7 @@ void prs_cub3d(char *argv)
 	if (*line != '\0')
 		prs_cub3d_ass(line, t_map);
 //	ft_lstiter(t_map, ft_list_print);
+
 	create_map(t_map);
 //	free(line);
 }

@@ -30,7 +30,8 @@
 
 struct		s_parsecub3dfile
 {
-	int		**map;
+	char	**map;
+	int		**map_int;
 	int		x_r;
 	int		y_r;
 	char	*no_t;
@@ -45,19 +46,19 @@ struct		s_parsecub3dfile
 
 typedef struct  s_img
 {
-    void *img;
-    char *addr;
-    int bpp;
-    int l_len;
-    int endian;
-    int tmp_x;
-    int tmp_y;
+	void *img;
+	char *addr;
+	int bpp;
+	int l_len;
+	int endian;
+	int tmp_x;
+	int tmp_y;
 } t_img;
 
 struct ha
 {
-    void *mlx;
-    void *wnd;
+	void *mlx;
+	void *wnd;
 } t_mlx;
 
 void		prs_cub3d(char *argv);
