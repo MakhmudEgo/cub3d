@@ -43,6 +43,23 @@ struct		s_parsecub3dfile
 	int		orien;
 }			t_cub3d;
 
+typedef struct  s_img
+{
+    void *img;
+    char *addr;
+    int bpp;
+    int l_len;
+    int endian;
+    int tmp_x;
+    int tmp_y;
+} t_img;
+
+struct ha
+{
+    void *mlx;
+    void *wnd;
+} t_mlx;
+
 void		prs_cub3d(char *argv);
 void		create_map(t_list *t_map);
 
