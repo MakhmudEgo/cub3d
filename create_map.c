@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:08:31 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/09 18:09:49 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/11 20:51:23 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ void create_map(t_list *t_map)
 	t_cub3d.map[map_size - 1] = 0x0; // char map
 	t_cub3d.map_int[map_size - 1] = 0x0; //int map;
 	map_size = 0;
-	while (t_map)
+
+// int's map
+   while (t_map)
 	{
 		if (t_map->content)
 		{
@@ -70,4 +72,15 @@ void create_map(t_list *t_map)
 		t_map = t_map->next;
 	}
 
+/*	while (t_map)
+	{
+		if (t_map->content)
+		{
+			(t_cub3d.map)[map_size] = t_map->content;
+			printf("%s\n", (t_cub3d.map)[map_size]);
+			map_size++;
+		} else
+			free(t_map->next);
+		t_map = t_map->next;
+	}*/
 }
