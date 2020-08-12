@@ -45,12 +45,19 @@ static void map_fill(char *s, int current, int last)
 
 	while (s[n])
 	{
-		if ((current == 0 && s[n] != '1') || (current == last && s[n] != '1'))
-			exit(17);
-		if (s[0] != '1' || s[s_len - 1] != '1')
-			exit(17);
+		if ((current == 0 && s[n] != '1')
+		|| (current == last && s[n] != '1')
+		|| (s[0] != '1' && s[0] != ' ') || s[s_len - 1] != '1'
+		|| (s[n - 1] == ' ' && s[n] == '0'))
+		{
+			s[n] = '1';
+			printf("Карта не валидная, мой ИИ исправил это.\nОшибка в %d\nСимволь %d\n", current + 1, n + 1);
+		}
+//		if (s[0] != '1' || s[s_len - 1] != '1')
+//			exit(17);
 		n++;
 	}
+	printf("%s\n", s);
 }
 
 void create_map(t_list *t_map)
