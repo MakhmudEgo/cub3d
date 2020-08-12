@@ -11,49 +11,63 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-static void map_fill(char *s, int i)
+static void map_fill(char *s, int current, int last)
 {
 	int n;
+	int s_len;
 
 	n = 0;
-	while (s && *s)
+	s_len = ft_strlen(s);
+	// for int's map
+/*	while (s && *s)
 	{
 		if (*s == ' ' || *s == '1')
-			t_cub3d.map_int[i][n] = 1;
+			t_cub3d.map_int[current][n] = 1;
 		else if (*s == '2')
-			t_cub3d.map_int[i][n] = 2;
+			t_cub3d.map_int[current][n] = 2;
 		else if (*s == '0')
-			t_cub3d.map_int[i][n] = 0;
+			t_cub3d.map_int[current][n] = 0;
 		else if (*s == 'N' && !t_cub3d.orien)
-			t_cub3d.map_int[i][n] = N;
+			t_cub3d.map_int[current][n] = N;
 		else if (*s == 'S' && !t_cub3d.orien)
-			t_cub3d.map_int[i][n] = S;
+			t_cub3d.map_int[current][n] = S;
 		else if (*s == 'E' && !t_cub3d.orien)
-			t_cub3d.map_int[i][n] = E;
+			t_cub3d.map_int[current][n] = E;
 		else if (*s == 'W' && !t_cub3d.orien)
-			t_cub3d.map_int[i][n] = W;
+			t_cub3d.map_int[current][n] = W;
 		if ((*s == 'W' || *s == 'E' || *s == 'S' || *s == 'N') && !t_cub3d.orien)
-			t_cub3d.orien = t_cub3d.map_int[i][n];
+			t_cub3d.orien = t_cub3d.map_int[current][n];
 		else if (*s == 'W' || *s == 'E' || *s == 'S' || *s == 'N')
-			t_cub3d.map_int[i][n] = 0;
+			t_cub3d.map_int[current][n] = 0;
 		n++;
 		s++;
+	}*/
+
+	while (s[n])
+	{
+		if ((current == 0 && s[n] != '1') || (current == last && s[n] != '1'))
+			exit(17);
+		if (s[0] != '1' || s[s_len - 1] != '1')
+			exit(17);
+		n++;
 	}
 }
 
 void create_map(t_list *t_map)
 {
 	int map_size;
+	int i;
 
 	map_size = ft_lstsize(t_map);
 	t_cub3d.map = malloc(sizeof(char*) * map_size); // char map;
 	t_cub3d.map_int = malloc(sizeof(int*) * map_size); //int map;
 	t_cub3d.map[map_size - 1] = 0x0; // char map
 	t_cub3d.map_int[map_size - 1] = 0x0; //int map;
-	map_size = 0;
+//	map_size = 0;
+	i = 0;
 
 // int's map
-   while (t_map)
+/*   while (t_map)
 	{
 		if (t_map->content)
 		{
@@ -70,17 +84,18 @@ void create_map(t_list *t_map)
 			map_size++;
 		}
 		t_map = t_map->next;
-	}
+	}*/
 
-/*	while (t_map)
+	while (t_map)
 	{
 		if (t_map->content)
 		{
-			(t_cub3d.map)[map_size] = t_map->content;
-			printf("%s\n", (t_cub3d.map)[map_size]);
-			map_size++;
+			(t_cub3d.map)[i] = t_map->content;
+			map_fill(t_map->content, i, map_size - 2);
+//			printf("%s\n", (t_cub3d.map)[map_size]);
+			i++;
 		} else
 			free(t_map->next);
 		t_map = t_map->next;
-	}*/
+	}
 }
