@@ -11,14 +11,18 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-static void map_fill(char *s, int current, int last)
+static void map_fill(char *s, int current, int last, char **ss)
 {
 	int n;
 	int s_len;
+	int s_bf;
+	int s_af;
 
 	n = 0;
 	s_len = ft_strlen(s);
-	// for int's map
+    s_bf = current != 0 ? ft_strlen(ss[current - 1]) : 0;
+    s_af = current != last ? ft_strlen(ss[current + 1]) : 0;
+    // for int's map
 /*	while (s && *s)
 	{
 		if (*s == ' ' || *s == '1')
@@ -42,8 +46,9 @@ static void map_fill(char *s, int current, int last)
 		n++;
 		s++;
 	}*/
-// Мой Роджер
-	while (s[n])
+
+// Мой Роджер ------------------------------------------------------------------------
+	/*while (s[n])
 	{
 		if ((current == 0 && s[n] != '1' && s[n] != ' ')
 		|| (current == last && s[n] != '1'  && s[n] != ' ')
@@ -58,12 +63,30 @@ static void map_fill(char *s, int current, int last)
           "Давайте скажем Роджеру – Спасибо!\n",
           current + 1, n + 1);
 		}
-//		if (s[0] != '1' || s[s_len - 1] != '1')
-//			exit(17);
 		n++;
-	}
+	}*/
+	// Джесика
+	while (s[n])
+    {
+	    if (s[n] == '0' &&
+            (current == 0 || current == last ||
+            (s_bf <= n && current != 0) || (s_af <= n && current != last)
+            || (n != 0 && s[n - 1] == ' ') || s[n + 1] == ' '
+            || s[n + 1] == '\0' || n == 0
+            || (current < last && ss[current + 1][n] == ' '))
+	    )
+        {
+	        /*printf("Джесика Молодец! нашла ошибку в карте и исправила\n"
+                "в строке %d\n"
+                "Символ %d\n", current, n);*/
+            s[n] = '1';
+        }
+	    n++;
+    }
 	printf("%s\n", s);
 }
+
+// Мой Роджер ------------------------------------------------------------------------
 
 void create_map(t_list *t_map)
 {
@@ -75,7 +98,6 @@ void create_map(t_list *t_map)
 	t_cub3d.map_int = malloc(sizeof(int*) * map_size); //int map;
 	t_cub3d.map[map_size - 1] = 0x0; // char map
 	t_cub3d.map_int[map_size - 1] = 0x0; //int map;
-//	map_size = 0;
 	i = 0;
 
 // int's map
@@ -103,11 +125,18 @@ void create_map(t_list *t_map)
 		if (t_map->content)
 		{
 			(t_cub3d.map)[i] = t_map->content;
-			map_fill(t_map->content, i, map_size - 2);
+//			map_fill(t_map->content, i, map_size - 2);
 //			printf("%s\n", (t_cub3d.map)[map_size]);
 			i++;
 		} else
 			free(t_map->next);
 		t_map = t_map->next;
 	}
+	i = 0;
+	while ((t_cub3d.map)[i])
+    {
+        map_fill((t_cub3d.map)[i], i, map_size - 2, t_cub3d.map);
+        i++;
+    }
+
 }

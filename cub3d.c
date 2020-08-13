@@ -48,14 +48,14 @@ int main(int argc, char **argv)
 	img.tmp_y = 5;
 
 	prs_cub3d("../cub3d.pub"); // argv[1]
-	t_mlx.mlx = mlx_init();
+/*	t_mlx.mlx = mlx_init();
 	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r, "cub3d");
 	img.img = mlx_new_image(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r);
     img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
     my_mlx_pixel_put(&img, 5, 5, 0xff0000);
     mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
     mlx_hook(t_mlx.wnd, 2, 0L, hello, &img);
-    mlx_loop(t_mlx.mlx);
+    mlx_loop(t_mlx.mlx);*/
 
 //    while (GAME)
 //	{
