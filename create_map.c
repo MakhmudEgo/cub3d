@@ -66,24 +66,29 @@ static void map_fill(char *s, int current, int last, char **ss)
 		n++;
 	}*/
 	// Джесика
-	while (s[n])
+
+//    printf("b:%s\n", s);
+    while (s[n])
     {
 	    if (s[n] == '0' &&
-            (current == 0 || current == last ||
-            (s_bf <= n && current != 0) || (s_af <= n && current != last)
+            (current == 0 || current == last
+            || s_bf <= n || s_af <= n
             || (n != 0 && s[n - 1] == ' ') || s[n + 1] == ' '
             || s[n + 1] == '\0' || n == 0
-            || (current < last && ss[current + 1][n] == ' '))
-	    )
+            || (current < last && ss[current + 1][n] == ' ')
+            || (s_bf >= n && ss[current - 1][n] == ' ')))
         {
-	        /*printf("Джесика Молодец! нашла ошибку в карте и исправила\n"
+	        /*printf("ИИ Джесика Молодец! нашла ошибку в карте и исправила\n"
                 "в строке %d\n"
                 "Символ %d\n", current, n);*/
+//            printf("x%d:y%d\n", current + 1, n + 1);
             s[n] = '1';
         }
 	    n++;
     }
-	printf("%s\n", s);
+//	printf("%s\n", s);
+    printf("a:%s\n", s);
+
 }
 
 // Мой Роджер ------------------------------------------------------------------------
