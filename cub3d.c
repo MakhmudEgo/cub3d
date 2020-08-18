@@ -40,6 +40,58 @@ void		hello(int key, t_img *img)
 }
 //hello world
 
+void put_map(int x, int y, int clr, int size_px, t_img *img)
+{
+    int end_x;
+    int strt_x;
+    int end_y;
+    int strt_y;
+
+    strt_y = y * size_px;
+    strt_x = x * size_px;
+    x = strt_x;
+    end_x = strt_x + size_px;
+    end_y = strt_y + size_px;
+    while (strt_x <= end_x)
+    {
+        my_mlx_pixel_put(img, strt_x, strt_y, clr);
+        if (strt_x == end_x && strt_y <= end_y)
+        {
+            strt_y++;
+            strt_x = x;
+        }
+        else
+            strt_x++;
+    }
+}
+
+void    parse_map(t_img *img)
+{
+    int y;
+    int x;
+    int size_px;
+
+    y = 0;
+    x = 0;
+    size_px = 5;
+    while ((t_cub3d.map)[y])
+    {
+        while ((t_cub3d.map)[y][x])
+        {
+            if ((t_cub3d.map)[y][x] == '1')
+                put_map(x, y, 0xff0000, size_px, img);
+            else if ((t_cub3d.map)[y][x] == '0')
+                put_map(x, y, 0xffffff, size_px, img);
+            else if ((t_cub3d.map)[y][x] == ' ')
+                put_map(x, y, 0x0000ff, size_px, img);
+            else
+                put_map(x, y, 0x00ff00, size_px, img);
+            x++;
+        }
+        y++;
+    }
+}
+
 int main(int argc, char **argv)
 {
 	t_img img;
@@ -48,18 +100,14 @@ int main(int argc, char **argv)
 	img.tmp_y = 5;
 
 	prs_cub3d("../cub3d.pub"); // argv[1]
-/*	t_mlx.mlx = mlx_init();
+	t_mlx.mlx = mlx_init();
 	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r, "cub3d");
 	img.img = mlx_new_image(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r);
     img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
-    my_mlx_pixel_put(&img, 5, 5, 0xff0000);
+    parse_map(&img);
+//    my_mlx_pixel_put(&img, 5, 5, 0xff0000);
+//    put_map();
     mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
     mlx_hook(t_mlx.wnd, 2, 0L, hello, &img);
-    mlx_loop(t_mlx.mlx);*/
-
-//    while (GAME)
-//	{
-//
-//		break;
-//	}
+    mlx_loop(t_mlx.mlx);
 }
