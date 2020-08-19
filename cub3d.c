@@ -87,12 +87,27 @@ void    parse_map(t_img *img)
             else if ((t_cub3d.map)[y][x] == ' ')
                 put_map(x, y, 0x0, size_px, img);
             else
-                put_map(x, y, 0x00ff00, size_px, img);
+			{
+				put_map(x, y, 0x00ff00, size_px, img);
+				img->tmp_x = x;
+				img->tmp_y = y;
+			}
             x++;
         }
         x = 0;
         y++;
     }
+    float cc = 0;
+    while (1)
+	{
+    	float xx = img->tmp_x *size_px + cc * cos(0.5);
+    	float yy = img->tmp_y *size_px+ cc * sin(0.5);
+    	cc += 0.05;
+    	my_mlx_pixel_put(img, (int)xx, (int)yy, 0x0);
+//    	mlx_pixel_put(t_mlx.mlx, t_mlx.wnd, (int)yy, (int)xx, 0xff0000);
+		mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
+		if ((t_cub3d.map)[(int)yy/25][(int)xx/25] == '1') break;
+	}
 }
 
 int main(int argc, char **argv)
