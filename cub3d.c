@@ -23,8 +23,8 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 void		hello(int key, t_img *img)
 {
 //	mlx_destroy_image(t_mlx.mlx, img);
-//	img->img = mlx_new_image(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r);
-//	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
+/*	img->img = mlx_new_image(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);*/
 	if (key == 0x7e || key == 0xd)
 		my_mlx_pixel_put(img, img->tmp_x, --(img->tmp_y), 0xff0000);
 	if (key == 0x7d || key == 0x1)
@@ -82,6 +82,8 @@ void    parse_map(t_img *img)
                 put_map(x, y, 0xff0000, size_px, img);
             else if ((t_cub3d.map)[y][x] == '0')
                 put_map(x, y, 0xffffff, size_px, img);
+            else if ((t_cub3d.map)[y][x] == '2')
+                put_map(x, y, 0x0000ff, size_px, img);
             else if ((t_cub3d.map)[y][x] == ' ')
                 put_map(x, y, 0x0, size_px, img);
             else
