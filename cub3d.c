@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:53:39 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/09 18:28:01 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/19 19:21:20 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void    parse_map(t_img *img)
     {
         while (1)
         {
-            float xx = img->tmp_x *size_px + cc * cos(dd);
-            float yy = img->tmp_y *size_px+ cc * sin(dd);
+            float xx = img->tmp_x * size_px + (size_px/2) + cc * cos(dd);
+            float yy = img->tmp_y * size_px + (size_px/2) + cc * sin(dd);
             cc += 1;
             my_mlx_pixel_put(img, (int)xx, (int)yy, 0xf000f0);
 //    	mlx_pixel_put(t_mlx.mlx, t_mlx.wnd, (int)yy, (int)xx, 0xff0000);
