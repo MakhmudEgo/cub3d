@@ -66,29 +66,30 @@ void    parse_map(t_img *img)
             else
             {
                 put_map(x, y, 0xffffff, sz_px, img);
-                img->tmp_x = x;
-                img->tmp_y = y;
+                img->strt_x = x;
+                img->strt_y = y;
             }
             x++;
         }
-        x = 0;
-        y++;
-    }
-    double dd = -0.3;
-    float cc = 0;
-    while (dd <= 0.7)
-    {
-        while (1)
-        {
-            short xx = img->tmp_x * sz_px + (sz_px / 2) + cc * cos(dd);
-            short yy = img->tmp_y * sz_px + (sz_px / 2) + cc * sin(dd);
-            cc += 1;
-            my_mlx_pixel_put(img, xx, yy, 0xf000f0);
-            if ((t_cub3d.map)[yy/25][xx/25] == '1')
-                break;
-        }
-        cc = 0;
-        dd += 0.01;
-    }
-    mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
+		x = 0;
+		y++;
+	}
+	double corner = -0.3;
+	float coef = 0;
+	while (corner <= 0.7)
+	{
+		while (GAME)
+		{
+			short xx = img->strt_x * sz_px + (sz_px / 2) + coef * cos(corner);
+			short yy = img->strt_y * sz_px + (sz_px / 2) + coef * sin(corner);
+			coef += 1;
+			my_mlx_pixel_put(img, xx, yy, 0xf000f0);
+			if ((t_cub3d.map)[yy/25][xx/25] == '1')
+				break;
+		}
+
+		coef = 0;
+		corner += 0.01;
+	}
+	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
 }

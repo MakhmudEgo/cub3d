@@ -26,14 +26,14 @@ void		start(int key, t_img *img)
  * img->img = mlx_new_image(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r);
  * img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
  */
-	if (key == 0x7e || key == 0xd)
-		my_mlx_pixel_put(img, img->tmp_x, --(img->tmp_y), 0xff0000);
-	if (key == 0x7d || key == 0x1)
-		my_mlx_pixel_put(img, img->tmp_x, ++(img->tmp_y), 0xff0000);
-	if (key == 0x7b || key == 0)
-		my_mlx_pixel_put(img, --(img->tmp_x), img->tmp_y, 0xff0000);
-	if (key == 0x7c || key == 0x2)
-		my_mlx_pixel_put(img, ++(img->tmp_x), img->tmp_y, 0xff0000);
+	if (key == 0x7e || key == 0xd) // up
+		my_mlx_pixel_put(img, img->strt_x, --(img->strt_y), 0xff0000);
+	if (key == 0x7d || key == 0x1) // down
+		my_mlx_pixel_put(img, img->strt_x, ++(img->strt_y), 0xff0000);
+	if (key == 0x7b || key == 0) // left
+		my_mlx_pixel_put(img, --(img->strt_x), img->strt_y, 0xff0000);
+	if (key == 0x7c || key == 0x2) // right
+		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);
 	printf("key == %#x\n", key);
 	if (key == 0x35)
 		exit(123);
@@ -44,8 +44,8 @@ int main(int argc, char **argv)
 {
 	t_img img;
 
-	img.tmp_x = 5;
-	img.tmp_y = 5;
+	img.strt_x = 5;
+	img.strt_y = 5;
 
 	prs_cub3d(argv[1]);
 	t_mlx.mlx = mlx_init();
