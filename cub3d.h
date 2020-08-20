@@ -63,5 +63,7 @@ struct ha
 
 void		prs_cub3d(char *argv);
 void		create_map(t_list *t_map);
+void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void    parse_map(t_img *img);
 
 #endif
