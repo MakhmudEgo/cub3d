@@ -24,10 +24,10 @@ void put_map(int x, int y, int clr, int size_px, t_img *img)
     x = strt_x;
     end_x = strt_x + size_px;
     end_y = strt_y + size_px;
-    while (strt_x <= end_x)
+    while (strt_x < end_x)
     {
         my_mlx_pixel_put(img, strt_x, strt_y, clr);
-        if (strt_x == end_x && strt_y < end_y)
+        if (strt_x == end_x - 1 && strt_y < end_y)
         {
             strt_y++;
             strt_x = x;
@@ -63,12 +63,13 @@ void    parse_map(t_img *img)
                 put_map(x, y, 0x0000ff, sz_px, img);
             else if ((t_c3d.map)[y][x] == ' ')
                 put_map(x, y, 0x0, sz_px, img);
-            else
+            else if (ft_strchr("NSEW", (t_c3d.map)[y][x]))
             {
-                put_map(x, y, 0xffffff, sz_px, img);
+            	t_c3d.orien = (t_c3d.map)[y][x];
                 img->strt_x = x;
-                img->strt_y = y;
-            }
+				img->strt_y = y;
+//				put_map(x, y, 0xff00ff, sz_px, img);
+			}
             x++;
         }
 		x = 0;

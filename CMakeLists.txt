@@ -17,6 +17,11 @@ add_executable(cub3d
         libft/ft_atoi.c
         libft/ft_strdup.c
         libft/ft_strlen.c
+        libft/ft_strchr.c
         get_next_line/get_next_line.c
         get_next_line/get_next_line_utils.c
-        cub3d.c parse_cub3dfile.c create_map.c put_map2d.c)
+        cub3d.c
+        parse_cub3dfile.c
+        create_map.c
+        put_map2d.c
+        )

@@ -13,10 +13,10 @@
 #ifndef CUB3D_CUB3D_H
 
 # define CUB3D_CUB3D_H
-# define N 6
-# define S 7
-# define E 8
-# define W 9
+# define N 'N'
+# define S 'S'
+# define E 'E'
+# define W 'W'
 # define GAME 1
 
 # include "get_next_line/get_next_line.h"
@@ -41,7 +41,7 @@ struct		s_parsecub3dfile
 	char	*sp_t;
 	int		f_t;
 	int		c_t;
-	int		orien;
+	char	orien;
 	short 	plyr_x;
 	short 	plyr_y;
 	double	crnr;

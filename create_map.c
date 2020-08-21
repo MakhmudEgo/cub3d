@@ -14,60 +14,13 @@
 static void map_fill(char *s, int current, int last, char **ss)
 {
 	int n;
-	int s_len;
 	int s_bf;
 	int s_af;
 
 	n = 0;
-	s_len = ft_strlen(s);
     s_bf = current != 0 ? ft_strlen(ss[current - 1]) : 0;
     s_af = current != last ? ft_strlen(ss[current + 1]) : 0;
-    // for int's map
-/*	while (s && *s)
-	{
-		if (*s == ' ' || *s == '1')
-			t_c3d.map_int[current][n] = 1;
-		else if (*s == '2')
-			t_c3d.map_int[current][n] = 2;
-		else if (*s == '0')
-			t_c3d.map_int[current][n] = 0;
-		else if (*s == 'N' && !t_c3d.orien)
-			t_c3d.map_int[current][n] = N;
-		else if (*s == 'S' && !t_c3d.orien)
-			t_c3d.map_int[current][n] = S;
-		else if (*s == 'E' && !t_c3d.orien)
-			t_c3d.map_int[current][n] = E;
-		else if (*s == 'W' && !t_c3d.orien)
-			t_c3d.map_int[current][n] = W;
-		if ((*s == 'W' || *s == 'E' || *s == 'S' || *s == 'N') && !t_c3d.orien)
-			t_c3d.orien = t_c3d.map_int[current][n];
-		else if (*s == 'W' || *s == 'E' || *s == 'S' || *s == 'N')
-			t_c3d.map_int[current][n] = 0;
-		n++;
-		s++;
-	}*/
 
-// Мой Роджер ------------------------------------------------------------------------
-	/*while (s[n])
-	{
-		if ((current == 0 && s[n] != '1' && s[n] != ' ')
-		|| (current == last && s[n] != '1'  && s[n] != ' ')
-		|| (s[0] != '1' && s[0] != ' ')
-		|| (s[s_len - 1] != '1' && s_len - 1 == n)
-		|| (s[n - 1] == ' ' && s[n] == '0'))
-		{
-			s[n] = '1';
-			printf("Карта не валидная, но мой ИИ-Роджер исправил это.\n"
-          "Ошибка в %d строке\n"
-          "Символ %d\n"
-          "Давайте скажем Роджеру – Спасибо!\n",
-          current + 1, n + 1);
-		}
-		n++;
-	}*/
-	// Джесика
-
-//    printf("b:%s\n", s);
     while (s[n])
     {
 	    if (s[n] == '0' &&
@@ -80,18 +33,14 @@ static void map_fill(char *s, int current, int last, char **ss)
         {
 	        /*printf("ИИ Джесика Молодец! нашла ошибку в карте и исправила\n"
                 "в строке %d\n"
-                "Символ %d\n", current, n);*/
-//            printf("x%d:y%d\n", current + 1, n + 1);
+                "Символ %d\n", current, n);
+            printf("x%d:y%d\n", current + 1, n + 1);*/
             s[n] = '1';
         }
 	    n++;
     }
-//	printf("%s\n", s);
     printf("a:%s\n", s);
-
 }
-
-// Мой Роджер ------------------------------------------------------------------------
 
 void create_map(t_list *t_map)
 {
@@ -99,39 +48,15 @@ void create_map(t_list *t_map)
 	int i;
 
 	map_size = ft_lstsize(t_map);
-	t_c3d.map = malloc(sizeof(char*) * map_size); // char map;
-	t_c3d.map_int = malloc(sizeof(int*) * map_size); //int map;
-	t_c3d.map[map_size - 1] = 0x0; // char map
-	t_c3d.map_int[map_size - 1] = 0x0; //int map;
+	t_c3d.map = malloc(sizeof(char*) * map_size);
+	t_c3d.map[map_size - 1] = 0x0;
 	i = 0;
-
-// int's map
-/*   while (t_map)
-	{
-		if (t_map->content)
-		{
-			(t_c3d.map_int)[map_size] = malloc(sizeof(int) * (ft_strlen(t_map->content) + 1));
-			map_fill(t_map->content, map_size);
-			(t_c3d.map_int)[map_size][ft_strlen(t_map->content)] = 5;
-			int n = 0;
-			while ((t_c3d.map_int)[map_size][n] != 5)
-			{
-				printf("%d", (t_c3d.map_int)[map_size][n]);
-				n++;
-			}
-			printf("%d\n", (t_c3d.map_int)[map_size][n]);
-			map_size++;
-		}
-		t_map = t_map->next;
-	}*/
 
 	while (t_map)
 	{
 		if (t_map->content)
 		{
 			(t_c3d.map)[i] = t_map->content;
-//			map_fill(t_map->content, i, map_size - 2);
-//			printf("%s\n", (t_c3d.map)[map_size]);
 			i++;
 		} else
 			free(t_map->next);

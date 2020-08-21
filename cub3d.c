@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
 	img.strt_x = 5;
 	img.strt_y = 5;
-
+	(argc != 2) ? exit(45) : printf("фисё окк\n");
 	prs_cub3d(argv[1]);
 	t_mlx.mlx = mlx_init();
 	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r, "cub3d");
@@ -56,4 +56,5 @@ int main(int argc, char **argv)
     mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
     mlx_hook(t_mlx.wnd, 2, 0L, start, &img);
     mlx_loop(t_mlx.mlx);
+	return (0);
 }
