@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub3dfile.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:30:40 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/09 16:54:54 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/21 10:57:17 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 void t_cub3d_init()
 {
-	t_cub3d.map = 0x0;
-	t_cub3d.map_int = 0x0;
-	t_cub3d.x_r = 0x0;
-	t_cub3d.y_r = 0x0;
-	t_cub3d.no_t = 0x0;
-	t_cub3d.so_t = 0x0;
-	t_cub3d.we_t = 0x0;
-	t_cub3d.ea_t = 0x0;
-	t_cub3d.sp_t = 0x0;
-	t_cub3d.f_t = 0x0;
-	t_cub3d.c_t = 0x0;
-	t_cub3d.orien = 0x0;
+	t_c3d.map = 0x0;
+	t_c3d.map_int = 0x0;
+	t_c3d.x_r = 0x0;
+	t_c3d.y_r = 0x0;
+	t_c3d.no_t = 0x0;
+	t_c3d.so_t = 0x0;
+	t_c3d.we_t = 0x0;
+	t_c3d.ea_t = 0x0;
+	t_c3d.sp_t = 0x0;
+	t_c3d.f_t = 0x0;
+	t_c3d.c_t = 0x0;
+	t_c3d.orien = 0x0;
+	t_c3d.plyr_x = 0x0;
+	t_c3d.plyr_y = 0x0;
+	t_c3d.crnr = 0x0;
+	t_c3d.cf_rcs = 0x0;
 }
 
 int		create_trgb(int t, int r, int g, int b)
@@ -48,9 +52,9 @@ void	prs_cub3d_fc(char *s, char c)
 		s++;
 	b = ft_atoi(s + 1);
 	if (c == 'F')
-		t_cub3d.f_t = create_trgb(0, r, g, b);
+		t_c3d.f_t = create_trgb(0, r, g, b);
 	else
-		t_cub3d.c_t = create_trgb(0, r, g, b);
+		t_c3d.c_t = create_trgb(0, r, g, b);
 	free(tmp);
 }
 
@@ -58,23 +62,23 @@ void prs_cub3d_ass(char *s, t_list *t_map)
 {
 	if (*s == 'R')
 	{
-		t_cub3d.x_r = ft_atoi(++s);
+		t_c3d.x_r = ft_atoi(++s);
 		while (s && *s == ' ' && *s != '\0')
 			s++;
 		while (s && *s != ' ' && *s != '\0')
 			s++;
-		t_cub3d.y_r = ft_atoi(s);
+		t_c3d.y_r = ft_atoi(s);
 	}
 	else if (*s == 'N' && *(s + 1) == 'O')
-		t_cub3d.no_t = ft_strtrim(s + 3, " ");
+		t_c3d.no_t = ft_strtrim(s + 3, " ");
 	else if (*s == 'S' && *(s + 1) == 'O')
-		t_cub3d.so_t = ft_strtrim(s + 3, " ");
+		t_c3d.so_t = ft_strtrim(s + 3, " ");
 	else if (*s == 'W' && *(s + 1) == 'E')
-		t_cub3d.we_t = ft_strtrim(s + 3, " ");
+		t_c3d.we_t = ft_strtrim(s + 3, " ");
 	else if (*s == 'E' && *(s + 1) == 'A')
-		t_cub3d.ea_t = ft_strtrim(s + 3, " ");
+		t_c3d.ea_t = ft_strtrim(s + 3, " ");
 	else if (*s == 'S' && *(s + 1) != 'O')
-		t_cub3d.sp_t = ft_strtrim(s + 2, " ");
+		t_c3d.sp_t = ft_strtrim(s + 2, " ");
 	else if(*s == 'F' || *s == 'C')
 		prs_cub3d_fc(ft_strtrim(s + 2, " "), *s);
 	else

@@ -51,17 +51,17 @@ void    parse_map(t_img *img)
     y = 0;
     x = 0;
     sz_px = 25;
-    while ((t_cub3d.map)[y])
+    while ((t_c3d.map)[y])
     {
-        while ((t_cub3d.map)[y][x])
+        while ((t_c3d.map)[y][x])
         {
-            if ((t_cub3d.map)[y][x] == '1')
+            if ((t_c3d.map)[y][x] == '1')
                 put_map(x, y, 0xff0000, sz_px, img);
-            else if ((t_cub3d.map)[y][x] == '0')
+            else if ((t_c3d.map)[y][x] == '0')
                 put_map(x, y, 0xffffff, sz_px, img);
-            else if ((t_cub3d.map)[y][x] == '2')
+            else if ((t_c3d.map)[y][x] == '2')
                 put_map(x, y, 0x0000ff, sz_px, img);
-            else if ((t_cub3d.map)[y][x] == ' ')
+            else if ((t_c3d.map)[y][x] == ' ')
                 put_map(x, y, 0x0, sz_px, img);
             else
             {
@@ -74,22 +74,19 @@ void    parse_map(t_img *img)
 		x = 0;
 		y++;
 	}
-	double corner = -0.3;
-	float coef = 0;
-	while (corner <= 0.7)
+	while (t_c3d.crnr <= 1.05)
 	{
 		while (GAME)
 		{
-			short xx = img->strt_x * sz_px + (sz_px / 2) + coef * cos(corner);
-			short yy = img->strt_y * sz_px + (sz_px / 2) + coef * sin(corner);
-			coef += 1;
-			my_mlx_pixel_put(img, xx, yy, 0xf000f0);
-			if ((t_cub3d.map)[yy/25][xx/25] == '1')
+			t_c3d.plyr_x = img->strt_x * sz_px + (sz_px / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr);
+			t_c3d.plyr_y = img->strt_y * sz_px + (sz_px / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr);
+			t_c3d.cf_rcs += 1;
+			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);
+			if ((t_c3d.map)[t_c3d.plyr_y / sz_px][t_c3d.plyr_x / sz_px] == '1')
 				break;
 		}
-
-		coef = 0;
-		corner += 0.01;
+		t_c3d.cf_rcs = 0;
+		t_c3d.crnr += 0.01;
 	}
 	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
 }

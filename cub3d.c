@@ -23,7 +23,7 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 void		start(int key, t_img *img)
 {
 /*
- * img->img = mlx_new_image(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r);
+ * img->img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
  * img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
  */
 	if (key == 0x7e || key == 0xd) // up
@@ -49,8 +49,8 @@ int main(int argc, char **argv)
 
 	prs_cub3d(argv[1]);
 	t_mlx.mlx = mlx_init();
-	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r, "cub3d");
-	img.img = mlx_new_image(t_mlx.mlx, t_cub3d.x_r, t_cub3d.y_r);
+	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r, "cub3d");
+	img.img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
     img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
     parse_map(&img);
     mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);

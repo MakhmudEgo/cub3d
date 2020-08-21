@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:56:21 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/09 17:46:53 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/21 10:52:55 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ struct		s_parsecub3dfile
 	int		f_t;
 	int		c_t;
 	int		orien;
-}			t_cub3d;
+	short 	plyr_x;
+	short 	plyr_y;
+	double	crnr;
+	short	cf_rcs;
+}			t_c3d;
 
 typedef struct  s_img
 {
