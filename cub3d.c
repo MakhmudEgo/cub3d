@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:53:39 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/19 19:21:20 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/22 15:51:50 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,26 @@ void		start(int key, t_img *img)
  * img->img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
  * img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
  */
-	if (key == 0x7e || key == 0xd) // up
-		my_mlx_pixel_put(img, img->strt_x, --(img->strt_y), 0xff0000);
-	if (key == 0x7d || key == 0x1) // down
-		my_mlx_pixel_put(img, img->strt_x, ++(img->strt_y), 0xff0000);
-	if (key == 0x7b || key == 0) // left
-		my_mlx_pixel_put(img, --(img->strt_x), img->strt_y, 0xff0000);
-	if (key == 0x7c || key == 0x2) // right
-		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);
+	if (UP)
+	{
+
+	}
+//		my_mlx_pixel_put(img, img->strt_x, --(img->strt_y), 0xff0000);
+	if (DOWN)
+	{
+
+	}
+//		my_mlx_pixel_put(img, img->strt_x, ++(img->strt_y), 0xff0000);
+	if (LEFT)
+	{
+
+	}
+//		my_mlx_pixel_put(img, --(img->strt_x), img->strt_y, 0xff0000);
+	if (RIGHT)
+	{
+
+	}
+//		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);
 	printf("key == %#x\n", key);
 	if (key == 0x35)
 		exit(123);

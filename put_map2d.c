@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 10:59:17 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/20 10:59:20 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/22 16:22:40 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,29 @@ void    parse_map(t_img *img)
 {
     int y;
     int x;
-    int sz_px;
 
     y = 0;
     x = 0;
-    sz_px = 25;
     while ((t_c3d.map)[y])
     {
         while ((t_c3d.map)[y][x])
         {
             if ((t_c3d.map)[y][x] == '1')
-                put_map(x, y, 0xff0000, sz_px, img);
-            else if ((t_c3d.map)[y][x] == '0')
-                put_map(x, y, 0xffffff, sz_px, img);
+                put_map(x, y, 0xff0000, SZ_PX, img);
+            else if ((t_c3d.map)[y][x] == '0' || t_c3d.orien)
+                put_map(x, y, 0xffffff, SZ_PX, img);
             else if ((t_c3d.map)[y][x] == '2')
-                put_map(x, y, 0x0000ff, sz_px, img);
+                put_map(x, y, 0x0000ff, SZ_PX, img);
             else if ((t_c3d.map)[y][x] == ' ')
-                put_map(x, y, 0x0, sz_px, img);
-            else if (ft_strchr("NSEW", (t_c3d.map)[y][x]))
+                put_map(x, y, 0x0, SZ_PX, img);
+            else if (ft_strchr("NSEW", (t_c3d.map)[y][x]) && !t_c3d.orien)
             {
             	t_c3d.orien = (t_c3d.map)[y][x];
                 img->strt_x = x;
 				img->strt_y = y;
-//				put_map(x, y, 0xff00ff, sz_px, img);
+				put_map(x, y, 0xffffff, SZ_PX, img);
 			}
-            x++;
+			x++;
         }
 		x = 0;
 		y++;
@@ -79,11 +77,11 @@ void    parse_map(t_img *img)
 	{
 		while (GAME)
 		{
-			t_c3d.plyr_x = img->strt_x * sz_px + (sz_px / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr);
-			t_c3d.plyr_y = img->strt_y * sz_px + (sz_px / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr);
+			t_c3d.plyr_x = img->strt_x * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr);
+			t_c3d.plyr_y = img->strt_y * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr);
 			t_c3d.cf_rcs += 1;
 			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);
-			if ((t_c3d.map)[t_c3d.plyr_y / sz_px][t_c3d.plyr_x / sz_px] == '1')
+			if ((t_c3d.map)[t_c3d.plyr_y / SZ_PX][t_c3d.plyr_x / SZ_PX] == '1')
 				break;
 		}
 		t_c3d.cf_rcs = 0;
