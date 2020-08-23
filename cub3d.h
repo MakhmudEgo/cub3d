@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:56:21 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/23 12:47:55 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/23 13:24:26 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct  s_img
 	int bpp;
 	int l_len;
 	int endian;
-	int strt_x;
-	int strt_y;
+	double strt_x;
+	double strt_y;
 } t_img;
 
 struct ha

@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:53:39 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/23 13:26:17 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/23 16:24:01 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,26 @@ void		start(int key, t_img *img)
  */
 	if (UP)
 	{
-
+		if ((t_c3d.map)[(int)(img->strt_y)][(int)(img->strt_x) + 1] != '1')
+		{
+			img->strt_x += cos(t_c3d.crnr);
+			img->strt_y += sin(t_c3d.crnr);
+			t_c3d.crnr_s = t_c3d.crnr - 0.52;
+			t_c3d.crnr_e = t_c3d.crnr + 0.52;
+			parse_map(img);
+		}
 	}
 //		my_mlx_pixel_put(img, img->strt_x, --(img->strt_y), 0xff0000);
 	if (DOWN)
 	{
-
+		if ((t_c3d.map)[(int)(img->strt_y)][(int)(img->strt_x) - 1] != '1')
+		{
+			img->strt_x -= cos(t_c3d.crnr);
+			img->strt_y -= sin(t_c3d.crnr);
+			t_c3d.crnr_s = t_c3d.crnr - 0.52;
+			t_c3d.crnr_e = t_c3d.crnr + 0.52;
+			parse_map(img);
+		}
 	}
 //		my_mlx_pixel_put(img, img->strt_x, ++(img->strt_y), 0xff0000);
 	if (LEFT)
