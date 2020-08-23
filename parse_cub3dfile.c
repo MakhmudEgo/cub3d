@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:30:40 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/22 15:08:12 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/22 19:47:19 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void t_cub3d_init()
 {
 	t_c3d.map = 0x0;
-	t_c3d.map_int = 0x0;
 	t_c3d.x_r = 0x0;
 	t_c3d.y_r = 0x0;
 	t_c3d.no_t = 0x0;
@@ -28,7 +27,7 @@ void t_cub3d_init()
 	t_c3d.orien = 0x0;
 	t_c3d.plyr_x = 0x0;
 	t_c3d.plyr_y = 0x0;
-	t_c3d.crnr = 0x0;
+	t_c3d.crnr = -0.3;
 	t_c3d.cf_rcs = 0x0;
 }
 

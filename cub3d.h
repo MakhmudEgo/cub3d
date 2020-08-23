@@ -36,7 +36,6 @@
 struct		s_parsecub3dfile
 {
 	char	**map;
-	int		**map_int;
 	int		x_r;
 	int		y_r;
 	char	*no_t;

@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 10:59:17 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/22 16:22:40 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/22 20:35:26 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void    parse_map(t_img *img)
 	{
 		while (GAME)
 		{
-			t_c3d.plyr_x = img->strt_x * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr);
+			t_c3d.plyr_x = img->strt_x * SZ_PX + t_c3d.cf_rcs * cos(t_c3d.crnr);
 			t_c3d.plyr_y = img->strt_y * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr);
 			t_c3d.cf_rcs += 1;
 			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);
