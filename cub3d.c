@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:53:39 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/22 15:51:50 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/23 13:26:17 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,18 @@ void		start(int key, t_img *img)
 //		my_mlx_pixel_put(img, img->strt_x, ++(img->strt_y), 0xff0000);
 	if (LEFT)
 	{
-
+		t_c3d.crnr -= 0.2;
+		t_c3d.crnr_s = t_c3d.crnr - 0.52;
+		t_c3d.crnr_e = t_c3d.crnr + 0.52;
+		parse_map(img);
 	}
 //		my_mlx_pixel_put(img, --(img->strt_x), img->strt_y, 0xff0000);
 	if (RIGHT)
 	{
-
+		t_c3d.crnr += 0.2;
+		t_c3d.crnr_s = t_c3d.crnr - 0.52;
+		t_c3d.crnr_e = t_c3d.crnr + 0.52;
+		parse_map(img);
 	}
 //		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);
 	printf("key == %#x\n", key);

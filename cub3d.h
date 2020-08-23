@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:56:21 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/22 15:49:39 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/23 12:47:55 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define DOWN key == 0x7d || key == 0x1
 # define LEFT key == 0x7b || key == 0
 # define RIGHT key == 0x7c || key == 0x2
+# define CRNR 0.0
 
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
@@ -48,7 +49,9 @@ struct		s_parsecub3dfile
 	char	orien;
 	short 	plyr_x;
 	short 	plyr_y;
-	double	crnr;
+	double crnr;
+	double crnr_s;
+	double crnr_e;
 	short	cf_rcs;
 }			t_c3d;
 
