@@ -81,7 +81,7 @@ void    parse_map(t_img *img)
 	{
 		while (GAME)
 		{
-			t_c3d.plyr_x = img->strt_x * SZ_PX  + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+			t_c3d.plyr_x = img->strt_x * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 			t_c3d.plyr_y = img->strt_y * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 			t_c3d.cf_rcs += 1;
 			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);

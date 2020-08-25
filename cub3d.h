@@ -53,6 +53,8 @@ struct		s_parsecub3dfile
 	double crnr_s;
 	double crnr_e;
 	short	cf_rcs;
+	short	tmp_x;
+	short	tmp_y;
 }			t_c3d;
 
 typedef struct  s_img

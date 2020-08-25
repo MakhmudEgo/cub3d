@@ -26,12 +26,16 @@ void		start(int key, t_img *img)
  * img->img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
  * img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
  */
+	short x_u = (img->strt_x + cos(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+	short y_u = (img->strt_y + sin(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+	short x_d = (img->strt_x - cos(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+	short y_d = (img->strt_y - sin(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 	if (UP)
 	{
-		if ((t_c3d.map)[(int)(img->strt_y)][(int)(img->strt_x) + 1] != '1')
+		if ((t_c3d.map)[y_u / SZ_PX][x_u / SZ_PX] != '1')
 		{
-			img->strt_x += cos(t_c3d.crnr);
-			img->strt_y += sin(t_c3d.crnr);
+			img->strt_x += cos(t_c3d.crnr)/2;
+			img->strt_y += sin(t_c3d.crnr)/2;
 			t_c3d.crnr_s = t_c3d.crnr - 0.52;
 			t_c3d.crnr_e = t_c3d.crnr + 0.52;
 			parse_map(img);
@@ -40,10 +44,10 @@ void		start(int key, t_img *img)
 //		my_mlx_pixel_put(img, img->strt_x, --(img->strt_y), 0xff0000);
 	if (DOWN)
 	{
-		if ((t_c3d.map)[(int)(img->strt_y)][(int)(img->strt_x) - 1] != '1')
+		if ((t_c3d.map)[y_d / SZ_PX][x_d / SZ_PX] != '1')
 		{
-			img->strt_x -= cos(t_c3d.crnr);
-			img->strt_y -= sin(t_c3d.crnr);
+			img->strt_x -= cos(t_c3d.crnr) / 4;
+			img->strt_y -= sin(t_c3d.crnr) / 4;
 			t_c3d.crnr_s = t_c3d.crnr - 0.52;
 			t_c3d.crnr_e = t_c3d.crnr + 0.52;
 			parse_map(img);
