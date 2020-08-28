@@ -26,7 +26,7 @@ void		start(int key, t_img *img)
  * img->img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
  * img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
  */
-	short x_u = (img->strt_x + cos(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+/*	short x_u = (img->strt_x + cos(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 	short y_u = (img->strt_y + sin(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 	short x_d = (img->strt_x - cos(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 	short y_d = (img->strt_y - sin(t_c3d.crnr) / 4) * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
@@ -69,7 +69,7 @@ void		start(int key, t_img *img)
 		t_c3d.crnr_e = t_c3d.crnr + 0.52;
 		parse_map(img);
 	}
-//		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);
+//		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);*/
 	printf("key == %#x\n", key);
 	if (key == 0x35)
 		exit(123);

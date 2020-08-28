@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 14:56:21 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/23 13:24:26 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/27 19:52:56 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define E 'E'
 # define W 'W'
 # define GAME 1
-# define SZ_PX 25
+# define SZ_PX 64
 # define UP key == 0x7e || key == 0xd
 # define DOWN key == 0x7d || key == 0x1
 # define LEFT key == 0x7b || key == 0
@@ -47,8 +47,8 @@ struct		s_parsecub3dfile
 	int		f_t;
 	int		c_t;
 	char	orien;
-	short 	plyr_x;
-	short 	plyr_y;
+	double 	plyr_x;
+	double 	plyr_y;
 	double crnr;
 	double crnr_s;
 	double crnr_e;
