@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 10:59:17 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/27 20:54:15 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/29 17:19:05 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void    parse_map(t_img *img)
 
 	// ----------
 	double bbx = (int)(img->strt_x / 64) * 64 - 1;
-	double bby = img->strt_y + (img->strt_x - bbx) * tan(t_c3d.crnr_e);
+	double bby = img->strt_y + (bbx - img->strt_x) * tan(t_c3d.crnr_e);
 	while (bbx / 64 < 29 && bby / 64 < 10 && t_c3d.map[(int)(bby/64)][(int)(bbx/64)] != '1')
 	{
 		bbx -= 64;

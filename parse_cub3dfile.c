@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:30:40 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/27 20:54:52 by mizola           ###   ########.fr       */
+/*   Updated: 2020/08/29 17:21:15 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void t_cub3d_init()
 	t_c3d.crnr = CRNR;
 	t_c3d.crnr_s = CRNR - 0.52;
 //	t_c3d.crnr_e = CRNR + 0.52;
-	t_c3d.crnr_e = 3.49;
+	t_c3d.crnr_e = 5.2;
 
 }
 
