@@ -36,8 +36,8 @@ void		start(int key, t_img *img)
 		{
 			img->strt_x += cos(t_c3d.crnr) * 4;
 			img->strt_y += sin(t_c3d.crnr) * 4;
-			t_c3d.crnr_s = t_c3d.crnr - 0.52;
-			t_c3d.crnr_e = t_c3d.crnr + 0.52;
+			t_c3d.crnr_s = t_c3d.crnr - MMP;
+			t_c3d.crnr_e = t_c3d.crnr + MMP;
 			parse_map(img);
 		}
 	}
@@ -48,8 +48,8 @@ void		start(int key, t_img *img)
 		{
 			img->strt_x -= cos(t_c3d.crnr) * 4;
 			img->strt_y -= sin(t_c3d.crnr) * 4;
-			t_c3d.crnr_s = t_c3d.crnr - 0.52;
-			t_c3d.crnr_e = t_c3d.crnr + 0.52;
+			t_c3d.crnr_s = t_c3d.crnr - MMP;
+			t_c3d.crnr_e = t_c3d.crnr + MMP;
 			parse_map(img);
 		}
 	}
@@ -57,16 +57,16 @@ void		start(int key, t_img *img)
 	if (LEFT)
 	{
 		t_c3d.crnr -= 0.2;
-		t_c3d.crnr_s = t_c3d.crnr - 0.52;
-		t_c3d.crnr_e = t_c3d.crnr + 0.52;
+		t_c3d.crnr_s = t_c3d.crnr - MMP;
+		t_c3d.crnr_e = t_c3d.crnr + MMP;
 		parse_map(img);
 	}
 //		my_mlx_pixel_put(img, --(img->strt_x), img->strt_y, 0xff0000);
 	if (RIGHT)
 	{
 		t_c3d.crnr += 0.2;
-		t_c3d.crnr_s = t_c3d.crnr - 0.52;
-		t_c3d.crnr_e = t_c3d.crnr + 0.52;
+		t_c3d.crnr_s = t_c3d.crnr - MMP;
+		t_c3d.crnr_e = t_c3d.crnr + MMP;
 		parse_map(img);
 	}
 //		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);

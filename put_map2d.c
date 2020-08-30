@@ -42,6 +42,19 @@ void move_player()
 
 }
 
+void draw_t(t_img *img, double lv, int x)
+{
+//	lv *= cos(t_c3d.crnr - t_c3d.crnr_s);
+	int start = t_c3d.y_r / 2 - (t_c3d.y_r / lv * SZ_PX) / 2;
+	int end = t_c3d.y_r / 2 + (t_c3d.y_r / lv * SZ_PX) / 2;
+	if (start < 0)
+		start = 0;
+	while (start < end && start < t_c3d.y_r)
+	{
+		my_mlx_pixel_put(img, x, start++, 0x00ff00);
+	}
+}
+
 void    parse_map(t_img *img)
 {
     int y;
@@ -77,19 +90,31 @@ void    parse_map(t_img *img)
 		x = 0;
 		y++;
 	}
-	while (t_c3d.crnr_s <= t_c3d.crnr_e)
+	int xx = 0;
+    double step = (M_PI/3)/t_c3d.x_r;
+	while (t_c3d.crnr_s < t_c3d.crnr_e)
 	{
 		while (GAME)
 		{
 			t_c3d.plyr_x = img->strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 			t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 			t_c3d.cf_rcs += 1;
-			if (!ft_strchr("02NSWE", t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)]))
-				break;
 			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);
+			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '1'
+			||
+			t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
+			&& t_c3d.map[(int)((t_c3d.plyr_y + 1) / SZ_PX)][(int)((t_c3d.plyr_x - 1)/ SZ_PX)] == '1'
+			||
+			t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x - 1)/ SZ_PX)] == '1'
+			&& t_c3d.map[(int)((t_c3d.plyr_y + 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
+			)
+				break;
 		}
+		double lv = sqrt(pow(t_c3d.plyr_x - img->strt_x, 2) + pow(t_c3d.plyr_y - img->strt_y, 2));
+		draw_t(img, lv, xx++);
 		t_c3d.cf_rcs = 0;
-		t_c3d.crnr_s += 0.001;
+		t_c3d.crnr_s += step;
 	}
+	printf("dd%d\n", xx);
 	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
 }
