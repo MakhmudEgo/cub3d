@@ -66,8 +66,8 @@ void    parse_map(t_img *img)
             else if (ft_strchr("NSEW", (t_c3d.map)[y][x]) && !t_c3d.orien)
             {
             	t_c3d.orien = (t_c3d.map)[y][x];
-                img->strt_x = x;
-				img->strt_y = y;
+                img->strt_x = x * SZ_PX + (SZ_PX / 2);
+				img->strt_y = y * SZ_PX + (SZ_PX / 2);
 				put_map(x, y, 0xffffff, SZ_PX, img);
 			}
             else if (t_c3d.orien)
@@ -79,15 +79,26 @@ void    parse_map(t_img *img)
 	}
 	while (t_c3d.crnr_s <= t_c3d.crnr_e)
 	{
+		int x = (int)(t_c3d.plyr_x / SZ_PX);
+		int y = (int)(t_c3d.plyr_y / SZ_PX);
+		printf("До:X:%d-Y%d\n", x,y);
 		while (GAME)
 		{
-			t_c3d.plyr_x = img->strt_x * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
-			t_c3d.plyr_y = img->strt_y * SZ_PX + (SZ_PX / 2) + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
-			t_c3d.cf_rcs += 1;
-			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);
-			if ((t_c3d.map)[t_c3d.plyr_y / SZ_PX][t_c3d.plyr_x / SZ_PX] == '1')
+			t_c3d.plyr_x = img->strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+			t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+			t_c3d.cf_rcs += 0.5;
+			x = (int)(t_c3d.plyr_x / SZ_PX);
+			y = (int)(t_c3d.plyr_y / SZ_PX);
+			if (!ft_strchr("02NSWE", t_c3d.map[y][x])
+//			|| t_c3d.map[(int)(floor((t_c3d.plyr_y + 2) / SZ_PX))][(int)(floor((t_c3d.plyr_x + 2) / SZ_PX))] == '1'
+//			&& t_c3d.map[(int)(floor((t_c3d.plyr_y - 2) / SZ_PX))][(int)(floor((t_c3d.plyr_x - 2) / SZ_PX))] == '1'
+			) {
 				break;
+			}
+//			printf("X:%d-Y%d\n", x,y);
+			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);
 		}
+		printf("После:X:%d-Y%d\n", x,y);
 		t_c3d.cf_rcs = 0;
 		t_c3d.crnr_s += 0.01;
 	}

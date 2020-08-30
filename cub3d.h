@@ -18,7 +18,7 @@
 # define E 'E'
 # define W 'W'
 # define GAME 1
-# define SZ_PX 25
+# define SZ_PX 32
 # define UP key == 0x7e || key == 0xd
 # define DOWN key == 0x7d || key == 0x1
 # define LEFT key == 0x7b || key == 0
@@ -47,12 +47,12 @@ struct		s_parsecub3dfile
 	int		f_t;
 	int		c_t;
 	char	orien;
-	short 	plyr_x;
-	short 	plyr_y;
+	double 	plyr_x;
+	double 	plyr_y;
 	double crnr;
 	double crnr_s;
 	double crnr_e;
-	short	cf_rcs;
+	double	cf_rcs;
 	short	tmp_x;
 	short	tmp_y;
 }			t_c3d;
