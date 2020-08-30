@@ -44,7 +44,7 @@ void move_player()
 
 void draw_t(t_img *img, double lv, int x)
 {
-//	lv *= cos(t_c3d.crnr - t_c3d.crnr_s);
+	lv *= cos(t_c3d.crnr - t_c3d.crnr_s);
 	int start = t_c3d.y_r / 2 - (t_c3d.y_r / lv * SZ_PX) / 2;
 	int end = t_c3d.y_r / 2 + (t_c3d.y_r / lv * SZ_PX) / 2;
 	if (start < 0)
@@ -69,22 +69,22 @@ void    parse_map(t_img *img)
         while ((t_c3d.map)[y][x])
         {
             if ((t_c3d.map)[y][x] == '1')
-                put_map(x, y, 0xff0000, SZ_PX, img);
-            else if ((t_c3d.map)[y][x] == '0')
-                put_map(x, y, 0xffffff, SZ_PX, img);
+                put_map(x, y, 0xff0000, SZ_PX/8, img);
+//            else if ((t_c3d.map)[y][x] == '0')
+//                put_map(x, y, 0xffffff, SZ_PX, img);
             else if ((t_c3d.map)[y][x] == '2')
-                put_map(x, y, 0x0000ff, SZ_PX, img);
-            else if ((t_c3d.map)[y][x] == ' ')
-                put_map(x, y, 0x0, SZ_PX, img);
+                put_map(x, y, 0x0000ff, SZ_PX/8, img);
+//            else if ((t_c3d.map)[y][x] == ' ')
+//                put_map(x, y, 0x0, SZ_PX, img);
             else if (ft_strchr("NSEW", (t_c3d.map)[y][x]) && !t_c3d.orien)
             {
             	t_c3d.orien = (t_c3d.map)[y][x];
                 img->strt_x = x * SZ_PX + (SZ_PX / 2);
 				img->strt_y = y * SZ_PX + (SZ_PX / 2);
-				put_map(x, y, 0xffffff, SZ_PX, img);
+//				put_map(x, y, 0xffffff, SZ_PX, img);
 			}
-            else if (t_c3d.orien)
-				put_map(x, y, 0xffffff, SZ_PX, img);
+//            else if (t_c3d.orien)
+//				put_map(x, y, 0xffffff, SZ_PX, img);
 			x++;
         }
 		x = 0;
@@ -92,23 +92,37 @@ void    parse_map(t_img *img)
 	}
 	int xx = 0;
     double step = (M_PI/3)/t_c3d.x_r;
-	while (t_c3d.crnr_s < t_c3d.crnr_e)
+	while (t_c3d.crnr_s < t_c3d.crnr_e - step)
 	{
 		while (GAME)
 		{
 			t_c3d.plyr_x = img->strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 			t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
-			t_c3d.cf_rcs += 1;
-			my_mlx_pixel_put(img, t_c3d.plyr_x, t_c3d.plyr_y, 0xf000f0);
+			t_c3d.cf_rcs += 0.25;
+			my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xf000f0);
 			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '1'
 			||
-			t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
-			&& t_c3d.map[(int)((t_c3d.plyr_y + 1) / SZ_PX)][(int)((t_c3d.plyr_x - 1)/ SZ_PX)] == '1'
+			(t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
+			&& t_c3d.map[(int)((t_c3d.plyr_y + 1) / SZ_PX)][(int)((t_c3d.plyr_x - 1)/ SZ_PX)] == '1')
 			||
-			t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x - 1)/ SZ_PX)] == '1'
-			&& t_c3d.map[(int)((t_c3d.plyr_y + 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
+			(t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x - 1)/ SZ_PX)] == '1'
+			&& t_c3d.map[(int)((t_c3d.plyr_y + 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1')
 			)
+			{
+				if ((t_c3d.map[(int) ((t_c3d.plyr_y - 1) / SZ_PX)][(int) ((t_c3d.plyr_x + 1) / SZ_PX)] == '1'
+					 && t_c3d.map[(int) ((t_c3d.plyr_y + 1) / SZ_PX)][(int) ((t_c3d.plyr_x - 1) / SZ_PX)] == '1')
+					||
+					(t_c3d.map[(int) ((t_c3d.plyr_y - 1) / SZ_PX)][(int) ((t_c3d.plyr_x - 1) / SZ_PX)] == '1'
+					 && t_c3d.map[(int) ((t_c3d.plyr_y + 1) / SZ_PX)][(int) ((t_c3d.plyr_x + 1) / SZ_PX)] == '1'))
+				{
+					t_c3d.cf_rcs += 0.25;
+					t_c3d.plyr_x = img->strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+					t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+					my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xf000f0);
+
+				}
 				break;
+			}
 		}
 		double lv = sqrt(pow(t_c3d.plyr_x - img->strt_x, 2) + pow(t_c3d.plyr_y - img->strt_y, 2));
 		draw_t(img, lv, xx++);
