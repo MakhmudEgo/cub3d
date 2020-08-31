@@ -20,7 +20,7 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void		start(int key, t_img *img)
+int		start(int key, t_img *img)
 {
 /*
  * img->img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
@@ -37,7 +37,7 @@ void		start(int key, t_img *img)
 			img->strt_x += cos(t_c3d.crnr) * 4;
 			img->strt_y += sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - MMP;
-			t_c3d.crnr_e = t_c3d.crnr + MMP;
+//			t_c3d.crnr_e = t_c3d.crnr + MMP;
 			parse_map(img);
 		}
 	}
@@ -49,7 +49,7 @@ void		start(int key, t_img *img)
 			img->strt_x -= cos(t_c3d.crnr) * 4;
 			img->strt_y -= sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - MMP;
-			t_c3d.crnr_e = t_c3d.crnr + MMP;
+//			t_c3d.crnr_e = t_c3d.crnr + MMP;
 			parse_map(img);
 		}
 	}
@@ -74,11 +74,14 @@ void		start(int key, t_img *img)
 	if (key == 0x35)
 		exit(123);
 	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
+	return 1;
 }
+
 
 int main(int argc, char **argv)
 {
 	t_img img;
+
 
 	img.strt_x = 5;
 	img.strt_y = 5;
@@ -87,10 +90,17 @@ int main(int argc, char **argv)
 	t_mlx.mlx = mlx_init();
 	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r, "cub3d");
 	img.img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
-    img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
-    parse_map(&img);
-    mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
-    mlx_hook(t_mlx.wnd, 2, 0L, start, &img);
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
+	parse_map(&img);
+
+	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
+
+
+
+
+
+
+	mlx_hook(t_mlx.wnd, 2, 0L, start, &img);
     mlx_loop(t_mlx.mlx);
 	return (0);
 }

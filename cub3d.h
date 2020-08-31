@@ -18,7 +18,7 @@
 # define E 'E'
 # define W 'W'
 # define GAME 1
-# define SZ_PX 32
+# define SZ_PX 64
 # define UP key == 0x7e || key == 0xd
 # define DOWN key == 0x7d || key == 0x1
 # define LEFT key == 0x7b || key == 0
@@ -65,6 +65,8 @@ typedef struct  s_img
 	int bpp;
 	int l_len;
 	int endian;
+	int w_xpm;
+	int h_xpm;
 	double strt_x;
 	double strt_y;
 } t_img;
