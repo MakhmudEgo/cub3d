@@ -71,6 +71,14 @@ typedef struct  s_img
 	double strt_y;
 } t_img;
 
+struct s_txtr
+{
+	t_img txtr_no;
+	t_img txtr_we;
+	t_img txtr_so;
+	t_img txtr_ea;
+} t_txtr;
+
 struct ha
 {
 	void *mlx;

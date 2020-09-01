@@ -45,32 +45,40 @@ void move_player()
 int		get_xpm_color(t_img *data, int x, int y)
 {
 	char	*dst;
-//	unsigned int		color;
 
 	dst = data->addr + (y * data->l_len + x * (data->bpp / 8));
-
-//	color = dst;
 	return (*(unsigned int*)dst);
 }
 
 void draw_t(t_img *img, double lv, int x)
 {
-	t_img txtr;
-
-	txtr.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.ea_t, &txtr.w_xpm, &txtr.h_xpm);
-	txtr.addr = mlx_get_data_addr(txtr.img, &txtr.bpp, &txtr.l_len, &txtr.endian);
-	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, txtr.img, 0, 0);
-
 	lv *= cos(t_c3d.crnr - t_c3d.crnr_s);
 	int start = t_c3d.y_r / 2 - (t_c3d.y_r / lv * SZ_PX) / 2;
 	int end = t_c3d.y_r / 2 + (t_c3d.y_r / lv * SZ_PX) / 2;
-	if (start < 0)
-		start = 0;
-	double cff = 64.0 / (end - start);
+//	if (start < 0)
+//		start = 0;
+	double cff_ea = (double)t_txtr.txtr_ea.h_xpm / (end - start);
+	double cff_we = (double)t_txtr.txtr_we.h_xpm / (end - start);
+	double cff_so = (double)t_txtr.txtr_we.h_xpm / (end - start);
+	double cff_no = (double)t_txtr.txtr_we.h_xpm / (end - start);
 	int tmp = start;
-	while (start < end && start < t_c3d.y_r)
+	while (start < end && start < t_c3d.y_r)//
 	{
-		my_mlx_pixel_put(img, x, start, get_xpm_color(&txtr, (int)t_c3d.plyr_x % 64, (int)((start - tmp) * cff)));
+		if (start >= 0)
+		{
+			if (t_c3d.map[(int)(t_c3d.plyr_y) / SZ_PX][(int)(t_c3d.plyr_x - 0.25 * cos(t_c3d.crnr_s)) / SZ_PX] == '1')
+			{
+				int i = (int)(t_c3d.plyr_y + 0.25 * sin(t_c3d.crnr_s))/ SZ_PX;
+				int b = (int)(t_c3d.plyr_y) / SZ_PX;
+				if (t_c3d.map[(int)(t_c3d.plyr_y + 10 * sin(t_c3d.crnr_s)) / SZ_PX][(int)(t_c3d.plyr_x) / SZ_PX] == '1')
+					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_ea, (int)t_c3d.plyr_x % t_txtr.txtr_ea.w_xpm, (int)((start - tmp) * cff_ea)));
+				else
+					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_so, (int)t_c3d.plyr_x % t_txtr.txtr_so.w_xpm, (int)((start - tmp) * cff_so)));
+
+			}
+			else
+				my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_we, (int)t_c3d.plyr_y % t_txtr.txtr_we.h_xpm, (int)((start - tmp) * cff_we)));
+		}
 		start++;
 	}
 }
@@ -134,18 +142,18 @@ void    parse_map(t_img *img)
 			 && t_c3d.map[(int)((t_c3d.plyr_y + 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1')
 			)
 			{
-				if ((t_c3d.map[(int) ((t_c3d.plyr_y - 1) / SZ_PX)][(int) ((t_c3d.plyr_x + 1) / SZ_PX)] == '1'
-					 && t_c3d.map[(int) ((t_c3d.plyr_y + 1) / SZ_PX)][(int) ((t_c3d.plyr_x - 1) / SZ_PX)] == '1')
-					||
-					(t_c3d.map[(int) ((t_c3d.plyr_y - 1) / SZ_PX)][(int) ((t_c3d.plyr_x - 1) / SZ_PX)] == '1'
-					 && t_c3d.map[(int) ((t_c3d.plyr_y + 1) / SZ_PX)][(int) ((t_c3d.plyr_x + 1) / SZ_PX)] == '1'))
-				{
-//					t_c3d.cf_rcs += 0.25;
-					t_c3d.plyr_x = img->strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
-					t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
-					my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xf000f0);
-
-				}
+//				if ((t_c3d.map[(int) ((t_c3d.plyr_y - 1) / SZ_PX)][(int) ((t_c3d.plyr_x + 1) / SZ_PX)] == '1'
+//					 && t_c3d.map[(int) ((t_c3d.plyr_y + 1) / SZ_PX)][(int) ((t_c3d.plyr_x - 1) / SZ_PX)] == '1')
+//					||
+//					(t_c3d.map[(int) ((t_c3d.plyr_y - 1) / SZ_PX)][(int) ((t_c3d.plyr_x - 1) / SZ_PX)] == '1'
+//					 && t_c3d.map[(int) ((t_c3d.plyr_y + 1) / SZ_PX)][(int) ((t_c3d.plyr_x + 1) / SZ_PX)] == '1'))
+//				{
+////					t_c3d.cf_rcs += 0.25;
+//					t_c3d.plyr_x = img->strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+//					t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+//					my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xf000f0);
+//
+//				}
 				break;
 			}
 		}

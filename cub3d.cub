@@ -1,8 +1,8 @@
-R     1500       1000
-NO        ./path_to_the_north_texture.xpm
-SO       ./path_to_the_south_texture.xpm
-WE      ./path_to_the_west_texture.xpm
-EA       ../texture/path_to_the_east_texture.xpm
+R     1000       800
+NO        ../texture/orange_stained_glass.xpm
+SO       ../texture/magenta_stained_glass.xpm
+WE      ../texture/orange_stained_glass.xpm
+EA       ../texture/pink_stained_glass.xpm
 S                      ./path_to_the_sprite_texture
 F      220,255,255
 C        255,0,0
@@ -10,8 +10,8 @@ C        255,0,0
         1111111111111111111111111
         1200000000110000000000001
         0011000001110000002000001
-       01001000000000000000000001
-110000001111011000N01110000000000101
+       0100100000000000N000000001
+1100000011110110000001110000000000101
 10000000001100000111011111111101101
 111101111111110111000000122210
 11110111111111011101010010001

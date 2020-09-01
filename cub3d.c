@@ -77,6 +77,26 @@ int		start(int key, t_img *img)
 	return 1;
 }
 
+void	txtr_init()
+{
+/*
+ * t_img txtr;
+
+	txtr.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.ea_t, &txtr.w_xpm, &txtr.h_xpm);
+	txtr.addr = mlx_get_data_addr(txtr.img, &txtr.bpp, &txtr.l_len, &txtr.endian);
+ * */
+	t_txtr.txtr_ea.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.ea_t, &t_txtr.txtr_ea.w_xpm, &t_txtr.txtr_ea.h_xpm);
+	t_txtr.txtr_ea.addr = mlx_get_data_addr(t_txtr.txtr_ea.img, &t_txtr.txtr_ea.bpp, &t_txtr.txtr_ea.l_len, &t_txtr.txtr_ea.endian);
+
+	t_txtr.txtr_no.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.no_t, &t_txtr.txtr_no.w_xpm, &t_txtr.txtr_no.h_xpm);
+	t_txtr.txtr_no.addr = mlx_get_data_addr(t_txtr.txtr_no.img, &t_txtr.txtr_no.bpp, &t_txtr.txtr_no.l_len, &t_txtr.txtr_no.endian);
+
+	t_txtr.txtr_so.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.so_t, &t_txtr.txtr_so.w_xpm, &t_txtr.txtr_so.h_xpm);
+	t_txtr.txtr_so.addr = mlx_get_data_addr(t_txtr.txtr_so.img, &t_txtr.txtr_so.bpp, &t_txtr.txtr_so.l_len, &t_txtr.txtr_so.endian);
+
+	t_txtr.txtr_we.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.we_t, &t_txtr.txtr_we.w_xpm, &t_txtr.txtr_we.h_xpm);
+	t_txtr.txtr_we.addr = mlx_get_data_addr(t_txtr.txtr_we.img, &t_txtr.txtr_we.bpp, &t_txtr.txtr_we.l_len, &t_txtr.txtr_we.endian);
+}
 
 int main(int argc, char **argv)
 {
@@ -88,11 +108,11 @@ int main(int argc, char **argv)
 	(argc != 2) ? exit(45) : printf("фисё окк\n");
 	prs_cub3d(argv[1]);
 	t_mlx.mlx = mlx_init();
+	txtr_init();
 	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r, "cub3d");
 	img.img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
 	parse_map(&img);
-
 	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
 
 
