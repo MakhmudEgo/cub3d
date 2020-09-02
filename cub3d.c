@@ -22,10 +22,6 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 
 int		start(int key, t_img *img)
 {
-/*
- * img->img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
- * img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
- */
 	short x_u = (img->strt_x + cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 	short y_u = (img->strt_y + sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 	short x_d = (img->strt_x - cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
@@ -37,11 +33,9 @@ int		start(int key, t_img *img)
 			img->strt_x += cos(t_c3d.crnr) * 4;
 			img->strt_y += sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - MMP;
-//			t_c3d.crnr_e = t_c3d.crnr + MMP;
 			parse_map(img);
 		}
 	}
-//		my_mlx_pixel_put(img, img->strt_x, --(img->strt_y), 0xff0000);
 	if (DOWN)
 	{
 		if ((t_c3d.map)[y_d / SZ_PX][x_d / SZ_PX] != '1')
@@ -49,11 +43,9 @@ int		start(int key, t_img *img)
 			img->strt_x -= cos(t_c3d.crnr) * 4;
 			img->strt_y -= sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - MMP;
-//			t_c3d.crnr_e = t_c3d.crnr + MMP;
 			parse_map(img);
 		}
 	}
-//		my_mlx_pixel_put(img, img->strt_x, ++(img->strt_y), 0xff0000);
 	if (LEFT)
 	{
 		t_c3d.crnr -= 0.2;
@@ -61,7 +53,6 @@ int		start(int key, t_img *img)
 		t_c3d.crnr_e = t_c3d.crnr + MMP;
 		parse_map(img);
 	}
-//		my_mlx_pixel_put(img, --(img->strt_x), img->strt_y, 0xff0000);
 	if (RIGHT)
 	{
 		t_c3d.crnr += 0.2;
@@ -69,7 +60,6 @@ int		start(int key, t_img *img)
 		t_c3d.crnr_e = t_c3d.crnr + MMP;
 		parse_map(img);
 	}
-//		my_mlx_pixel_put(img, ++(img->strt_x), img->strt_y, 0xff0000);
 	printf("key == %#x\n", key);
 	if (key == 0x35)
 		exit(123);
@@ -79,12 +69,6 @@ int		start(int key, t_img *img)
 
 void	txtr_init()
 {
-/*
- * t_img txtr;
-
-	txtr.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.ea_t, &txtr.w_xpm, &txtr.h_xpm);
-	txtr.addr = mlx_get_data_addr(txtr.img, &txtr.bpp, &txtr.l_len, &txtr.endian);
- * */
 	t_txtr.txtr_ea.img = mlx_xpm_file_to_image(t_mlx.mlx, t_c3d.ea_t, &t_txtr.txtr_ea.w_xpm, &t_txtr.txtr_ea.h_xpm);
 	t_txtr.txtr_ea.addr = mlx_get_data_addr(t_txtr.txtr_ea.img, &t_txtr.txtr_ea.bpp, &t_txtr.txtr_ea.l_len, &t_txtr.txtr_ea.endian);
 
@@ -113,12 +97,6 @@ int main(int argc, char **argv)
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
 	parse_map(&img);
 	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
-
-
-
-
-
-
 	mlx_hook(t_mlx.wnd, 2, 0L, start, &img);
     mlx_loop(t_mlx.mlx);
 	return (0);
