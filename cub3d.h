@@ -71,6 +71,26 @@ typedef struct  s_img
 	double strt_y;
 } t_img;
 
+struct s_coordinatesprite
+{
+	double x;
+	double y;
+	double l_len;
+} t_cr_sprt;
+
+struct s_sprite
+{
+	void *img;
+	char *addr;
+	int bpp;
+	int l_len;
+	int endian;
+	int wdth;
+	int hght;
+} t_sprt;
+
+
+
 struct s_txtr
 {
 	t_img txtr_no;

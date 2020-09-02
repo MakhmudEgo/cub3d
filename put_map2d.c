@@ -82,6 +82,48 @@ void draw_t(t_img *img, double lv, int x)
 		start++;
 	}
 }
+//--------------------------------------sprite----------------------------
+/*void draw_sprite(t_img *img)
+{
+	// абсолютное направление от игрока до спрайта (в радианах)
+	double sprite_dir = atan2(t_cr_sprt.y - img->strt_y, t_cr_sprt.x - img->strt_x);
+	// удаление лишних оборотов
+	double ugol = t_c3d.crnr < 0 ? t_c3d.crnr * -1 : t_c3d.crnr;
+	while (sprite_dir - player.a >  M_PI) sprite_dir -= 2*M_PI;
+	while (sprite_dir - player.a < -M_PI) sprite_dir += 2*M_PI;
+
+	// расстояние от игрока до спрайта
+	double sprite_dist = std::sqrt(pow(player.x - sprite.x, 2) + pow(player.y - sprite.y, 2));
+	size_t sprite_screen_size = std::min(2000, static_cast<int>(fb.h/sprite_dist));
+	// не забывайте, что 3D вид занимает только половину кадрового буфера,
+	// таким образом, fb.w/2 для ширины экрана
+	int h_offset = (sprite_dir - player.a)*(fb.w/2)/(player.fov) + (fb.w/2)/2 - sprite_screen_size/2;
+	int v_offset = fb.h/2 - sprite_screen_size/2;
+
+	for (size_t i=0; i<sprite_screen_size; i++) {
+		if (h_offset+int(i)<0 || h_offset+i>=fb.w/2) continue;
+		for (size_t j=0; j<sprite_screen_size; j++) {
+			if (v_offset+int(j)<0 || v_offset+j>=fb.h) continue;
+			fb.set_pixel(fb.w/2 + h_offset+i, v_offset+j, pack_color(0,0,0));
+		}
+	}
+}
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ //////// for KANAT
+ */
+
+//--------------------------------------sprite----------------------------
 
 void    parse_map(t_img *img)
 {
@@ -142,7 +184,8 @@ void    parse_map(t_img *img)
 			my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xffff66);
 			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '2')
 			{
-				break;
+				t_cr_sprt.x = (int)(t_c3d.plyr_x / SZ_PX) * SZ_PX + (SZ_PX / 2);
+				t_cr_sprt.y = (int)(t_c3d.plyr_y / SZ_PX) * SZ_PX + (SZ_PX / 2);
 			}
 			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '1'
 			||
@@ -163,6 +206,12 @@ void    parse_map(t_img *img)
 		t_c3d.cf_rcs = 0;
 		t_c3d.crnr_s += step;
 	}
+
+
+
+
+
+
 	x = 0;
 	y = 0;
 	while ((t_c3d.map)[y])
