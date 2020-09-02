@@ -1,5 +1,5 @@
 R     1000       800
-NO        ../texture/orange_stained_glass.xpm
+NO        ../texture/lime_stained_glass.xpm
 SO       ../texture/magenta_stained_glass.xpm
 WE      ../texture/orange_stained_glass.xpm
 EA       ../texture/pink_stained_glass.xpm
@@ -10,7 +10,7 @@ C        255,0,0
         1111111111111111111111111
         1200000000110000000000001
         0011000001110000002000001
-       0100100000000000N000000001
+       01001000000N00000000000001
 1100000011110110000001110000000000101
 10000000001100000111011111111101101
 111101111111110111000000122210

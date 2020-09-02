@@ -102,7 +102,6 @@ int main(int argc, char **argv)
 {
 	t_img img;
 
-
 	img.strt_x = 5;
 	img.strt_y = 5;
 	(argc != 2) ? exit(45) : printf("фисё окк\n");
