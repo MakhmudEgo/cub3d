@@ -1,9 +1,9 @@
-R     1000       800
+R     900       800
 NO        ../texture/lime_stained_glass.xpm
 SO       ../texture/magenta_stained_glass.xpm
 WE      ../texture/orange_stained_glass.xpm
 EA       ../texture/pink_stained_glass.xpm
-S                      ./path_to_the_sprite_texture
+S                      .w./path_to_the_sprite_texture
 F      220,255,255
 C        255,0,0
 
