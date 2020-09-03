@@ -29,8 +29,8 @@ void t_cub3d_init()
 	t_c3d.plyr_y = 0x0;
 	t_c3d.cf_rcs = 1;
 	t_c3d.crnr = CRNR;
-	t_c3d.crnr_s = CRNR - MMP;
-	t_c3d.crnr_e = CRNR + MMP;
+	t_c3d.crnr_s = M_PI * 2 - M_PI_6;
+	t_c3d.crnr_e = CRNR + M_PI_6;
 }
 
 int		create_trgb(int t, int r, int g, int b)

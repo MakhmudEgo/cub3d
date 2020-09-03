@@ -24,7 +24,7 @@
 # define LEFT key == 0x7b || key == 0
 # define RIGHT key == 0x7c || key == 0x2
 # define CRNR 0.0
-# define MMP M_PI/6
+# define M_PI_6 (M_PI/6)
 
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"

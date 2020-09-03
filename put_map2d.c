@@ -83,28 +83,27 @@ void draw_t(t_img *img, double lv, int x)
 	}
 }
 //--------------------------------------sprite----------------------------
-/*void draw_sprite(t_img *img)
+void draw_sprite(t_img *img)
 {
 	// абсолютное направление от игрока до спрайта (в радианах)
 	double sprite_dir = atan2(t_cr_sprt.y - img->strt_y, t_cr_sprt.x - img->strt_x);
 	// удаление лишних оборотов
-	double ugol = t_c3d.crnr < 0 ? t_c3d.crnr * -1 : t_c3d.crnr;
-	while (sprite_dir - player.a >  M_PI) sprite_dir -= 2*M_PI;
-	while (sprite_dir - player.a < -M_PI) sprite_dir += 2*M_PI;
+	while (sprite_dir - t_c3d.crnr >  M_PI) sprite_dir -= 2*M_PI;
+	while (sprite_dir - t_c3d.crnr < -M_PI) sprite_dir += 2*M_PI;
 
 	// расстояние от игрока до спрайта
-	double sprite_dist = std::sqrt(pow(player.x - sprite.x, 2) + pow(player.y - sprite.y, 2));
-	size_t sprite_screen_size = std::min(2000, static_cast<int>(fb.h/sprite_dist));
+	double sprite_dist = sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
+	size_t sprite_screen_size = t_c3d.y_r / (int)sprite_dist;
 	// не забывайте, что 3D вид занимает только половину кадрового буфера,
 	// таким образом, fb.w/2 для ширины экрана
-	int h_offset = (sprite_dir - player.a)*(fb.w/2)/(player.fov) + (fb.w/2)/2 - sprite_screen_size/2;
-	int v_offset = fb.h/2 - sprite_screen_size/2;
+	int h_offset = (sprite_dir - t_c3d.crnr)*(t_c3d.x_r/2)/(M_PI / 3) + (t_c3d.x_r/2)/2 - sprite_screen_size/2;
+	int v_offset = t_c3d.y_r/2 - sprite_screen_size/2;
 
 	for (size_t i=0; i<sprite_screen_size; i++) {
-		if (h_offset+int(i)<0 || h_offset+i>=fb.w/2) continue;
+		if (h_offset+(i)<0 || h_offset+i>=t_c3d.x_r/2) continue;
 		for (size_t j=0; j<sprite_screen_size; j++) {
-			if (v_offset+int(j)<0 || v_offset+j>=fb.h) continue;
-			fb.set_pixel(fb.w/2 + h_offset+i, v_offset+j, pack_color(0,0,0));
+			if (v_offset+(j)<0 || v_offset+j>=t_c3d.y_r) continue;
+			my_mlx_pixel_put(img, h_offset+i, v_offset+j, 0x0);
 		}
 	}
 }
@@ -121,7 +120,7 @@ void draw_t(t_img *img, double lv, int x)
  //////// for KANAT
  //////// for KANAT
  //////// for KANAT
- */
+
 
 //--------------------------------------sprite----------------------------
 
@@ -173,8 +172,8 @@ void    parse_map(t_img *img)
 		y++;
 	}
 	int xx = 0;
-    double step = (M_PI/3)/t_c3d.x_r;
-	while (t_c3d.crnr_s < t_c3d.crnr_e - step)
+    double step = 0;
+	while (step < M_PI / 3)
 	{
 		while (GAME)
 		{
@@ -204,7 +203,8 @@ void    parse_map(t_img *img)
 		}
 		draw_t(img, t_c3d.cf_rcs, xx++);
 		t_c3d.cf_rcs = 0;
-		t_c3d.crnr_s += step;
+		t_c3d.crnr_s += (M_PI/3)/t_c3d.x_r;
+		step += (M_PI/3)/t_c3d.x_r;
 	}
 
 
@@ -234,5 +234,6 @@ void    parse_map(t_img *img)
 		y++;
 	}
 	printf("x : %d\n", xx);
+	draw_sprite(img);
 	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
 }
