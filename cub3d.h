@@ -97,6 +97,7 @@ struct s_txtr
 	t_img txtr_we;
 	t_img txtr_so;
 	t_img txtr_ea;
+	t_img txtr_sp;
 } t_txtr;
 
 struct ha

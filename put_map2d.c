@@ -77,6 +77,7 @@ void draw_t(t_img *img, double lv, int x)
 					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_we, (int)t_c3d.plyr_y % t_txtr.txtr_we.h_xpm, (int)((start - tmp) * cff_we)));
 				else
 					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_no, (int)t_c3d.plyr_y % t_txtr.txtr_no.h_xpm, (int)((start - tmp) * cff_no)));
+
 			}
 		}
 		start++;
@@ -93,18 +94,36 @@ void draw_sprite(t_img *img)
 
 	// расстояние от игрока до спрайта
 	double sprite_dist = sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
-	size_t sprite_screen_size = t_c3d.y_r / (int)sprite_dist;
+	size_t sprite_screen_size = t_c3d.y_r/ sprite_dist * 64;
 	// не забывайте, что 3D вид занимает только половину кадрового буфера,
 	// таким образом, fb.w/2 для ширины экрана
-	int h_offset = (sprite_dir - t_c3d.crnr)*(t_c3d.x_r/2)/(M_PI / 3) + (t_c3d.x_r/2)/2 - sprite_screen_size/2;
+	int h_offset = (sprite_dir - t_c3d.crnr)*(t_c3d.x_r)/(M_PI / 3) + (t_c3d.x_r/2)  - sprite_screen_size/2;
 	int v_offset = t_c3d.y_r/2 - sprite_screen_size/2;
 
-	for (size_t i=0; i<sprite_screen_size; i++) {
-		if (h_offset+(i)<0 || h_offset+i>=t_c3d.x_r/2) continue;
+/*	for (size_t i=0; i<sprite_screen_size; i++) {
+//		if (h_offset+(i)<0 || h_offset+i>=t_c3d.x_r/2) continue;
 		for (size_t j=0; j<sprite_screen_size; j++) {
-			if (v_offset+(j)<0 || v_offset+j>=t_c3d.y_r) continue;
+//			if (v_offset+(j)<0 || v_offset+j>=t_c3d.y_r) continue;
+			if(h_offset +)
 			my_mlx_pixel_put(img, h_offset+i, v_offset+j, 0x0);
 		}
+	}*/
+	int color;
+	int i = 0;
+	int j = 0;
+	while (i < sprite_screen_size)
+	{
+		j = 0;
+		while (j<sprite_screen_size)
+		{
+			int x = i * ((double )t_sprt.wdth/(double )sprite_screen_size);
+			int y = j * ((double )t_sprt.hght/(double )sprite_screen_size);
+			color = *(unsigned int*)(t_sprt.addr + (y * t_sprt.l_len + x * (t_sprt.bpp / 8)));
+			if ((h_offset + i >= 0 && h_offset +i < t_c3d.x_r) && (v_offset + j >= 0 && v_offset +j < t_c3d.y_r) && color > 0)
+				my_mlx_pixel_put(img, h_offset+i, v_offset+j, color);
+			j++;
+		}
+		i++;
 	}
 }
  //////// for KANAT
