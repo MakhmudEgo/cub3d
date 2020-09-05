@@ -59,7 +59,7 @@ void	prs_cub3d_fc(char *s, char c)
 	free(tmp);
 }
 
-void prs_cub3d_ass(char *s, t_list *t_map)
+void prs_cub3d_ass(char *s, t_list **t_map)
 {
 	if (*s == 'R')
 	{
@@ -83,7 +83,7 @@ void prs_cub3d_ass(char *s, t_list *t_map)
 	else if(*s == 'F' || *s == 'C')
 		prs_cub3d_fc(ft_strtrim(s + 2, " "), *s);
 	else
-		ft_lstadd_back(&t_map, ft_lstnew(s));
+		ft_lstadd_back(t_map, ft_lstnew(s));
 }
 
 void ft_list_print(void *s)
@@ -101,19 +101,17 @@ void prs_cub3d(char *argv)
 	int fd;
 	t_list *t_map;
 
-	t_map = malloc(sizeof(t_list));
+	t_map = 0x0;
 	t_cub3d_init();
-	t_map->next = 0x0;
-	t_map->content = 0x0;
 	fd = open(argv, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
 		if (*line != '\0')
-			prs_cub3d_ass(line, t_map);
+			prs_cub3d_ass(line, &t_map);
 //		free(line);
 	}
 	if (*line != '\0')
-		prs_cub3d_ass(line, t_map);
+		prs_cub3d_ass(line, &t_map);
 //	ft_lstiter(t_map, ft_list_print);
 
 	create_map(t_map);

@@ -48,8 +48,8 @@ void create_map(t_list *t_map)
 	int i;
 
 	map_size = ft_lstsize(t_map);
-	t_c3d.map = malloc(sizeof(char*) * map_size);
-	t_c3d.map[map_size - 1] = 0x0;
+	t_c3d.map = malloc(sizeof(char*) * map_size + 1);
+	t_c3d.map[map_size] = 0x0;
 	i = 0;
 
 	while (t_map)
@@ -65,7 +65,7 @@ void create_map(t_list *t_map)
 	i = 0;
 	while ((t_c3d.map)[i])
     {
-        map_fill((t_c3d.map)[i], i, map_size - 2, t_c3d.map);
+        map_fill((t_c3d.map)[i], i, map_size - 1, t_c3d.map);
         i++;
     }
 

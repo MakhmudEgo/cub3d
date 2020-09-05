@@ -24,4 +24,6 @@ add_executable(cub3d
         parse_cub3dfile.c
         create_map.c
         put_map2d.c
+        sp_lstadd_back.c
+        sp_lstnew.c
         )
