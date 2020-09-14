@@ -208,10 +208,10 @@ void    parse_map(t_img *img)
 	}
 	int xx = 0;
     double step = 0;
-    t_coors *sprts = 0x0;
+/*    t_coors *sprts = 0x0;
 	t_cr_sprt.w = 0;
 	t_cr_sprt.h = 0;
-	t_cr_sprt.i = 0;
+	t_cr_sprt.i = 0;*/
 	while (step < M_PI / 3)
 	{
 		while (GAME)
@@ -220,7 +220,7 @@ void    parse_map(t_img *img)
 			t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 			t_c3d.cf_rcs += 0.25;
 			my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xffff66);
-			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '2'
+			/*if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '2'
 			&& ((t_cr_sprt.h < (int)(t_c3d.plyr_y / SZ_PX)
 			|| (t_cr_sprt.h == (int)(t_c3d.plyr_y / SZ_PX && t_cr_sprt.w < (int)(t_c3d.plyr_x / SZ_PX)))
 			))
@@ -233,7 +233,7 @@ void    parse_map(t_img *img)
 					t_cr_sprt.sp_d = sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
 					t_cr_sprt.i++;
 					sp_lstadd_back(&sprts, sp_lstnew(t_cr_sprt.x, t_cr_sprt.y, t_cr_sprt.sp_d));
-			}
+			}*/
 			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '1'
 			||
 			(t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
@@ -249,8 +249,8 @@ void    parse_map(t_img *img)
 		t_c3d.crnr_s += (M_PI/3)/t_c3d.x_r;
 		step += (M_PI/3)/t_c3d.x_r;
 	}
-	void **sprites = sp_sortlst(sprts);
-	draw_sprite(sprites, img);
+/*	void **sprites = sp_sortlst(sprts);
+	draw_sprite(sprites, img);*/
 	x = 0;
 	y = 0;
 	while ((t_c3d.map)[y])

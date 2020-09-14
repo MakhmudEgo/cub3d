@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-static void map_fill(char *s, int current, int last, char **ss)
+static void map_fill(char *s, int current, int last, t_coors **sprts )
 {
 	int n;
 	int s_bf;
 	int s_af;
+	char **ss = t_c3d.map;
 
 	n = 0;
     s_bf = current != 0 ? ft_strlen(ss[current - 1]) : 0;
@@ -37,6 +38,8 @@ static void map_fill(char *s, int current, int last, char **ss)
             printf("x%d:y%d\n", current + 1, n + 1);*/
             s[n] = '1';
         }
+		if (s[n] == '2')
+			sp_lstadd_back(sprts, sp_lstnew(n, current, 0));
 	    n++;
     }
     printf("a:%s\n", s);
@@ -46,6 +49,7 @@ void create_map(t_list *t_map)
 {
 	int map_size;
 	int i;
+	t_coors *sprts = 0x0;
 
 	map_size = ft_lstsize(t_map);
 	t_c3d.map = malloc(sizeof(char*) * map_size + 1);
@@ -65,7 +69,7 @@ void create_map(t_list *t_map)
 	i = 0;
 	while ((t_c3d.map)[i])
     {
-        map_fill((t_c3d.map)[i], i, map_size - 1, t_c3d.map);
+        map_fill((t_c3d.map)[i], i, map_size - 1, &sprts);
         i++;
     }
 
