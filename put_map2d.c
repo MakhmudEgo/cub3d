@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 10:59:17 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/23 12:57:21 by mizola           ###   ########.fr       */
+/*   Updated: 2020/09/15 20:22:29 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ void draw_t(t_img *img, double lv, int x)
 	}
 }
 //--------------------------------------sprite----------------------------
-void draw_sprite(void **sprites, t_data *data, double *stn)
+void draw_sprite(void **sprites, t_data *data, double *stn, int n)
 {
 	int t = 0;
-	int n  = 5;
 	// абсолютное направление от игрока до спрайта (в радианах)
 	while (0 <= n)
 	{
@@ -264,7 +263,7 @@ void    parse_map(t_data *data)
 	}
 	get_len_sprts(data->sprts, &data->img);
 	void **sprites = sp_sortlst(data->sprts);
-	draw_sprite(sprites, data, stn);
+	draw_sprite(sprites, data, stn, sp_lstsize(data->sprts) - 1);
 	x = 0;
 	y = 0;
 	while ((t_c3d.map)[y])

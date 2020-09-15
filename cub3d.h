@@ -23,6 +23,8 @@
 # define DOWN key == 0x7d || key == 0x1
 # define LEFT key == 0x7b || key == 0
 # define RIGHT key == 0x7c || key == 0x2
+# define L_RT key == 0xc || key == 0x56
+# define R_RT key == 0xe || key == 0x58
 # define CRNR 0.0
 # define M_PI_6 (M_PI/6)
 

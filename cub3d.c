@@ -48,12 +48,32 @@ int		start(int key, t_data *data)
 	}
 	if (LEFT)
 	{
+		if ((t_c3d.map)[(int)(data->img.strt_y - cos(t_c3d.crnr) * 4)/ SZ_PX][(int)(data->img.strt_x + sin(t_c3d.crnr) * 4) / SZ_PX] != '1')
+		{
+			data->img.strt_x += sin(t_c3d.crnr) * 4;
+			data->img.strt_y -= cos(t_c3d.crnr) * 4;
+			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
+			parse_map(data);
+		}
+	}
+	if (RIGHT)
+	{
+		if ((t_c3d.map)[(int)(data->img.strt_y + cos(t_c3d.crnr) * 4)/ SZ_PX][(int)(data->img.strt_x - sin(t_c3d.crnr) * 4) / SZ_PX] != '1')
+		{
+			data->img.strt_x -= sin(t_c3d.crnr) * 4;
+			data->img.strt_y += cos(t_c3d.crnr) * 4;
+			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
+			parse_map(data);
+		}
+	}
+	if (L_RT)
+	{
 		t_c3d.crnr += (t_c3d.crnr - 0.2 < 0) ? M_PI * 2 - 0.2 : -0.2;
 		t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
 		t_c3d.crnr_e = t_c3d.crnr + M_PI_6;
 		parse_map(data);
 	}
-	if (RIGHT)
+	if (R_RT)
 	{
 		t_c3d.crnr += (t_c3d.crnr + 0.2 > M_PI * 2) ? -t_c3d.crnr + 0.2 : 0.2;
 		t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
