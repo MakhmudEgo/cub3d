@@ -117,11 +117,12 @@ struct ha
 	void *wnd;
 } t_mlx;
 
-void		prs_cub3d(char *argv);
-void		create_map(t_list *t_map);
+void		prs_cub3d(char *argv, t_coors **sprts);
+t_coors		*create_map(t_list *t_map);
 void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
-void		parse_map(t_img *img);
+void		parse_map(t_img *img, t_coors *sprts);
 void		sp_lstadd_back(t_coors **sprts, t_coors *new);
 t_coors		*sp_lstnew(double x, double y, double l_len);
+int	sp_lstsize(t_coors *lst);
 
 #endif

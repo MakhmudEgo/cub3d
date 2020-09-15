@@ -95,7 +95,7 @@ void ft_list_print(void *s)
 	}
 }
 
-void prs_cub3d(char *argv)
+void prs_cub3d(char *argv, t_coors **sprts)
 {
 	char *line;
 	int fd;
@@ -114,6 +114,6 @@ void prs_cub3d(char *argv)
 		prs_cub3d_ass(line, &t_map);
 //	ft_lstiter(t_map, ft_list_print);
 
-	create_map(t_map);
+	*sprts = create_map(t_map);
 //	free(line);
 }

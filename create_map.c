@@ -39,13 +39,13 @@ static void map_fill(char *s, int current, int last, t_coors **sprts )
             s[n] = '1';
         }
 		if (s[n] == '2')
-			sp_lstadd_back(sprts, sp_lstnew(n, current, 0));
+			sp_lstadd_back(sprts, sp_lstnew(n * SZ_PX + (SZ_PX / 2), current * SZ_PX + (SZ_PX / 2), 0));
 	    n++;
     }
     printf("a:%s\n", s);
 }
 
-void create_map(t_list *t_map)
+t_coors *create_map(t_list *t_map)
 {
 	int map_size;
 	int i;
@@ -72,5 +72,5 @@ void create_map(t_list *t_map)
         map_fill((t_c3d.map)[i], i, map_size - 1, &sprts);
         i++;
     }
-
+	return (sprts);
 }

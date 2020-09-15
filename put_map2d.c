@@ -87,7 +87,7 @@ void draw_t(t_img *img, double lv, int x)
 void draw_sprite(void **sprites, t_img *img)
 {
 	int t = 0;
-	t_cr_sprt.i--;
+	t_cr_sprt.i = 3;
 	// абсолютное направление от игрока до спрайта (в радианах)
 	while (0 <= t_cr_sprt.i)
 	{
@@ -126,9 +126,10 @@ void draw_sprite(void **sprites, t_img *img)
 
 void  **sp_sortlst(t_coors *sprts)
 {
-	void	**arr = malloc(sizeof(void *) * t_cr_sprt.i);
+	void	**arr = malloc(sizeof(void *) * sp_lstsize(sprts));
 	int		i;
 	int		j;
+	int		n;
 
 	i = 0;
 	while (sprts && sprts->next)
@@ -138,10 +139,11 @@ void  **sp_sortlst(t_coors *sprts)
 		i++;
 	}
 	arr[i] = sprts;
+	n = i + 1;
 	i = 1;
 	j = 0;
-	while (i < t_cr_sprt.i) {
-		while (j < t_cr_sprt.i-1) {
+	while (i < n) {
+		while (j < n - 1) {
 			if (((t_coors *)(arr[j]))->l_len > ((t_coors *)(arr[j+1]))->l_len)
 			{
 				void *tmp = arr[j];
@@ -156,10 +158,18 @@ void  **sp_sortlst(t_coors *sprts)
 	return (arr);
 }
 
-
+static void get_len_sprts(t_coors *sprts, t_img *img)
+{
+	while (sprts->next)
+	{
+		sprts->l_len = sqrt(pow(img->strt_x - sprts->x, 2) + pow(img->strt_y - sprts->y, 2));
+		sprts = sprts->next;
+	}
+	sprts->l_len = sqrt(pow(img->strt_x - sprts->x, 2) + pow(img->strt_y - sprts->y, 2));
+}
 //--------------------------------------sprite----------------------------
 
-void    parse_map(t_img *img)
+void    parse_map(t_img *img, t_coors *sprts)
 {
     int y;
     int x;
@@ -220,20 +230,6 @@ void    parse_map(t_img *img)
 			t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 			t_c3d.cf_rcs += 0.25;
 			my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xffff66);
-			/*if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '2'
-			&& ((t_cr_sprt.h < (int)(t_c3d.plyr_y / SZ_PX)
-			|| (t_cr_sprt.h == (int)(t_c3d.plyr_y / SZ_PX && t_cr_sprt.w < (int)(t_c3d.plyr_x / SZ_PX)))
-			))
-			)
-			{
-					t_cr_sprt.w = (int)(t_c3d.plyr_x / SZ_PX);
-					t_cr_sprt.h = (int)(t_c3d.plyr_y / SZ_PX);
-					t_cr_sprt.x = (int)(t_c3d.plyr_x / SZ_PX) * SZ_PX + (SZ_PX / 2);
-					t_cr_sprt.y = (int)(t_c3d.plyr_y / SZ_PX) * SZ_PX + (SZ_PX / 2);
-					t_cr_sprt.sp_d = sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
-					t_cr_sprt.i++;
-					sp_lstadd_back(&sprts, sp_lstnew(t_cr_sprt.x, t_cr_sprt.y, t_cr_sprt.sp_d));
-			}*/
 			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '1'
 			||
 			(t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
@@ -249,8 +245,9 @@ void    parse_map(t_img *img)
 		t_c3d.crnr_s += (M_PI/3)/t_c3d.x_r;
 		step += (M_PI/3)/t_c3d.x_r;
 	}
-/*	void **sprites = sp_sortlst(sprts);
-	draw_sprite(sprites, img);*/
+	get_len_sprts(sprts, img);
+	void **sprites = sp_sortlst(sprts);
+	draw_sprite(sprites, img);
 	x = 0;
 	y = 0;
 	while ((t_c3d.map)[y])

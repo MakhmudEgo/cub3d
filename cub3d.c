@@ -20,7 +20,7 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int		start(int key, t_img *img)
+int		start(int key, t_img *img, t_coors *sprts)
 {
 	short x_u = (img->strt_x + cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 	short y_u = (img->strt_y + sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
@@ -33,7 +33,7 @@ int		start(int key, t_img *img)
 			img->strt_x += cos(t_c3d.crnr) * 4;
 			img->strt_y += sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
-			parse_map(img);
+			parse_map(img, sprts);
 		}
 	}
 	if (DOWN)
@@ -43,7 +43,7 @@ int		start(int key, t_img *img)
 			img->strt_x -= cos(t_c3d.crnr) * 4;
 			img->strt_y -= sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
-			parse_map(img);
+			parse_map(img, sprts);
 		}
 	}
 	if (LEFT)
@@ -51,14 +51,14 @@ int		start(int key, t_img *img)
 		t_c3d.crnr += (t_c3d.crnr - 0.2 < 0) ? M_PI * 2 - 0.2 : -0.2;
 		t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
 		t_c3d.crnr_e = t_c3d.crnr + M_PI_6;
-		parse_map(img);
+		parse_map(img, sprts);
 	}
 	if (RIGHT)
 	{
 		t_c3d.crnr += (t_c3d.crnr + 0.2 > M_PI * 2) ? -t_c3d.crnr + 0.2 : 0.2;
 		t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
 		t_c3d.crnr_e = t_c3d.crnr + M_PI_6;
-		parse_map(img);
+		parse_map(img, sprts);
 	}
 	printf("key == %#x\n", key);
 	if (key == 0x35)
@@ -88,15 +88,16 @@ void	txtr_init()
 int main(int argc, char **argv)
 {
 	t_img img;
+	t_coors *sprts;
 
 	(argc != 2) ? exit(45) : printf("фисё окк\n");
-	prs_cub3d(argv[1]);
+	prs_cub3d(argv[1], &sprts);
 	t_mlx.mlx = mlx_init();
 	txtr_init();
 	t_mlx.wnd = mlx_new_window(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r, "cub3d");
 	img.img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
-	parse_map(&img);
+	parse_map(&img, sprts);
 	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img.img, 0, 0);
 	mlx_hook(t_mlx.wnd, 2, 0L, start, &img);
     mlx_loop(t_mlx.mlx);
