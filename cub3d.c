@@ -22,10 +22,10 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 
 int		start(int key, t_data *data)
 {
-	short x_u = (data->img.strt_x + cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
-	short y_u = (data->img.strt_y + sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
-	short x_d = (data->img.strt_x - cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
-	short y_d = (data->img.strt_y - sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+	short x_u = (data->img.strt_x + cos(t_c3d.crnr) * 4);
+	short y_u = (data->img.strt_y + sin(t_c3d.crnr) * 4);
+	short x_d = (data->img.strt_x - cos(t_c3d.crnr) * 4);
+	short y_d = (data->img.strt_y - sin(t_c3d.crnr) * 4);
 	if (UP)
 	{
 		if ((t_c3d.map)[y_u / SZ_PX][x_u / SZ_PX] != '1')

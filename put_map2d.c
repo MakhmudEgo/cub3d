@@ -84,7 +84,7 @@ void draw_t(t_img *img, double lv, int x)
 	}
 }
 //--------------------------------------sprite----------------------------
-void draw_sprite(void **sprites, t_data *data, double *stn, int n)
+void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
 {
 	int t = 0;
 	// абсолютное направление от игрока до спрайта (в радианах)
@@ -232,10 +232,6 @@ void    parse_map(t_data *data)
 	}
 	int vrtl_line = 0;
     double step = 0;
-/*    t_coors *sprts = 0x0;
-	t_cr_sprt.w = 0;
-	t_cr_sprt.h = 0;
-	t_cr_sprt.i = 0;*/
 	double stn[t_c3d.x_r];
 	while (step < M_PI / 3)
 	{
