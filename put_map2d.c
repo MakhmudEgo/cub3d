@@ -84,7 +84,7 @@ void draw_t(t_img *img, double lv, int x)
 	}
 }
 //--------------------------------------sprite----------------------------
-void draw_sprite(void **sprites, t_data *data)
+void draw_sprite(void **sprites, t_data *data, double *stn)
 {
 	int t = 0;
 	int n  = 5;
@@ -109,7 +109,22 @@ void draw_sprite(void **sprites, t_data *data)
 		int j = 0;
 		while (i < sprite_screen_size) {
 			j = 0;
+			if (h_offset+ i <0 || h_offset+i>=t_c3d.x_r)
+			{
+				i++;
+				continue;
+			}
+			if (stn[h_offset + i] < sprite_dist)
+			{
+				i++;
+				continue;
+			}
 			while (j < sprite_screen_size) {
+				if (v_offset+ j < 0 || v_offset+j >= t_c3d.y_r)
+				{
+					j++;
+					continue;
+				}
 				int x = i * ((double) t_sprt.wdth / (double) sprite_screen_size);
 				int y = j * ((double) t_sprt.hght / (double) sprite_screen_size);
 				color = *(unsigned int *) (t_sprt.addr + (y * t_sprt.l_len + x * (t_sprt.bpp / 8)));
@@ -216,12 +231,13 @@ void    parse_map(t_data *data)
 		x = 0;
 		y++;
 	}
-	int xx = 0;
+	int vrtl_line = 0;
     double step = 0;
 /*    t_coors *sprts = 0x0;
 	t_cr_sprt.w = 0;
 	t_cr_sprt.h = 0;
 	t_cr_sprt.i = 0;*/
+	double stn[t_c3d.x_r];
 	while (step < M_PI / 3)
 	{
 		while (GAME)
@@ -240,14 +256,15 @@ void    parse_map(t_data *data)
 			)
 				break;
 		}
-		draw_t(&data->img, t_c3d.cf_rcs, xx++);
+		stn[vrtl_line] = t_c3d.cf_rcs;
+		draw_t(&data->img, t_c3d.cf_rcs, vrtl_line++);
 		t_c3d.cf_rcs = 0;
 		t_c3d.crnr_s += (M_PI/3)/t_c3d.x_r;
 		step += (M_PI/3)/t_c3d.x_r;
 	}
 	get_len_sprts(data->sprts, &data->img);
 	void **sprites = sp_sortlst(data->sprts);
-	draw_sprite(sprites, data);
+	draw_sprite(sprites, data, stn);
 	x = 0;
 	y = 0;
 	while ((t_c3d.map)[y])
@@ -269,6 +286,6 @@ void    parse_map(t_data *data)
 		x = 0;
 		y++;
 	}
-	printf("x : %d\n", xx);
+	printf("x : %d\n", vrtl_line);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.wnd, data->img.img, 0, 0);
 }

@@ -20,18 +20,18 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int		start(int key, t_img *img, t_data *data)
+int		start(int key, t_data *data)
 {
-	short x_u = (img->strt_x + cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
-	short y_u = (img->strt_y + sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
-	short x_d = (img->strt_x - cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
-	short y_d = (img->strt_y - sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+	short x_u = (data->img.strt_x + cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+	short y_u = (data->img.strt_y + sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+	short x_d = (data->img.strt_x - cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+	short y_d = (data->img.strt_y - sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 	if (UP)
 	{
 		if ((t_c3d.map)[y_u / SZ_PX][x_u / SZ_PX] != '1')
 		{
-			img->strt_x += cos(t_c3d.crnr) * 4;
-			img->strt_y += sin(t_c3d.crnr) * 4;
+			data->img.strt_x += cos(t_c3d.crnr) * 4;
+			data->img.strt_y += sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
 			parse_map(data);
 		}
@@ -40,8 +40,8 @@ int		start(int key, t_img *img, t_data *data)
 	{
 		if ((t_c3d.map)[y_d / SZ_PX][x_d / SZ_PX] != '1')
 		{
-			img->strt_x -= cos(t_c3d.crnr) * 4;
-			img->strt_y -= sin(t_c3d.crnr) * 4;
+			data->img.strt_x -= cos(t_c3d.crnr) * 4;
+			data->img.strt_y -= sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
 			parse_map(data);
 		}
