@@ -84,14 +84,14 @@ void draw_t(t_img *img, double lv, int x)
 	}
 }
 //--------------------------------------sprite----------------------------
-void draw_sprite(void **sprites, t_img *img)
+void draw_sprite(void **sprites, t_data *data)
 {
 	int t = 0;
-	int n  = 7;
+	int n  = 5;
 	// абсолютное направление от игрока до спрайта (в радианах)
 	while (0 <= n)
 	{
-		double sprite_dir = atan2(((t_coors *)(sprites[n]))->y - img->strt_y, ((t_coors *)(sprites[n]))->x - img->strt_x);
+		double sprite_dir = atan2(((t_coors *)(sprites[n]))->y - data->img.strt_y, ((t_coors *)(sprites[n]))->x - data->img.strt_x);
 		// удаление лишних оборотов
 		while (sprite_dir - t_c3d.crnr > M_PI) sprite_dir -= 2 * M_PI;
 		while (sprite_dir - t_c3d.crnr < -M_PI) sprite_dir += 2 * M_PI;
@@ -115,7 +115,7 @@ void draw_sprite(void **sprites, t_img *img)
 				color = *(unsigned int *) (t_sprt.addr + (y * t_sprt.l_len + x * (t_sprt.bpp / 8)));
 				if ((h_offset + i >= 0 && h_offset + i < t_c3d.x_r) &&
 					(v_offset + j >= 0 && v_offset + j < t_c3d.y_r) && color > 0)
-					my_mlx_pixel_put(img, h_offset + i, v_offset + j, color);
+					my_mlx_pixel_put(&data->img, h_offset + i, v_offset + j, color);
 				j++;
 			}
 			i++;
@@ -169,18 +169,18 @@ static void get_len_sprts(t_coors *sprts, t_img *img)
 }
 //--------------------------------------sprite----------------------------
 
-void    parse_map(t_img *img, t_coors *sprts, s_data *data)
+void    parse_map(t_data *data)
 {
     int y;
     int x;
 
     y = 0;
     x = 0;
-	img->img = mlx_new_image(data->mlx.mlx, t_c3d.x_r, t_c3d.y_r);
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
+	data->img.img = mlx_new_image(data->mlx.mlx, t_c3d.x_r, t_c3d.y_r);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp, &data->img.l_len, &data->img.endian);
 	while (y < t_c3d.y_r / 2)
 	{
-		my_mlx_pixel_put(img, x, y, 0xffd1d8);
+		my_mlx_pixel_put(&data->img, x, y, 0xffd1d8);
 		if (x == t_c3d.x_r && y < t_c3d.y_r - 1)
 		{
 			x = 0;
@@ -191,7 +191,7 @@ void    parse_map(t_img *img, t_coors *sprts, s_data *data)
 	x = 0;
 	while (y < t_c3d.y_r)
 	{
-		my_mlx_pixel_put(img, x, y, 0x75c1ff);
+		my_mlx_pixel_put(&data->img, x, y, 0x75c1ff);
 		if (x == t_c3d.x_r && y < t_c3d.y_r)
 		{
 			x = 0;
@@ -208,8 +208,8 @@ void    parse_map(t_img *img, t_coors *sprts, s_data *data)
             if (ft_strchr("NSEW", (t_c3d.map)[y][x]) && !t_c3d.orien)
             {
             	t_c3d.orien = (t_c3d.map)[y][x];
-                img->strt_x = x * SZ_PX + (SZ_PX / 2);
-				img->strt_y = y * SZ_PX + (SZ_PX / 2);
+                data->img.strt_x = x * SZ_PX + (SZ_PX / 2);
+				data->img.strt_y = y * SZ_PX + (SZ_PX / 2);
 			}
 			x++;
         }
@@ -226,10 +226,10 @@ void    parse_map(t_img *img, t_coors *sprts, s_data *data)
 	{
 		while (GAME)
 		{
-			t_c3d.plyr_x = img->strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
-			t_c3d.plyr_y = img->strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
+			t_c3d.plyr_x = data->img.strt_x + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
+			t_c3d.plyr_y = data->img.strt_y + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
 			t_c3d.cf_rcs += 0.25;
-			my_mlx_pixel_put(img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xffff66);
+			my_mlx_pixel_put(&data->img, t_c3d.plyr_x/8, t_c3d.plyr_y/8, 0xffff66);
 			if (t_c3d.map[(int)(t_c3d.plyr_y / SZ_PX)][(int)(t_c3d.plyr_x / SZ_PX)] == '1'
 			||
 			(t_c3d.map[(int)((t_c3d.plyr_y - 1) / SZ_PX)][(int)((t_c3d.plyr_x + 1)/ SZ_PX)] == '1'
@@ -240,14 +240,14 @@ void    parse_map(t_img *img, t_coors *sprts, s_data *data)
 			)
 				break;
 		}
-		draw_t(img, t_c3d.cf_rcs, xx++);
+		draw_t(&data->img, t_c3d.cf_rcs, xx++);
 		t_c3d.cf_rcs = 0;
 		t_c3d.crnr_s += (M_PI/3)/t_c3d.x_r;
 		step += (M_PI/3)/t_c3d.x_r;
 	}
-	get_len_sprts(sprts, img);
-	void **sprites = sp_sortlst(sprts);
-	draw_sprite(sprites, img);
+	get_len_sprts(data->sprts, &data->img);
+	void **sprites = sp_sortlst(data->sprts);
+	draw_sprite(sprites, data);
 	x = 0;
 	y = 0;
 	while ((t_c3d.map)[y])
@@ -255,14 +255,14 @@ void    parse_map(t_img *img, t_coors *sprts, s_data *data)
 		while ((t_c3d.map)[y][x])
 		{
 			if ((t_c3d.map)[y][x] == '1')
-				put_map(x, y, 0xffffff, SZ_PX/8, img);
+				put_map(x, y, 0xffffff, SZ_PX/8, &data->img);
 			else if ((t_c3d.map)[y][x] == '2')
-				put_map(x, y, 0x75c1ff, SZ_PX/8, img);
+				put_map(x, y, 0x75c1ff, SZ_PX/8, &data->img);
 			else if (ft_strchr("NSEW", (t_c3d.map)[y][x]) && !t_c3d.orien)
 			{
 				t_c3d.orien = (t_c3d.map)[y][x];
-				img->strt_x = x * SZ_PX + (SZ_PX / 2);
-				img->strt_y = y * SZ_PX + (SZ_PX / 2);
+				data->img.strt_x = x * SZ_PX + (SZ_PX / 2);
+				data->img.strt_y = y * SZ_PX + (SZ_PX / 2);
 			}
 			x++;
 		}
@@ -270,5 +270,5 @@ void    parse_map(t_img *img, t_coors *sprts, s_data *data)
 		y++;
 	}
 	printf("x : %d\n", xx);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.wnd, img->img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.wnd, data->img.img, 0, 0);
 }

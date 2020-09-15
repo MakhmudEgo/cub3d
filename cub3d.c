@@ -20,7 +20,7 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int		start(int key, t_img *img, t_coors *sprts, s_data *data)
+int		start(int key, t_img *img, t_data *data)
 {
 	short x_u = (img->strt_x + cos(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * cos(t_c3d.crnr_s);
 	short y_u = (img->strt_y + sin(t_c3d.crnr) * 4);// + t_c3d.cf_rcs * sin(t_c3d.crnr_s);
@@ -33,7 +33,7 @@ int		start(int key, t_img *img, t_coors *sprts, s_data *data)
 			img->strt_x += cos(t_c3d.crnr) * 4;
 			img->strt_y += sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
-			parse_map(img, sprts, data);
+			parse_map(data);
 		}
 	}
 	if (DOWN)
@@ -43,7 +43,7 @@ int		start(int key, t_img *img, t_coors *sprts, s_data *data)
 			img->strt_x -= cos(t_c3d.crnr) * 4;
 			img->strt_y -= sin(t_c3d.crnr) * 4;
 			t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
-			parse_map(img, sprts, data);
+			parse_map(data);
 		}
 	}
 	if (LEFT)
@@ -51,14 +51,14 @@ int		start(int key, t_img *img, t_coors *sprts, s_data *data)
 		t_c3d.crnr += (t_c3d.crnr - 0.2 < 0) ? M_PI * 2 - 0.2 : -0.2;
 		t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
 		t_c3d.crnr_e = t_c3d.crnr + M_PI_6;
-		parse_map(img, sprts, data);
+		parse_map(data);
 	}
 	if (RIGHT)
 	{
 		t_c3d.crnr += (t_c3d.crnr + 0.2 > M_PI * 2) ? -t_c3d.crnr + 0.2 : 0.2;
 		t_c3d.crnr_s = t_c3d.crnr - M_PI_6;
 		t_c3d.crnr_e = t_c3d.crnr + M_PI_6;
-		parse_map(img, sprts, data);
+		parse_map(data);
 	}
 	printf("key == %#x\n", key);
 	if (key == 0x35)
@@ -66,7 +66,7 @@ int		start(int key, t_img *img, t_coors *sprts, s_data *data)
 	return 1;
 }
 
-void	txtr_init(s_data *data)
+void	txtr_init(t_data *data)
 {
 	t_txtr.txtr_ea.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.ea_t, &t_txtr.txtr_ea.w_xpm, &t_txtr.txtr_ea.h_xpm);
 	t_txtr.txtr_ea.addr = mlx_get_data_addr(t_txtr.txtr_ea.img, &t_txtr.txtr_ea.bpp, &t_txtr.txtr_ea.l_len, &t_txtr.txtr_ea.endian);
@@ -87,20 +87,19 @@ void	txtr_init(s_data *data)
 
 int main(int argc, char **argv)
 {
-	t_img img;
-	t_coors *sprts;
-	s_data data;
+//	t_coors *sprts;
+	t_data data;
 
 	(argc != 2) ? exit(45) : printf("фисё окк\n");
-	prs_cub3d(argv[1], &sprts);
+	prs_cub3d(argv[1], &data.sprts);
 	data.mlx.mlx = mlx_init();
 	txtr_init(&data);
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, t_c3d.x_r, t_c3d.y_r, "cub3d");
-	img.img = mlx_new_image(data.mlx.mlx, t_c3d.x_r, t_c3d.y_r);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.l_len, &img.endian);
-	parse_map(&img, sprts, &data);
-	mlx_put_image_to_window(data.mlx.mlx, data.mlx.wnd, img.img, 0, 0);
-	mlx_hook(data.mlx.wnd, 2, 0L, start, &img);
+	data.img.img = mlx_new_image(data.mlx.mlx, t_c3d.x_r, t_c3d.y_r);
+	data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.l_len, &data.img.endian);
+	parse_map(&data);
+	mlx_put_image_to_window(data.mlx.mlx, data.mlx.wnd, data.img.img, 0, 0);
+	mlx_hook(data.mlx.wnd, 2, 0L, start, &data);
     mlx_loop(data.mlx.mlx);
 	return (0);
 }
