@@ -54,8 +54,6 @@ struct		s_parsecub3dfile
 	double crnr_s;
 	double crnr_e;
 	double	cf_rcs;
-	short	tmp_x;
-	short	tmp_y;
 }			t_c3d;
 
 typedef struct  s_img
@@ -70,16 +68,6 @@ typedef struct  s_img
 	double strt_x;
 	double strt_y;
 } t_img;
-
-struct s_coordinatesprite
-{
-	double x;
-	double y;
-	int w;
-	int h;
-	double sp_d;
-	int i;
-} t_cr_sprt;
 
 typedef struct s_coordisntsprites
 {
@@ -111,16 +99,20 @@ struct s_txtr
 	t_img txtr_sp;
 } t_txtr;
 
-struct ha
+typedef struct s_mlx
 {
 	void *mlx;
 	void *wnd;
 } t_mlx;
 
+typedef struct t_data {
+	t_mlx mlx;
+} s_data;
+
 void		prs_cub3d(char *argv, t_coors **sprts);
 t_coors		*create_map(t_list *t_map);
 void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
-void		parse_map(t_img *img, t_coors *sprts);
+void		parse_map(t_img *img, t_coors *sprts, s_data *data);
 void		sp_lstadd_back(t_coors **sprts, t_coors *new);
 t_coors		*sp_lstnew(double x, double y, double l_len);
 int	sp_lstsize(t_coors *lst);

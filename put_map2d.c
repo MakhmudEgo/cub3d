@@ -87,17 +87,17 @@ void draw_t(t_img *img, double lv, int x)
 void draw_sprite(void **sprites, t_img *img)
 {
 	int t = 0;
-	t_cr_sprt.i = 3;
+	int n  = 7;
 	// абсолютное направление от игрока до спрайта (в радианах)
-	while (0 <= t_cr_sprt.i)
+	while (0 <= n)
 	{
-		double sprite_dir = atan2(((t_coors *)(sprites[t_cr_sprt.i]))->y - img->strt_y, ((t_coors *)(sprites[t_cr_sprt.i]))->x - img->strt_x);
+		double sprite_dir = atan2(((t_coors *)(sprites[n]))->y - img->strt_y, ((t_coors *)(sprites[n]))->x - img->strt_x);
 		// удаление лишних оборотов
 		while (sprite_dir - t_c3d.crnr > M_PI) sprite_dir -= 2 * M_PI;
 		while (sprite_dir - t_c3d.crnr < -M_PI) sprite_dir += 2 * M_PI;
 
 		// расстояние от игрока до спрайта
-		double sprite_dist = ((t_coors *)(sprites[t_cr_sprt.i]))->l_len; //sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
+		double sprite_dist = ((t_coors *)(sprites[n]))->l_len; //sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
 		size_t sprite_screen_size = t_c3d.y_r / sprite_dist * 64;
 		// не забывайте, что 3D вид занимает только половину кадрового буфера,
 		// таким образом, fb.w/2 для ширины экрана
@@ -120,7 +120,7 @@ void draw_sprite(void **sprites, t_img *img)
 			}
 			i++;
 		}
-		t_cr_sprt.i--;
+		n--;
 	}
 }
 
@@ -169,14 +169,14 @@ static void get_len_sprts(t_coors *sprts, t_img *img)
 }
 //--------------------------------------sprite----------------------------
 
-void    parse_map(t_img *img, t_coors *sprts)
+void    parse_map(t_img *img, t_coors *sprts, s_data *data)
 {
     int y;
     int x;
 
     y = 0;
     x = 0;
-	img->img = mlx_new_image(t_mlx.mlx, t_c3d.x_r, t_c3d.y_r);
+	img->img = mlx_new_image(data->mlx.mlx, t_c3d.x_r, t_c3d.y_r);
 	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->l_len, &img->endian);
 	while (y < t_c3d.y_r / 2)
 	{
@@ -270,5 +270,5 @@ void    parse_map(t_img *img, t_coors *sprts)
 		y++;
 	}
 	printf("x : %d\n", xx);
-	mlx_put_image_to_window(t_mlx.mlx, t_mlx.wnd, img->img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.wnd, img->img, 0, 0);
 }
