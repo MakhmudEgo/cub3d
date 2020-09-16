@@ -50,15 +50,15 @@ int		get_xpm_color(t_img *data, int x, int y)
 	return (*(unsigned int*)dst);
 }
 
-void draw_t(t_img *img, double lv, int x)
+void draw_t(t_data *data, double lv, int x)
 {
 	lv *= cos(t_c3d.crnr - t_c3d.crnr_s);
 	int start = t_c3d.y_r / 2 - (t_c3d.y_r / lv * SZ_PX) / 2;
 	int end = t_c3d.y_r / 2 + (t_c3d.y_r / lv * SZ_PX) / 2;
-	double cff_ea = (double)t_txtr.txtr_ea.h_xpm / (end - start);
-	double cff_we = (double)t_txtr.txtr_we.h_xpm / (end - start);
-	double cff_so = (double)t_txtr.txtr_we.h_xpm / (end - start);
-	double cff_no = (double)t_txtr.txtr_we.h_xpm / (end - start);
+	double cff_ea = (double)data->txtr_ea.h_xpm / (end - start);
+	double cff_we = (double)data->txtr_we.h_xpm / (end - start);
+	double cff_so = (double)data->txtr_we.h_xpm / (end - start);
+	double cff_no = (double)data->txtr_we.h_xpm / (end - start);
 	int tmp = start;
 	while (start < end && start < t_c3d.y_r)//
 	{
@@ -67,16 +67,16 @@ void draw_t(t_img *img, double lv, int x)
 			if (t_c3d.map[(int)(t_c3d.plyr_y) / SZ_PX][(int)(t_c3d.plyr_x - 0.25 * cos(t_c3d.crnr_s)) / SZ_PX] == '1')
 			{
 				if (t_c3d.map[(int)(t_c3d.plyr_y + 32) / SZ_PX][(int)(t_c3d.plyr_x) / SZ_PX] == '1')
-					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_ea, (int)t_c3d.plyr_x % t_txtr.txtr_ea.w_xpm, (int)((start - tmp) * cff_ea)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_ea, (int)t_c3d.plyr_x % data->txtr_ea.w_xpm, (int)((start - tmp) * cff_ea)));
 				else
-					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_so, (int)t_c3d.plyr_x % t_txtr.txtr_so.w_xpm, (int)((start - tmp) * cff_so)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_so, (int)t_c3d.plyr_x % data->txtr_so.w_xpm, (int)((start - tmp) * cff_so)));
 			}
 			else
 			{
 				if (t_c3d.map[(int)(t_c3d.plyr_y) / SZ_PX][(int)(t_c3d.plyr_x + 32) / SZ_PX] == '1')
-					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_we, (int)t_c3d.plyr_y % t_txtr.txtr_we.h_xpm, (int)((start - tmp) * cff_we)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_we, (int)t_c3d.plyr_y % data->txtr_we.h_xpm, (int)((start - tmp) * cff_we)));
 				else
-					my_mlx_pixel_put(img, x, start, get_xpm_color(&t_txtr.txtr_no, (int)t_c3d.plyr_y % t_txtr.txtr_no.h_xpm, (int)((start - tmp) * cff_no)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_no, (int)t_c3d.plyr_y % data->txtr_no.h_xpm, (int)((start - tmp) * cff_no)));
 
 			}
 		}
@@ -114,9 +114,9 @@ void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
 			while (++j < sprite_screen_size) {
 				if (v_offset+ j < 0 || v_offset+j >= t_c3d.y_r)
 					continue;
-				int x = i * ((double) t_txtr.txtr_sp.w_xpm / (double) sprite_screen_size);
-				int y = j * ((double) t_txtr.txtr_sp.h_xpm / (double) sprite_screen_size);
-				color = *(unsigned int *) (t_txtr.txtr_sp.addr + (y * t_txtr.txtr_sp.l_len + x * (t_txtr.txtr_sp.bpp / 8)));
+				int x = i * ((double) data->txtr_sp.w_xpm / (double) sprite_screen_size);
+				int y = j * ((double) data->txtr_sp.h_xpm / (double) sprite_screen_size);
+				color = *(unsigned int *) (data->txtr_sp.addr + (y * data->txtr_sp.l_len + x * (data->txtr_sp.bpp / 8)));
 				if ((h_offset + i >= 0 && h_offset + i < t_c3d.x_r) &&
 					(v_offset + j >= 0 && v_offset + j < t_c3d.y_r) && color > 0)
 					my_mlx_pixel_put(&data->img, h_offset + i, v_offset + j, color);
@@ -240,7 +240,7 @@ void    parse_map(t_data *data)
 				break;
 		}
 		stn[vrtl_line] = t_c3d.cf_rcs;
-		draw_t(&data->img, t_c3d.cf_rcs, vrtl_line++);
+		draw_t(data, t_c3d.cf_rcs, vrtl_line++);
 		t_c3d.cf_rcs = 0;
 		t_c3d.crnr_s += (M_PI/3)/t_c3d.x_r;
 		step += (M_PI/3)/t_c3d.x_r;

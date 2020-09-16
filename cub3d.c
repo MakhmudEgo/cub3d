@@ -88,20 +88,20 @@ int		start(int key, t_data *data)
 
 void	txtr_init(t_data *data)
 {
-	t_txtr.txtr_ea.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.ea_t, &t_txtr.txtr_ea.w_xpm, &t_txtr.txtr_ea.h_xpm);
-	t_txtr.txtr_ea.addr = mlx_get_data_addr(t_txtr.txtr_ea.img, &t_txtr.txtr_ea.bpp, &t_txtr.txtr_ea.l_len, &t_txtr.txtr_ea.endian);
+	data->txtr_ea.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.ea_t, &data->txtr_ea.w_xpm, &data->txtr_ea.h_xpm);
+	data->txtr_ea.addr = mlx_get_data_addr(data->txtr_ea.img, &data->txtr_ea.bpp, &data->txtr_ea.l_len, &data->txtr_ea.endian);
 
-	t_txtr.txtr_no.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.no_t, &t_txtr.txtr_no.w_xpm, &t_txtr.txtr_no.h_xpm);
-	t_txtr.txtr_no.addr = mlx_get_data_addr(t_txtr.txtr_no.img, &t_txtr.txtr_no.bpp, &t_txtr.txtr_no.l_len, &t_txtr.txtr_no.endian);
+	data->txtr_no.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.no_t, &data->txtr_no.w_xpm, &data->txtr_no.h_xpm);
+	data->txtr_no.addr = mlx_get_data_addr(data->txtr_no.img, &data->txtr_no.bpp, &data->txtr_no.l_len, &data->txtr_no.endian);
 
-	t_txtr.txtr_so.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.so_t, &t_txtr.txtr_so.w_xpm, &t_txtr.txtr_so.h_xpm);
-	t_txtr.txtr_so.addr = mlx_get_data_addr(t_txtr.txtr_so.img, &t_txtr.txtr_so.bpp, &t_txtr.txtr_so.l_len, &t_txtr.txtr_so.endian);
+	data->txtr_so.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.so_t, &data->txtr_so.w_xpm, &data->txtr_so.h_xpm);
+	data->txtr_so.addr = mlx_get_data_addr(data->txtr_so.img, &data->txtr_so.bpp, &data->txtr_so.l_len, &data->txtr_so.endian);
 
-	t_txtr.txtr_we.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.we_t, &t_txtr.txtr_we.w_xpm, &t_txtr.txtr_we.h_xpm);
-	t_txtr.txtr_we.addr = mlx_get_data_addr(t_txtr.txtr_we.img, &t_txtr.txtr_we.bpp, &t_txtr.txtr_we.l_len, &t_txtr.txtr_we.endian);
+	data->txtr_we.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.we_t, &data->txtr_we.w_xpm, &data->txtr_we.h_xpm);
+	data->txtr_we.addr = mlx_get_data_addr(data->txtr_we.img, &data->txtr_we.bpp, &data->txtr_we.l_len, &data->txtr_we.endian);
 
-	t_txtr.txtr_sp.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.sp_t, &t_txtr.txtr_sp.w_xpm, &t_txtr.txtr_sp.h_xpm);
-	t_txtr.txtr_sp.addr = mlx_get_data_addr(t_txtr.txtr_sp.img, &t_txtr.txtr_sp.bpp, &t_txtr.txtr_sp.l_len, &t_txtr.txtr_sp.endian);
+	data->txtr_sp.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.sp_t, &data->txtr_sp.w_xpm, &data->txtr_sp.h_xpm);
+	data->txtr_sp.addr = mlx_get_data_addr(data->txtr_sp.img, &data->txtr_sp.bpp, &data->txtr_sp.l_len, &data->txtr_sp.endian);
 
 }
 

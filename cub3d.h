@@ -90,17 +90,6 @@ typedef struct s_sprite
 	int hght;
 } t_sprt;
 
-
-
-struct s_txtr
-{
-	t_img txtr_no;
-	t_img txtr_we;
-	t_img txtr_so;
-	t_img txtr_ea;
-	t_img txtr_sp;
-} t_txtr;
-
 typedef struct s_mlx
 {
 	void *mlx;
@@ -111,7 +100,12 @@ typedef struct s_data {
 	t_mlx mlx;
 	t_img img;
 	t_coors *sprts;
-	t_sprt sp_txtr;
+//	t_sprt sp_txtr;
+	t_img txtr_no;
+	t_img txtr_we;
+	t_img txtr_so;
+	t_img txtr_ea;
+	t_img txtr_sp;
 } t_data;
 
 void		prs_cub3d(char *argv, t_coors **sprts);
