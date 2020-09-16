@@ -86,7 +86,6 @@ void draw_t(t_img *img, double lv, int x)
 //--------------------------------------sprite----------------------------
 void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
 {
-	int t = 0;
 	// абсолютное направление от игрока до спрайта (в радианах)
 	while (0 <= n)
 	{
@@ -104,35 +103,24 @@ void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
 		int v_offset = t_c3d.y_r / 2 - sprite_screen_size / 2;
 
 		int color;
-		int i = 0;
-		int j = 0;
-		while (i < sprite_screen_size) {
-			j = 0;
+		int i = -1;
+		int j = -1;
+		while (++i < sprite_screen_size) {
+			j = -1;
 			if (h_offset+ i <0 || h_offset+i>=t_c3d.x_r)
-			{
-				i++;
 				continue;
-			}
 			if (stn[h_offset + i] < sprite_dist)
-			{
-				i++;
 				continue;
-			}
-			while (j < sprite_screen_size) {
+			while (++j < sprite_screen_size) {
 				if (v_offset+ j < 0 || v_offset+j >= t_c3d.y_r)
-				{
-					j++;
 					continue;
-				}
-				int x = i * ((double) t_sprt.wdth / (double) sprite_screen_size);
-				int y = j * ((double) t_sprt.hght / (double) sprite_screen_size);
-				color = *(unsigned int *) (t_sprt.addr + (y * t_sprt.l_len + x * (t_sprt.bpp / 8)));
+				int x = i * ((double) t_txtr.txtr_sp.w_xpm / (double) sprite_screen_size);
+				int y = j * ((double) t_txtr.txtr_sp.h_xpm / (double) sprite_screen_size);
+				color = *(unsigned int *) (t_txtr.txtr_sp.addr + (y * t_txtr.txtr_sp.l_len + x * (t_txtr.txtr_sp.bpp / 8)));
 				if ((h_offset + i >= 0 && h_offset + i < t_c3d.x_r) &&
 					(v_offset + j >= 0 && v_offset + j < t_c3d.y_r) && color > 0)
 					my_mlx_pixel_put(&data->img, h_offset + i, v_offset + j, color);
-				j++;
 			}
-			i++;
 		}
 		n--;
 	}

@@ -100,8 +100,8 @@ void	txtr_init(t_data *data)
 	t_txtr.txtr_we.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.we_t, &t_txtr.txtr_we.w_xpm, &t_txtr.txtr_we.h_xpm);
 	t_txtr.txtr_we.addr = mlx_get_data_addr(t_txtr.txtr_we.img, &t_txtr.txtr_we.bpp, &t_txtr.txtr_we.l_len, &t_txtr.txtr_we.endian);
 
-	t_sprt.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.sp_t, &t_sprt.wdth, &t_sprt.hght);
-	t_sprt.addr = mlx_get_data_addr(t_sprt.img, &t_sprt.bpp, &t_sprt.l_len, &t_sprt.endian);
+	t_txtr.txtr_sp.img = mlx_xpm_file_to_image(data->mlx.mlx, t_c3d.sp_t, &t_txtr.txtr_sp.w_xpm, &t_txtr.txtr_sp.h_xpm);
+	t_txtr.txtr_sp.addr = mlx_get_data_addr(t_txtr.txtr_sp.img, &t_txtr.txtr_sp.bpp, &t_txtr.txtr_sp.l_len, &t_txtr.txtr_sp.endian);
 
 }
 

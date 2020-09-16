@@ -79,7 +79,7 @@ typedef struct s_coordisntsprites
 	struct s_coordisntsprites *next;
 } t_coors;
 
-struct s_sprite
+typedef struct s_sprite
 {
 	void *img;
 	char *addr;
@@ -111,6 +111,7 @@ typedef struct s_data {
 	t_mlx mlx;
 	t_img img;
 	t_coors *sprts;
+	t_sprt sp_txtr;
 } t_data;
 
 void		prs_cub3d(char *argv, t_coors **sprts);
