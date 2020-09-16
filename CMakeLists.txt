@@ -27,4 +27,5 @@ add_executable(cub3d
         sp_lstadd_back.c
         sp_lstnew.c
         sp_lstsize.c
+        libft/ft_strncmp.c
         )

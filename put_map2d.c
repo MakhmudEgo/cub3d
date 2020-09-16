@@ -182,7 +182,7 @@ void    parse_map(t_data *data)
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp, &data->img.l_len, &data->img.endian);
 	while (y < t_c3d.y_r / 2)
 	{
-		my_mlx_pixel_put(&data->img, x, y, 0xffd1d8);
+		my_mlx_pixel_put(&data->img, x, y, t_c3d.c_t);//0xffd1d8
 		if (x == t_c3d.x_r && y < t_c3d.y_r - 1)
 		{
 			x = 0;
@@ -193,7 +193,7 @@ void    parse_map(t_data *data)
 	x = 0;
 	while (y < t_c3d.y_r)
 	{
-		my_mlx_pixel_put(&data->img, x, y, 0x75c1ff);
+		my_mlx_pixel_put(&data->img, x, y, t_c3d.f_t);//0x75c1ff
 		if (x == t_c3d.x_r && y < t_c3d.y_r)
 		{
 			x = 0;

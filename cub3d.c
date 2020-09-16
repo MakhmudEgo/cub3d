@@ -105,13 +105,21 @@ void	txtr_init(t_data *data)
 
 }
 
+void check_arg_exp(char **s, int argc)
+{
+	if (argc == 3)
+		(!ft_strncmp(s[1], s[2], 6) ||  ft_strlen(s[2]) != 6) ? exit(77) : write(1, "exp norm!\n", 10);
+//	ft_strnstr()
+	printf("фисё окк\n");
+}
+
 int main(int argc, char **argv)
 {
-//	t_coors *sprts;
 	t_data data;
 
-	(argc != 2) ? exit(45) : printf("фисё окк\n");
-	prs_cub3d(argv[1], &data.sprts);
+	(argc < 2 || argc > 3) ? exit(45) : check_arg_exp(argv, argc);
+	(prs_cub3d(argv[1], &data.sprts) ? exit(55) : write(1, "фисе ок1\n", 9));
+
 	data.mlx.mlx = mlx_init();
 	txtr_init(&data);
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, t_c3d.x_r, t_c3d.y_r, "cub3d");

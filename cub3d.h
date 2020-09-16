@@ -79,17 +79,6 @@ typedef struct s_coordisntsprites
 	struct s_coordisntsprites *next;
 } t_coors;
 
-typedef struct s_sprite
-{
-	void *img;
-	char *addr;
-	int bpp;
-	int l_len;
-	int endian;
-	int wdth;
-	int hght;
-} t_sprt;
-
 typedef struct s_mlx
 {
 	void *mlx;
@@ -100,7 +89,6 @@ typedef struct s_data {
 	t_mlx mlx;
 	t_img img;
 	t_coors *sprts;
-//	t_sprt sp_txtr;
 	t_img txtr_no;
 	t_img txtr_we;
 	t_img txtr_so;
@@ -108,7 +96,7 @@ typedef struct s_data {
 	t_img txtr_sp;
 } t_data;
 
-void		prs_cub3d(char *argv, t_coors **sprts);
+int		prs_cub3d(char *argv, t_coors **sprts);
 t_coors		*create_map(t_list *t_map);
 void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void		parse_map(t_data *data);

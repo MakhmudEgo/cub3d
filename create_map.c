@@ -24,18 +24,22 @@ static void map_fill(char *s, int current, int last, t_coors **sprts )
 
     while (s[n])
     {
-	    if (s[n] == '0' &&
+	    if ((s[n] == '0' || s[n] == 'N') &&
             (current == 0 || current == last
             || s_bf <= n || s_af <= n
             || (n != 0 && s[n - 1] == ' ') || s[n + 1] == ' '
             || s[n + 1] == '\0' || n == 0
             || (current < last && ss[current + 1][n] == ' ')
-            || (s_bf >= n && ss[current - 1][n] == ' ')))
+            || (s_bf >= n && ss[current - 1][n] == ' '))
+            || s[0] == '\n'
+            || !ft_strchr("12 0NWES", s[n]))
         {
 	        /*printf("ИИ Джесика Молодец! нашла ошибку в карте и исправила\n"
                 "в строке %d\n"
                 "Символ %d\n", current, n);
             printf("x%d:y%d\n", current + 1, n + 1);*/
+	        write(1, "запихни нормальную карту\n", 50);
+	        exit(66);
             s[n] = '1';
         }
 		if (s[n] == '2')

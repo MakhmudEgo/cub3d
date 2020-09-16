@@ -86,16 +86,7 @@ void prs_cub3d_ass(char *s, t_list **t_map)
 		ft_lstadd_back(t_map, ft_lstnew(s));
 }
 
-void ft_list_print(void *s)
-{
-	if (s)
-	{
-		write(1, s, ft_strlen(s));
-		write(1, "\n", 1);
-	}
-}
-
-void prs_cub3d(char *argv, t_coors **sprts)
+int prs_cub3d(char *argv, t_coors **sprts)
 {
 	char *line;
 	int fd;
@@ -108,12 +99,9 @@ void prs_cub3d(char *argv, t_coors **sprts)
 	{
 		if (*line != '\0')
 			prs_cub3d_ass(line, &t_map);
-//		free(line);
 	}
 	if (*line != '\0')
 		prs_cub3d_ass(line, &t_map);
-//	ft_lstiter(t_map, ft_list_print);
-
 	*sprts = create_map(t_map);
-//	free(line);
+	return 0;
 }
