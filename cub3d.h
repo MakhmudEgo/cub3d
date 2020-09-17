@@ -67,8 +67,6 @@ typedef struct  s_img
 	int endian;
 	int w_xpm;
 	int h_xpm;
-	double strt_x;
-	double strt_y;
 } t_img;
 
 typedef struct s_coordisntsprites
@@ -94,6 +92,8 @@ typedef struct s_data {
 	t_img txtr_so;
 	t_img txtr_ea;
 	t_img txtr_sp;
+	double strt_x;
+	double strt_y;
 } t_data;
 
 int		prs_cub3d(char *argv, t_coors **sprts);
