@@ -24,15 +24,16 @@ static void map_fill(char *s, int current, int last, t_coors **sprts )
 
     while (s[n])
     {
-	    if ((s[n] == '0' || s[n] == 'N') &&
+	    if (((s[n] == '0' || s[n] == 'N') &&
             (current == 0 || current == last
             || s_bf <= n || s_af <= n
             || (n != 0 && s[n - 1] == ' ') || s[n + 1] == ' '
             || s[n + 1] == '\0' || n == 0
             || (current < last && ss[current + 1][n] == ' ')
-            || (s_bf >= n && ss[current - 1][n] == ' '))
-            || s[0] == '\n'
-            || !ft_strchr("12 0NWES", s[n]))
+            || (s_bf >= n && ss[current - 1][n] == ' ')))
+            || !ft_strchr("12 0NWES", s[n])
+            || (current != last && ss[current + 1][0] == '\0')
+            )
         {
 	        /*printf("ИИ Джесика Молодец! нашла ошибку в карте и исправила\n"
                 "в строке %d\n"
@@ -46,7 +47,7 @@ static void map_fill(char *s, int current, int last, t_coors **sprts )
 			sp_lstadd_back(sprts, sp_lstnew(n * SZ_PX + (SZ_PX / 2), current * SZ_PX + (SZ_PX / 2), 0));
 	    n++;
     }
-    printf("a:%s\n", s);
+    printf("n = %d:|%s|\n", current, s);
 }
 
 t_coors *create_map(t_list *t_map)

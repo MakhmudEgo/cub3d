@@ -58,12 +58,36 @@ void	prs_cub3d_fc(char *s, char c)
 		t_c3d.c_t = create_trgb(0, r, g, b);
 	free(tmp);
 }
+static void is_valid_data(const char *s)
+{
+	int i;
+	int n;
 
+	i = -1;
+	while (s && s[++i])
+	{
+		if ((s[i] < '0' || s[i] > '9') && s[i] != ' ')
+			exit(22);
+	}
+	i = -1;
+	n = 0;
+	while (s && s[i] && s[++i])
+	{
+		if (s[i] && s[i] != ' ')
+		{
+			while (s[i] && s[i] != ' ')
+				i++;
+			n++;
+		}
+	}
+	(n != 2 ? exit(22) : write(1, "screen size ok22\n", 17));
+}
 void prs_cub3d_ass(char *s, t_list **t_map)
 {
 	if (*s == 'R')
 	{
-		t_c3d.x_r = ft_atoi(++s);
+		is_valid_data(++s);
+		t_c3d.x_r = ft_atoi(s);
 		while (s && *s == ' ' && *s != '\0')
 			s++;
 		while (s && *s != ' ' && *s != '\0')
@@ -97,7 +121,7 @@ int prs_cub3d(char *argv, t_coors **sprts)
 	fd = open(argv, O_RDONLY);
 	while (get_next_line(fd, &line))
 	{
-		if (*line != '\0')
+		if (*line != '\0' || (*line == '\0' && t_map))
 			prs_cub3d_ass(line, &t_map);
 	}
 	if (*line != '\0')
