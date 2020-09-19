@@ -103,25 +103,25 @@ void	txtr_init(t_data *data)
 
 }
 
-void check_arg_exp(char **s, int argc)
+void check_arg_exp(char **s, int argc, t_data *data)
 {
 	if (argc == 3)
-		(!ft_strncmp(s[1], s[2], 6) ||  ft_strlen(s[2]) != 6) ? exit(77) : write(1, "arg --save norm!\n", 17);
+		(!ft_strncmp(s[1], s[2], 6) ||  ft_strlen(s[2]) != 6) ? exit_notify("No valid argv\n", 77) : 0;
 	if ((ft_strlen(s[1]) < 5) || ft_strncmp(&s[1][ft_strlen(s[1]) - 4], ".cub", 4))
-		exit(98);
-	write(1, "exp .cub norm!\n", 15);
+		exit_notify("No valid exp .cub\n", 55);
+	data->scrn = argc == 3 ? 1 : 0;
 }
 
 int main(int argc, char **argv)
 {
 	t_data data;
 
-	(argc < 2 || argc > 3) ? exit(45) : check_arg_exp(argv, argc);
-	(prs_cub3d(argv[1], &data) ? exit(55) : write(1, "фисе ок1\n", 9));
+	(argc < 2 || argc > 3) ? exit_notify("No valid argc\n", 55) : check_arg_exp(argv, argc, &data);
+	prs_cub3d(argv[1], &data) ? exit_notify("No valid arg\n", 55) : 0;
 	data.mlx.mlx = mlx_init();
 	txtr_init(&data);
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, data.x_r, data.y_r, "cub3d");
-	data.img.img = mlx_new_image(data.mlx.mlx, data.x_r, data.y_r);
+	!(data.img.img = mlx_new_image(data.mlx.mlx, data.x_r, data.y_r)) ? exit_notify("No Image\n", 11) : 0;
 	data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.l_len, &data.img.endian);
 	parse_map(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.wnd, data.img.img, 0, 0);

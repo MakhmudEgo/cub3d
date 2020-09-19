@@ -74,6 +74,9 @@ typedef struct s_data {
 	double strt_x;
 	double strt_y;
 
+	t_list *t_map;
+	void **sprites;
+
 	char	**map;
 	int		x_r;
 	int		y_r;
@@ -91,6 +94,7 @@ typedef struct s_data {
 	double	crnr_s;
 	double	cf_rcs;
 	int		plyr;
+	int		scrn;
 } t_data;
 
 int		prs_cub3d(char *argv, t_data *data);

@@ -80,16 +80,16 @@ void draw_wall(t_data *data, double lv, int x)
 			if (data->map[(int)(data->plyr_y) / SZ_PX][(int)(data->plyr_x - 0.25 * cos(data->crnr_s)) / SZ_PX] == '1')
 			{
 				if (data->map[(int)(data->plyr_y + 32) / SZ_PX][(int)(data->plyr_x) / SZ_PX] == '1')
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_so, (int)data->plyr_x * (data->txtr_so.w_xpm / 64) % data->txtr_so.w_xpm, (int)((start - tmp) * cff_so)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_so, (int)data->plyr_x * (data->txtr_so.w_xpm / SZ_PX) % data->txtr_so.w_xpm, (int)((start - tmp) * cff_so)));
 				else
-					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_no, (int)data->plyr_x * (data->txtr_no.w_xpm / 64) % data->txtr_no.w_xpm, (int)((start - tmp) * cff_no)));
+					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_no, (int)data->plyr_x * (data->txtr_no.w_xpm / SZ_PX) % data->txtr_no.w_xpm, (int)((start - tmp) * cff_no)));
 			}
 			else
 			{
 				if (data->map[(int)(data->plyr_y) / SZ_PX][(int)(data->plyr_x + 32) / SZ_PX] == '1')
-					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_ea, (int)data->plyr_y * (data->txtr_ea.w_xpm / 64) % data->txtr_ea.h_xpm, (int)((start - tmp) * cff_ea)));
+					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_ea, (int)data->plyr_y * (data->txtr_ea.w_xpm / SZ_PX) % data->txtr_ea.h_xpm, (int)((start - tmp) * cff_ea)));
 				else
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_we, (int)data->plyr_y * (data->txtr_we.w_xpm / 64) % data->txtr_we.h_xpm, (int)((start - tmp) * cff_we)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_we, (int)data->plyr_y * (data->txtr_we.w_xpm / SZ_PX) % data->txtr_we.h_xpm, (int)((start - tmp) * cff_we)));
 			}
 		}
 		start++;
@@ -260,8 +260,8 @@ void    parse_map(t_data *data)
 		step += (M_PI/3)/data->x_r;
 	}
 	get_len_sprts(data);
-	void **sprites = sp_sortlst(data->sprts);
-	draw_sprite(sprites, data, stn, sp_lstsize(data->sprts) - 1);
+	data->sprites = sp_sortlst(data->sprts);
+	draw_sprite(data->sprites, data, stn, sp_lstsize(data->sprts) - 1);
 	x = 0;
 	y = 0;
 	while ((data->map)[y])

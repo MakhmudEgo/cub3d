@@ -31,6 +31,8 @@ void t_data_init(t_data *data)
 	data->crnr = CRNR;
 	data->crnr_s = M_PI * 2 - M_PI_6;
 	data->plyr = 0;
+	data->t_map = 0x0;
+	data->sprites = 0x0;
 }
 
 int		create_trgb(int t, int r, int g, int b)
@@ -40,8 +42,8 @@ int		create_trgb(int t, int r, int g, int b)
 
 void exit_notify(char *s, int code)
 {
-	write(1, "Error\n", 6);
-	write(1, s, ft_strlen(s));
+	write(2, "Error\n", 6);
+	write(2, s, ft_strlen(s));
 	exit(code);
 }
 
@@ -130,19 +132,19 @@ int prs_cub3d(char *argv, t_data *data)
 {
 	char *line;
 	int fd;
-	t_list *t_map;
+	int n;
 
-	t_map = 0x0;
 	t_data_init(data);
 	fd = open(argv, O_RDONLY);
-	while (get_next_line(fd, &line))
+	while ((n = get_next_line(fd, &line)) > 0)
 	{
-		if (*line != '\0' || (*line == '\0' && t_map))
-			prs_cub3d_ass(line, &t_map, data);
+		if (*line != '\0' || (*line == '\0' && data->t_map))
+			prs_cub3d_ass(line, &data->t_map, data);
 	}
+	n == -1 ? exit_notify("no valid file\n", 98) : 0;
 	if (*line != '\0')
-		prs_cub3d_ass(line, &t_map, data);
-	create_map(t_map, data);
+		prs_cub3d_ass(line, &data->t_map, data);
+	create_map(data->t_map, data);
 	data->plyr != 1 ? exit_notify("No Player\n", 12) : 0;
 	return 0;
 }
