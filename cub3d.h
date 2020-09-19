@@ -87,9 +87,10 @@ typedef struct s_data {
 	char	orien;
 	double 	plyr_x;
 	double 	plyr_y;
-	double crnr;
-	double crnr_s;
+	double	crnr;
+	double	crnr_s;
 	double	cf_rcs;
+	int		plyr;
 } t_data;
 
 int		prs_cub3d(char *argv, t_data *data);
@@ -98,6 +99,7 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void		parse_map(t_data *data);
 void		sp_lstadd_back(t_coors **sprts, t_coors *new);
 t_coors		*sp_lstnew(double x, double y, double l_len);
-int	sp_lstsize(t_coors *lst);
+int			sp_lstsize(t_coors *lst);
+void		exit_notify(char *s, int code);
 
 #endif

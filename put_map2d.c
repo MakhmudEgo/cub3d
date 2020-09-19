@@ -283,6 +283,5 @@ void    parse_map(t_data *data)
 		x = 0;
 		y++;
 	}
-	printf("x : %d\n", vrtl_line);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.wnd, data->img.img, 0, 0);
 }

@@ -24,7 +24,8 @@ static void map_fill(char *s, int current, int last, t_data *data)
 
     while (s[n])
     {
-	    if (((s[n] == '0' || s[n] == 'N') &&
+		data->plyr += (ft_strchr("NWES", s[n]) ? 1 : 0);
+		if (((s[n] == '0' || s[n] == 'N') &&
             (current == 0 || current == last
             || s_bf <= n || s_af <= n
             || (n != 0 && s[n - 1] == ' ') || s[n + 1] == ' '
@@ -33,6 +34,7 @@ static void map_fill(char *s, int current, int last, t_data *data)
             || (s_bf >= n && ss[current - 1][n] == ' ')))
             || !ft_strchr("12 0NWES", s[n])
             || (current != last && ss[current + 1][0] == '\0')
+            || data->plyr > 1
             )
         {
 	        /*printf("ИИ Джесика Молодец! нашла ошибку в карте и исправила\n"

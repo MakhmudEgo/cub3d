@@ -78,13 +78,12 @@ int		start(int key, t_data *data)
 		data->crnr_s = data->crnr - M_PI_6;
 		parse_map(data);
 	}
-	printf("key == %#x\n", key);
 	if (key == 0x35)
 		exit(123);
 	return 1;
 }
 
-int	txtr_init(t_data *data)
+void	txtr_init(t_data *data)
 {
 	data->txtr_ea.img = mlx_xpm_file_to_image(data->mlx.mlx, data->ea_t, &data->txtr_ea.w_xpm, &data->txtr_ea.h_xpm);
 	data->txtr_no.img = mlx_xpm_file_to_image(data->mlx.mlx, data->no_t, &data->txtr_no.w_xpm, &data->txtr_no.h_xpm);
@@ -98,11 +97,10 @@ int	txtr_init(t_data *data)
 		data->txtr_so.addr = mlx_get_data_addr(data->txtr_so.img, &data->txtr_so.bpp, &data->txtr_so.l_len, &data->txtr_so.endian);
 		data->txtr_we.addr = mlx_get_data_addr(data->txtr_we.img, &data->txtr_we.bpp, &data->txtr_we.l_len, &data->txtr_we.endian);
 		data->txtr_sp.addr = mlx_get_data_addr(data->txtr_sp.img, &data->txtr_sp.bpp, &data->txtr_sp.l_len, &data->txtr_sp.endian);
-	} else {
-		write(1, "txtr file ko\n", 13);
-		return 1;
 	}
-	return (0);
+	else
+		exit_notify("texture file ko\n", 45);
+
 }
 
 void check_arg_exp(char **s, int argc)
@@ -121,7 +119,7 @@ int main(int argc, char **argv)
 	(argc < 2 || argc > 3) ? exit(45) : check_arg_exp(argv, argc);
 	(prs_cub3d(argv[1], &data) ? exit(55) : write(1, "фисе ок1\n", 9));
 	data.mlx.mlx = mlx_init();
-	(txtr_init(&data) ? exit(47) : write(1, "txtr ok\n", 8));
+	txtr_init(&data);
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, data.x_r, data.y_r, "cub3d");
 	data.img.img = mlx_new_image(data.mlx.mlx, data.x_r, data.y_r);
 	data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.l_len, &data.img.endian);
