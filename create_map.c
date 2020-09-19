@@ -11,17 +11,18 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 static void map_fill(char *s, int current, int last, t_data *data)
 {
-	int n;
-	int s_bf;
-	int s_af;
-	char **ss = data->map;
+	int		n;
+	int		s_bf;
+	int		s_af;
 
 	n = 0;
-    s_bf = current != 0 ? ft_strlen(ss[current - 1]) : 0;
-    s_af = current != last ? ft_strlen(ss[current + 1]) : 0;
-
+    s_bf = current != 0 ? ft_strlen(data->map[current - 1]) : 0;
+    s_af = current != last ? ft_strlen(data->map[current + 1]) : 0;
+	data->max_width_map = s_bf > data->max_width_map ? s_bf : data->max_width_map;
+	data->max_width_map = s_af > data->max_width_map ? s_bf : data->max_width_map;
     while (s[n])
     {
 		data->plyr += (ft_strchr("NWES", s[n]) ? 1 : 0);
@@ -30,26 +31,17 @@ static void map_fill(char *s, int current, int last, t_data *data)
             || s_bf <= n || s_af <= n
             || (n != 0 && s[n - 1] == ' ') || s[n + 1] == ' '
             || s[n + 1] == '\0' || n == 0
-            || (current < last && ss[current + 1][n] == ' ')
-            || (s_bf >= n && ss[current - 1][n] == ' ')))
+            || (current < last && data->map[current + 1][n] == ' ')
+            || (s_bf >= n && data->map[current - 1][n] == ' ')))
             || !ft_strchr("12 0NWES", s[n])
-            || (current != last && ss[current + 1][0] == '\0')
+            || (current != last && data->map[current + 1][0] == '\0')
             || data->plyr > 1
             )
-        {
-	        /*printf("ИИ Джесика Молодец! нашла ошибку в карте и исправила\n"
-                "в строке %d\n"
-                "Символ %d\n", current, n);
-            printf("x%d:y%d\n", current + 1, n + 1);*/
-	        write(1, "запихни нормальную карту\n", 50);
-	        exit(66);
-            s[n] = '1';
-        }
+			exit_notify("No valid map\n", 66);
 		if (s[n] == '2')
 			sp_lstadd_back(&data->sprts, sp_lstnew(n * SZ_PX + (SZ_PX / 2), current * SZ_PX + (SZ_PX / 2), 0));
 	    n++;
     }
-    printf("n = %d:|%s|\n", current, s);
 }
 
 void create_map(t_list *t_map, t_data *data) {

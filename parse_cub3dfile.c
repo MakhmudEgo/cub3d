@@ -33,6 +33,8 @@ void t_data_init(t_data *data)
 	data->plyr = 0;
 	data->t_map = 0x0;
 	data->sprites = 0x0;
+	data->max_width_map = 0x0;
+	data->init_sprts = 0x0;
 }
 
 int		create_trgb(int t, int r, int g, int b)
@@ -102,6 +104,9 @@ void	prs_cub3d_fc(char *s, char c, t_data *data)
 
 void prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 {
+	char *tmp;
+
+	tmp = s;
 	if (*s == 'R')
 	{
 		is_valid_data(++s, ' ', 2, "screen size ko\n");
@@ -126,6 +131,8 @@ void prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 		prs_cub3d_fc(ft_strtrim(s + 2, " "), *s, data);
 	else
 		ft_lstadd_back(t_map, ft_lstnew(s));
+	if (*tmp != ' ' && *tmp != '1' && *tmp != '0')
+		free(tmp);
 }
 
 int prs_cub3d(char *argv, t_data *data)
@@ -140,10 +147,14 @@ int prs_cub3d(char *argv, t_data *data)
 	{
 		if (*line != '\0' || (*line == '\0' && data->t_map))
 			prs_cub3d_ass(line, &data->t_map, data);
+		if (*line == '\0')
+			free(line);
 	}
 	n == -1 ? exit_notify("no valid file\n", 98) : 0;
 	if (*line != '\0')
 		prs_cub3d_ass(line, &data->t_map, data);
+	if (*line == '\0')
+		free(line);
 	create_map(data->t_map, data);
 	data->plyr != 1 ? exit_notify("No Player\n", 12) : 0;
 	return 0;

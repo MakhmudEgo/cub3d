@@ -259,8 +259,14 @@ void    parse_map(t_data *data)
 		data->crnr_s += (M_PI/3)/data->x_r;
 		step += (M_PI/3)/data->x_r;
 	}
+	if (!data->init_sprts)
+	{
+		get_len_sprts(data);
+		data->sprites = sp_sortlst(data->sprts);
+		data->init_sprts = 1;
+//	free(data->sprites);
+	}
 	get_len_sprts(data);
-	data->sprites = sp_sortlst(data->sprts);
 	draw_sprite(data->sprites, data, stn, sp_lstsize(data->sprts) - 1);
 	x = 0;
 	y = 0;

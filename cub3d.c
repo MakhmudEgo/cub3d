@@ -100,7 +100,11 @@ void	txtr_init(t_data *data)
 	}
 	else
 		exit_notify("texture file ko\n", 45);
-
+	free(data->ea_t);
+	free(data->no_t);
+	free(data->so_t);
+	free(data->we_t);
+	free(data->sp_t);
 }
 
 void check_arg_exp(char **s, int argc, t_data *data)
