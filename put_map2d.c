@@ -46,7 +46,15 @@ int		get_xpm_color(t_img *data, int x, int y)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->l_len + x * (data->bpp / 8));
+	dst = data->addr + ((y * data->h_xpm/64) * data->l_len + x * (data->bpp / 8));
+	return (*(unsigned int*)dst);
+}
+
+int		vget_xpm_color(t_img *data, int x, int y)
+{
+	char	*dst;
+
+	dst = data->addr + ((y + (data->h_xpm / 64)) * data->l_len - (x+1) * (data->bpp / 8));
 	return (*(unsigned int*)dst);
 }
 
@@ -67,16 +75,16 @@ void draw_t(t_data *data, double lv, int x)
 			if (t_c3d.map[(int)(t_c3d.plyr_y) / SZ_PX][(int)(t_c3d.plyr_x - 0.25 * cos(t_c3d.crnr_s)) / SZ_PX] == '1')
 			{
 				if (t_c3d.map[(int)(t_c3d.plyr_y + 32) / SZ_PX][(int)(t_c3d.plyr_x) / SZ_PX] == '1')
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_ea, (int)t_c3d.plyr_x % data->txtr_ea.w_xpm, (int)((start - tmp) * cff_ea)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_so, (int)t_c3d.plyr_x * (data->txtr_so.w_xpm / 64) % data->txtr_so.w_xpm, (int)((start - tmp) * cff_so))); //юг
 				else
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_so, (int)t_c3d.plyr_x % data->txtr_so.w_xpm, (int)((start - tmp) * cff_so)));
+					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_no, (int)t_c3d.plyr_x * (data->txtr_no.w_xpm / 64) % data->txtr_no.w_xpm, (int)((start - tmp) * cff_no))); //север
 			}
 			else
 			{
 				if (t_c3d.map[(int)(t_c3d.plyr_y) / SZ_PX][(int)(t_c3d.plyr_x + 32) / SZ_PX] == '1')
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_we, (int)t_c3d.plyr_y % data->txtr_we.h_xpm, (int)((start - tmp) * cff_we)));
+					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_ea, (int)t_c3d.plyr_y * (data->txtr_ea.w_xpm / 64) % data->txtr_ea.h_xpm, (int)((start - tmp) * cff_ea))); // восток
 				else
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_no, (int)t_c3d.plyr_y % data->txtr_no.h_xpm, (int)((start - tmp) * cff_no)));
+					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_we, (int)t_c3d.plyr_y * (data->txtr_we.w_xpm / 64) % data->txtr_we.h_xpm, (int)((start - tmp) * cff_we))); // запад
 
 			}
 		}
