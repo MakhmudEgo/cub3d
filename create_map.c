@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-static void map_fill(char *s, int current, int last, t_coors **sprts )
+static void map_fill(char *s, int current, int last, t_data *data)
 {
 	int n;
 	int s_bf;
 	int s_af;
-	char **ss = t_c3d.map;
+	char **ss = data->map;
 
 	n = 0;
     s_bf = current != 0 ? ft_strlen(ss[current - 1]) : 0;
@@ -44,38 +44,36 @@ static void map_fill(char *s, int current, int last, t_coors **sprts )
             s[n] = '1';
         }
 		if (s[n] == '2')
-			sp_lstadd_back(sprts, sp_lstnew(n * SZ_PX + (SZ_PX / 2), current * SZ_PX + (SZ_PX / 2), 0));
+			sp_lstadd_back(&data->sprts, sp_lstnew(n * SZ_PX + (SZ_PX / 2), current * SZ_PX + (SZ_PX / 2), 0));
 	    n++;
     }
     printf("n = %d:|%s|\n", current, s);
 }
 
-t_coors *create_map(t_list *t_map)
-{
+void create_map(t_list *t_map, t_data *data) {
 	int map_size;
 	int i;
-	t_coors *sprts = 0x0;
 
 	map_size = ft_lstsize(t_map);
-	t_c3d.map = malloc(sizeof(char*) * map_size + 1);
-	t_c3d.map[map_size] = 0x0;
+	data->map = malloc(sizeof(char *) * map_size + 1);
+	data->map[map_size] = 0x0;
 	i = 0;
 
 	while (t_map)
 	{
 		if (t_map->content)
 		{
-			(t_c3d.map)[i] = t_map->content;
+			(data->map)[i] = t_map->content;
 			i++;
-		} else
+		}
+		else
 			free(t_map->next);
 		t_map = t_map->next;
 	}
 	i = 0;
-	while ((t_c3d.map)[i])
-    {
-        map_fill((t_c3d.map)[i], i, map_size - 1, &sprts);
-        i++;
-    }
-	return (sprts);
+	while ((data->map)[i])
+	{
+		map_fill((data->map)[i], i, map_size - 1, data);
+		i++;
+	}
 }

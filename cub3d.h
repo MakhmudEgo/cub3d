@@ -37,27 +37,6 @@
 # include "minilibx/mlx.h"
 # include <fcntl.h>
 
-struct		s_parsecub3dfile
-{
-	char	**map;
-	int		x_r;
-	int		y_r;
-	char	*no_t;
-	char	*so_t;
-	char	*we_t;
-	char	*ea_t;
-	char	*sp_t;
-	int		f_t;
-	int		c_t;
-	char	orien;
-	double 	plyr_x;
-	double 	plyr_y;
-	double crnr;
-	double crnr_s;
-	double crnr_e;
-	double	cf_rcs;
-}			t_c3d;
-
 typedef struct  s_img
 {
 	void *img;
@@ -94,10 +73,27 @@ typedef struct s_data {
 	t_img txtr_sp;
 	double strt_x;
 	double strt_y;
+
+	char	**map;
+	int		x_r;
+	int		y_r;
+	char	*no_t;
+	char	*so_t;
+	char	*we_t;
+	char	*ea_t;
+	char	*sp_t;
+	int		f_t;
+	int		c_t;
+	char	orien;
+	double 	plyr_x;
+	double 	plyr_y;
+	double crnr;
+	double crnr_s;
+	double	cf_rcs;
 } t_data;
 
-int		prs_cub3d(char *argv, t_coors **sprts);
-t_coors		*create_map(t_list *t_map);
+int		prs_cub3d(char *argv, t_data *data);
+void		create_map(t_list *t_map, t_data *data);
 void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void		parse_map(t_data *data);
 void		sp_lstadd_back(t_coors **sprts, t_coors *new);
