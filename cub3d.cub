@@ -1,11 +1,11 @@
 R 1000 1000
-NO ./texture/pink_stained_glass.xpm
+NO ./texture/lime_stained_glass.xpm
 
-SO ./texture/pink_stained_glass.xpm
+SO ./texture/magenta_stained_glass.xpm
 
 WE ./texture/pink_stained_glass.xpm
 
-EA ./texture/pink_stained_glass.xpm
+EA ./texture/orange_stained_glass.xpm
 
 S ./texture/lpigeon.xpm
 
