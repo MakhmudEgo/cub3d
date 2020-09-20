@@ -1,13 +1,13 @@
 R 1000 1000
-NO ../texture/pink_stained_glass.xpm
+NO ./texture/pink_stained_glass.xpm
 
-SO ../texture/pink_stained_glass.xpm
+SO ./texture/pink_stained_glass.xpm
 
-WE ../texture/pink_stained_glass.xpm
+WE ./texture/pink_stained_glass.xpm
 
-EA ../texture/pink_stained_glass.xpm
+EA ./texture/pink_stained_glass.xpm
 
-S ../texture/lpigeon.xpm
+S ./texture/lpigeon.xpm
 
 F 255,190,200
 

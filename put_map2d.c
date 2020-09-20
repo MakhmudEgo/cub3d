@@ -58,10 +58,10 @@ int		vget_xpm_color(t_img *data, int x, int y)
 	return (*(unsigned int*)dst);
 }
 
-double get_cff(t_data *data)
+/*double get_cff(t_data *data)
 {
 	return 2.2;
-}
+}*/
 
 void draw_wall(t_data *data, double lv, int x)
 {
@@ -108,7 +108,7 @@ void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
 
 		// расстояние от игрока до спрайта
 		double sprite_dist = ((t_coors *)(sprites[n]))->l_len; //sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
-		size_t sprite_screen_size = data->y_r / sprite_dist * 64;
+		int sprite_screen_size = data->y_r / sprite_dist * 64;
 		// не забывайте, что 3D вид занимает только половину кадрового буфера,
 		// таким образом, fb.w/2 для ширины экрана
 		int h_offset = (sprite_dir - data->crnr) * (data->x_r) / (M_PI / 3) + (data->x_r / 2) - sprite_screen_size / 2;

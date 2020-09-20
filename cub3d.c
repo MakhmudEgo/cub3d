@@ -68,13 +68,13 @@ int		start(int key, t_data *data)
 	}
 	if (L_RT)
 	{
-		data->crnr += (data->crnr - 0.2 < 0) ? M_PI * 2 - 0.2 : -0.2;
+		data->crnr += (data->crnr - 0.5 < 0) ? M_PI * 2 - 0.5 : -0.5;
 		data->crnr_s = data->crnr - M_PI_6;
 		parse_map(data);
 	}
 	if (R_RT)
 	{
-		data->crnr += (data->crnr + 0.2 > M_PI * 2) ? -data->crnr + 0.2 : 0.2;
+		data->crnr += (data->crnr + 0.5 > M_PI * 2) ? -data->crnr + 0.5 : 0.5;
 		data->crnr_s = data->crnr - M_PI_6;
 		parse_map(data);
 	}
@@ -115,10 +115,10 @@ void check_arg_exp(char **s, int argc, t_data *data)
 		exit_notify("No valid exp .cub\n", 55);
 	data->scrn = argc == 3 ? 1 : 0;
 }
-int closs(t_data *data)
-{
-	exit(1);
-}
+//int closs(t_data *data)
+//{
+//	exit(1);
+//}
 
 int main(int argc, char **argv)
 {
@@ -131,10 +131,13 @@ int main(int argc, char **argv)
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, data.x_r, data.y_r, "cub3d");
 	!(data.img.img = mlx_new_image(data.mlx.mlx, data.x_r, data.y_r)) ? exit_notify("No Image\n", 11) : 0;
 	data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.l_len, &data.img.endian);
+//	int xx = 0x0;
+//	int yy = 0x0;
+//	mlx_get_screen_size(data.mlx.mlx, &xx, &yy);
 	parse_map(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.wnd, data.img.img, 0, 0);
 //	mlx_hook(data.mlx.mlx, 17, 0L, closs, &data);
 	mlx_hook(data.mlx.wnd, 2, 0L, start, &data);
-    mlx_loop(data.mlx.mlx);
+	mlx_loop(data.mlx.mlx);
 	return (0);
 }

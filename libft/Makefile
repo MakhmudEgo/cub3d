@@ -37,7 +37,7 @@ $(NAME): $(SRC_MAIN) $(HEADER)
 	ar rc $(NAME) $(OSRC_MAIN)
 	ranlib $(NAME)
 
-bonus: $(OSRC_BONUS)
+bonus: $(OSRC_BONUS) $(SRC_MAIN) $(HEADER)
 
 $(OSRC_BONUS): $(SRC_BONUS) $(HEADER)
 	gcc $(FLAGS) $(SRC_BONUS)

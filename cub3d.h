@@ -34,7 +34,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <math.h>
-# include "minilibx/mlx.h"
+# include "mlx/mlx.h"
+# include "mlx_dylib/mlx.h"
 # include <fcntl.h>
 
 typedef struct  s_img

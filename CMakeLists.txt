@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 project(cub3d C)
 
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -framework OpenGL -framework AppKit -I minilibx -L../minilibx -lmlx")
-include_directories(minilibx)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -framework OpenGL -framework AppKit -I mlx -L../mlx -lmlx")
+include_directories(mlx)
 
 add_executable(cub3d
         libft/ft_lstsize.c
