@@ -12,31 +12,6 @@
 
 #include "cub3d.h"
 
-void put_map(int x, int y, int clr, int size_px, t_img *img)
-{
-    int end_x;
-    int strt_x;
-    int end_y;
-    int strt_y;
-
-    strt_y = y * size_px;
-    strt_x = x * size_px;
-    x = strt_x;
-    end_x = strt_x + size_px;
-    end_y = strt_y + size_px;
-    while (strt_x < end_x)
-    {
-        my_mlx_pixel_put(img, strt_x, strt_y, clr);
-        if (strt_x == end_x - 1 && strt_y < end_y)
-        {
-            strt_y++;
-            strt_x = x;
-        }
-        else
-            strt_x++;
-    }
-}
-
 void move_player()
 {
 
@@ -129,37 +104,39 @@ void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
 		n--;
 	}
 }
-
-void  sp_sortlst(t_coors *sprts, void **arr)
+void sort_arr_sprt(void **arr, int n)
 {
 	int		i;
 	int		j;
-	int		n;
 
 	i = 0;
-	while (sprts && sprts->next)
+	j = -1;
+	while (++i < n)
 	{
-		arr[i] = sprts;
-		sprts = sprts->next;
-		i++;
-	}
-	arr[i] = sprts;
-	n = i + 1;
-	i = 1;
-	j = 0;
-	while (i < n) {
-		while (j < n - 1) {
+		while (++j < n - 1)
+		{
 			if (((t_coors *)(arr[j]))->l_len > ((t_coors *)(arr[j+1]))->l_len)
 			{
 				void *tmp = arr[j];
 				arr[j] = arr[j+1];
 				arr[j+1] = tmp;
 			}
-			j++;
 		}
-		j = 0;
-		i++;
+		j = -1;
 	}
+}
+void  sp_sortlst(t_coors *sprts, void **arr)
+{
+	int		i;
+
+	i = -1;
+	while (sprts && sprts->next)
+	{
+		arr[++i] = sprts;
+		sprts = sprts->next;
+	}
+	arr[++i] = sprts;
+	sort_arr_sprt(arr, i + 1);
 }
 
 static void get_len_sprts(t_data *data)
