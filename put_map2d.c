@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
+void		my_pxl_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -20,115 +20,159 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int		get_xpm_color(t_img *data, int x, int y)
+int			get_xpm_clr(t_img *data, int x, int y)
 {
 	char	*dst;
 
-	dst = data->addr + ((y * data->h_xpm/64) * data->l_len + x * (data->bpp / 8));
-	return (*(unsigned int*)dst);
+	dst = data->addr + ((y * data->h_xpm / 64)
+	* data->l_len + x * (data->bpp / 8));
+	return (*(int*)dst);
 }
 
-int		vget_xpm_color(t_img *data, int x, int y)
+int			vget_xpm_color(t_img *data, int x, int y)
 {
 	char	*dst;
 
-	dst = data->addr + ((y + (data->h_xpm / 64)) * data->l_len - (x+1) * (data->bpp / 8));
-	return (*(unsigned int*)dst);
+	dst = data->addr + ((y + (data->h_xpm / 64))
+	* data->l_len - (x + 1) * (data->bpp / 8));
+	return (*(int*)dst);
 }
 
-int get_y(t_img *txtr, int start, int end, int tmp)
+int			get_y(t_img *txtr, int start, int end, t_data *data)
 {
-	return ((int)((start - tmp) * (double)txtr->h_xpm/(end - tmp)));
+	int tmp;
+
+	tmp = data->y_r / 2 - (data->y_r / data->cf_rcs * SZ_PX) / 2;
+	return ((int)((start - tmp) * (double)txtr->h_xpm / (end - tmp)));
 }
 
-void draw_wall(t_data *data, double lv, int x)
+static void	draw_wall_ass(t_data *data, int x, int start, int end)
 {
-	lv *= cos(data->crnr - data->crnr_s);
-	int start = data->y_r / 2 - (data->y_r / lv * SZ_PX) / 2;
-	int end = data->y_r / 2 + (data->y_r / lv * SZ_PX) / 2;
-
-	int tmp = start;
-	while (start < end && start < data->y_r)//
+	if (start >= 0 && data->map[(int)(data->plyr_y) / SZ_PX]
+	[(int)(data->plyr_x - 0.25 * cos(data->crnr_s)) / SZ_PX] == '1')
 	{
-		if (start >= 0)
-		{
-			if (data->map[(int)(data->plyr_y) / SZ_PX][(int)(data->plyr_x - 0.25 * cos(data->crnr_s)) / SZ_PX] == '1')
-			{
-				if (data->map[(int)(data->plyr_y + 32) / SZ_PX][(int)(data->plyr_x) / SZ_PX] == '1')
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_so, (int)data->plyr_x * (data->txtr_so.w_xpm / SZ_PX) % data->txtr_so.w_xpm, get_y(&data->txtr_so, start, end, tmp)));
-				else
-					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_no, (int)data->plyr_x * (data->txtr_no.w_xpm / SZ_PX) % data->txtr_no.w_xpm, get_y(&data->txtr_no, start, end, tmp)));
-			}
-			else
-			{
-				if (data->map[(int)(data->plyr_y) / SZ_PX][(int)(data->plyr_x + 32) / SZ_PX] == '1')
-					my_mlx_pixel_put(&data->img, x, start, vget_xpm_color(&data->txtr_ea, (int)data->plyr_y * (data->txtr_ea.w_xpm / SZ_PX) % data->txtr_ea.h_xpm, get_y(&data->txtr_ea, start, end, tmp)));
-				else
-					my_mlx_pixel_put(&data->img, x, start, get_xpm_color(&data->txtr_we, (int)data->plyr_y * (data->txtr_we.w_xpm / SZ_PX) % data->txtr_we.h_xpm, get_y(&data->txtr_we, start, end, tmp)));
-			}
-		}
+		if (data->map[(int)(data->plyr_y + 32) / SZ_PX]
+		[(int)(data->plyr_x) / SZ_PX] == '1')
+			my_pxl_put(&data->img, x, start, get_xpm_clr(&data->txtr_so,
+			(int)data->plyr_x * (data->txtr_so.w_xpm / SZ_PX) %
+			data->txtr_so.w_xpm, get_y(&data->txtr_so, start, end, data)));
+		else
+			my_pxl_put(&data->img, x, start, vget_xpm_color(&data->txtr_no,
+			(int)data->plyr_x * (data->txtr_no.w_xpm / SZ_PX) %
+			data->txtr_no.w_xpm, get_y(&data->txtr_no, start, end, data)));
+	}
+	else if (start >= 0)
+	{
+		if (data->map[(int)(data->plyr_y) / SZ_PX]
+		[(int)(data->plyr_x + 32) / SZ_PX] == '1')
+			my_pxl_put(&data->img, x, start, vget_xpm_color(&data->txtr_ea,
+			(int)data->plyr_y * (data->txtr_ea.w_xpm / SZ_PX) %
+			data->txtr_ea.h_xpm, get_y(&data->txtr_ea, start, end, data)));
+		else
+			my_pxl_put(&data->img, x, start, get_xpm_clr(&data->txtr_we,
+			(int)data->plyr_y * (data->txtr_we.w_xpm / SZ_PX) %
+			data->txtr_we.h_xpm, get_y(&data->txtr_we, start, end, data)));
+	}
+}
+
+void		draw_wall(t_data *data, int x)
+{
+	int start;
+	int end;
+
+	data->cf_rcs *= cos(data->crnr - data->crnr_s);
+	start = data->y_r / 2 - (data->y_r / data->cf_rcs * SZ_PX) / 2;
+	end = data->y_r / 2 + (data->y_r / data->cf_rcs * SZ_PX) / 2;
+	while (start < end && start < data->y_r)
+	{
+		draw_wall_ass(data, x, start, end);
 		start++;
 	}
 }
-//--------------------------------------sprite----------------------------
-void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
+
+void		draw_sprite_ass(t_sp_data *sp_data, t_data *data)
 {
+	while (++sp_data->j < sp_data->sp_scrn_sz)
+	{
+		if (sp_data->v_off + sp_data->j < 0
+		|| sp_data->v_off + sp_data->j >= data->y_r)
+			continue;
+		sp_data->x = sp_data->i * ((double)data->txtr_sp.w_xpm
+		/ (double)sp_data->sp_scrn_sz);
+		sp_data->y = sp_data->j * ((double)data->txtr_sp.h_xpm
+		/ (double)sp_data->sp_scrn_sz);
+		sp_data->clr = *(int *)(data->txtr_sp.addr + (sp_data->y *
+		data->txtr_sp.l_len + sp_data->x * (data->txtr_sp.bpp / 8)));
+		if ((sp_data->h_off + sp_data->i >= 0 && sp_data->h_off + sp_data->i <
+		data->x_r) && (sp_data->v_off + sp_data->j >= 0 && sp_data->v_off
+		+ sp_data->j < data->y_r) && sp_data->clr > 0)
+			my_pxl_put(&data->img, sp_data->h_off + sp_data->i,
+			sp_data->v_off + sp_data->j, sp_data->clr);
+	}
+}
+
+void		draw_sprite_as(t_sp_data *sp_data, t_data *data, const double *stn)
+{
+	while (++sp_data->i < sp_data->sp_scrn_sz)
+	{
+		sp_data->j = -1;
+		if (sp_data->h_off + sp_data->i < 0
+		|| sp_data->h_off + sp_data->i >= data->x_r)
+			continue;
+		if (stn[sp_data->h_off + sp_data->i] < sp_data->sp_dist)
+			continue;
+		draw_sprite_ass(sp_data, data);
+	}
+}
+
+void		draw_sprite(void **sprites, t_data *data, const double *stn, int n)
+{
+	t_sp_data sp_data;
+
 	while (0 <= n)
 	{
-		double sprite_dir = atan2(((t_coors *)(sprites[n]))->y - data->strt_y, ((t_coors *)(sprites[n]))->x - data->strt_x);
-		while (sprite_dir - data->crnr > M_PI) sprite_dir -= 2 * M_PI;
-		while (sprite_dir - data->crnr < -M_PI) sprite_dir += 2 * M_PI;
-
-		double sprite_dist = ((t_coors *)(sprites[n]))->l_len; //sqrt(pow(img->strt_x - t_cr_sprt.x, 2) + pow(img->strt_y - t_cr_sprt.y, 2));
-		int sprite_screen_size = data->y_r / sprite_dist * 64;
-		int h_offset = (sprite_dir - data->crnr) * (data->x_r) / (M_PI / 3) + (data->x_r / 2) - sprite_screen_size / 2;
-		int v_offset = data->y_r / 2 - sprite_screen_size / 2;
-
-		int color;
-		int i = -1;
-		int j = -1;
-		while (++i < sprite_screen_size) {
-			j = -1;
-			if (h_offset+ i <0 || h_offset+i>=data->x_r)
-				continue;
-			if (stn[h_offset + i] < sprite_dist)
-				continue;
-			while (++j < sprite_screen_size) {
-				if (v_offset+ j < 0 || v_offset+j >= data->y_r)
-					continue;
-				int x = i * ((double) data->txtr_sp.w_xpm / (double) sprite_screen_size);
-				int y = j * ((double) data->txtr_sp.h_xpm / (double) sprite_screen_size);
-				color = *(unsigned int *) (data->txtr_sp.addr + (y * data->txtr_sp.l_len + x * (data->txtr_sp.bpp / 8)));
-				if ((h_offset + i >= 0 && h_offset + i < data->x_r) &&
-					(v_offset + j >= 0 && v_offset + j < data->y_r) && color > 0)
-					my_mlx_pixel_put(&data->img, h_offset + i, v_offset + j, color);
-			}
-		}
+		sp_data.sp_dr = atan2(((t_coors *)(sprites[n]))->y - data->strt_y,
+		((t_coors *)(sprites[n]))->x - data->strt_x);
+		while (sp_data.sp_dr - data->crnr > M_PI)
+			sp_data.sp_dr -= 2 * M_PI;
+		while (sp_data.sp_dr - data->crnr < -M_PI)
+			sp_data.sp_dr += 2 * M_PI;
+		sp_data.sp_dist = ((t_coors *)(sprites[n]))->l_len;
+		sp_data.sp_scrn_sz = data->y_r / sp_data.sp_dist * 64;
+		sp_data.h_off = (sp_data.sp_dr - data->crnr) * (data->x_r)
+		/ (M_PI / 3) + (data->x_r / 2) - sp_data.sp_scrn_sz / 2;
+		sp_data.v_off = data->y_r / 2 - sp_data.sp_scrn_sz / 2;
+		sp_data.i = -1;
+		draw_sprite_as(&sp_data, data, stn);
 		n--;
 	}
 }
-void sort_arr_sprt(void **arr, int n)
+
+void		sort_arr_sprt(void **arr, int n)
 {
 	int		i;
 	int		j;
+	void	*tmp;
 
 	i = 0;
 	j = -1;
+	tmp = 0x0;
 	while (++i < n)
 	{
 		while (++j < n - 1)
 		{
-			if (((t_coors *)(arr[j]))->l_len > ((t_coors *)(arr[j+1]))->l_len)
+			if (((t_coors *)(arr[j]))->l_len > ((t_coors *)(arr[j + 1]))->l_len)
 			{
-				void *tmp = arr[j];
-				arr[j] = arr[j+1];
-				arr[j+1] = tmp;
+				tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
 			}
 		}
 		j = -1;
 	}
 }
-void  sp_sortlst(t_coors *sprts, void **arr)
+
+void		sp_sortlst(t_coors *sprts, void **arr)
 {
 	int		i;
 
@@ -142,18 +186,23 @@ void  sp_sortlst(t_coors *sprts, void **arr)
 	sort_arr_sprt(arr, i + 1);
 }
 
-static void get_len_sprts(t_data *data)
+static void	get_len_sprts(t_data *data)
 {
-	t_coors *sprts = data->sprts;
+	t_coors *sprts;
+
+	sprts = data->sprts;
 	while (data->sprts->next)
 	{
-		data->sprts->l_len = sqrt(pow(data->strt_x - data->sprts->x, 2) + pow(data->strt_y - data->sprts->y, 2));
+		data->sprts->l_len = sqrt(pow(data->strt_x - data->sprts->x, 2)
+		+ pow(data->strt_y - data->sprts->y, 2));
 		data->sprts = data->sprts->next;
 	}
-	data->sprts->l_len = sqrt(pow(data->strt_x - data->sprts->x, 2) + pow(data->strt_y - data->sprts->y, 2));
+	data->sprts->l_len = sqrt(pow(data->strt_x - data->sprts->x, 2)
+	+ pow(data->strt_y - data->sprts->y, 2));
 	data->sprts = sprts;
 }
-void wall_fc(t_data *data)
+
+void		wall_fc(t_data *data)
 {
 	int y;
 	int x;
@@ -162,7 +211,7 @@ void wall_fc(t_data *data)
 	x = 0;
 	while (y < data->y_r / 2)
 	{
-		my_mlx_pixel_put(&data->img, x, y, data->c_t);
+		my_pxl_put(&data->img, x, y, data->c_t);
 		if (x == data->x_r && y < data->y_r - 1)
 		{
 			x = 0;
@@ -174,42 +223,61 @@ void wall_fc(t_data *data)
 	while (y < data->y_r)
 	{
 		while (++x < data->x_r)
-			my_mlx_pixel_put(&data->img, x, y, data->f_t);
+			my_pxl_put(&data->img, x, y, data->f_t);
 		x = -1;
 		y++;
 	}
 }
-void    parse_map(t_data *data)
+
+void		raycasting_ass(t_data *data)
 {
-	data->img.img = mlx_new_image(data->mlx.mlx, data->x_r, data->y_r);
-	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp, &data->img.l_len, &data->img.endian);
-	wall_fc(data);
-	int vrtl_line = 0;
-    double step = 0;
-	double stn[data->x_r];
+	while (GAME)
+	{
+		data->plyr_x = data->strt_x + data->cf_rcs * cos(data->crnr_s);
+		data->plyr_y = data->strt_y + data->cf_rcs * sin(data->crnr_s);
+		data->cf_rcs += 0.25;
+		if (data->map[(int)(data->plyr_y / SZ_PX)]
+		[(int)(data->plyr_x / SZ_PX)] == '1'
+		|| (data->map[(int)((data->plyr_y - 1) / SZ_PX)]
+		[(int)((data->plyr_x + 1) / SZ_PX)] == '1'
+		&& data->map[(int)((data->plyr_y + 1) / SZ_PX)]
+		[(int)((data->plyr_x - 1) / SZ_PX)] == '1')
+		|| (data->map[(int)((data->plyr_y - 1) / SZ_PX)]
+		[(int)((data->plyr_x - 1) / SZ_PX)] == '1'
+		&& data->map[(int)((data->plyr_y + 1) / SZ_PX)]
+		[(int)((data->plyr_x + 1) / SZ_PX)] == '1'))
+			break ;
+	}
+}
+
+void		raycasting(t_data *data, double *stn)
+{
+	int		vrtl_line;
+	double	step;
+
+	vrtl_line = 0;
+	step = 0;
 	while (step < M_PI / 3)
 	{
-		while (GAME)
-		{
-			data->plyr_x = data->strt_x + data->cf_rcs * cos(data->crnr_s);
-			data->plyr_y = data->strt_y + data->cf_rcs * sin(data->crnr_s);
-			data->cf_rcs += 0.25;
-			if (data->map[(int)(data->plyr_y / SZ_PX)][(int)(data->plyr_x / SZ_PX)] == '1'
-			||
-			(data->map[(int)((data->plyr_y - 1) / SZ_PX)][(int)((data->plyr_x + 1)/ SZ_PX)] == '1'
-			&& data->map[(int)((data->plyr_y + 1) / SZ_PX)][(int)((data->plyr_x - 1)/ SZ_PX)] == '1')
-			||
-			(data->map[(int)((data->plyr_y - 1) / SZ_PX)][(int)((data->plyr_x - 1)/ SZ_PX)] == '1'
-			&& data->map[(int)((data->plyr_y + 1) / SZ_PX)][(int)((data->plyr_x + 1)/ SZ_PX)] == '1')
-			)
-				break;
-		}
+		raycasting_ass(data);
 		stn[vrtl_line] = data->cf_rcs;
-		draw_wall(data, data->cf_rcs, vrtl_line++);
+		draw_wall(data, vrtl_line++);
 		data->cf_rcs = 0;
-		data->crnr_s += (M_PI/3)/data->x_r;
-		step += (M_PI/3)/data->x_r;
+		data->crnr_s += (M_PI / 3) / data->x_r;
+		step += (M_PI / 3) / data->x_r;
 	}
+}
+
+void		parse_map(t_data *data)
+{
+	double stn[data->x_r];
+
+	data->img.img = mlx_new_image(data->mlx.mlx, data->x_r, data->y_r);
+	!data->img.img ? exit_notify("No Image\n", 49) : 0;
+	data->img.addr = mlx_get_data_addr(data->img.img,
+	&data->img.bpp, &data->img.l_len, &data->img.endian);
+	wall_fc(data);
+	raycasting(data, stn);
 	get_len_sprts(data);
 	if (!data->init_sp)
 		data->sprites = malloc(sizeof(void *) * sp_lstsize(data->sprts));
@@ -221,6 +289,5 @@ void    parse_map(t_data *data)
 	{
 		save_screen(data);
 		exit(41);
-
 	}
 }

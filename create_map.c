@@ -33,6 +33,30 @@ static int	is_valid_map(t_data *data, int n, int current, int last)
 	|| data->plyr > 1);
 }
 
+void		get_orien(t_data *data, char c)
+{
+	if (c == E)
+	{
+		data->crnr = CRNR;
+		data->crnr_s = M_PI * 2 - M_PI_6;
+	}
+	if (c == W)
+	{
+		data->crnr = M_PI;
+		data->crnr_s = M_PI - M_PI_6;
+	}
+	if (c == N)
+	{
+		data->crnr = M_PI / 2;
+		data->crnr_s = M_PI / 2 - M_PI_6;
+	}
+	if (c == S)
+	{
+		data->crnr = CRNR;
+		data->crnr_s = M_PI * 2 - M_PI_6;
+	}
+}
+
 static void	map_fill(char *s, int current, int last, t_data *data)
 {
 	int		n;
@@ -45,6 +69,7 @@ static void	map_fill(char *s, int current, int last, t_data *data)
 			data->plyr++;
 			data->strt_x = n * SZ_PX + (SZ_PX / 2);
 			data->strt_y = current * SZ_PX + (SZ_PX / 2);
+			get_orien(data, s[n]);
 		}
 		if (is_valid_map(data, n, current, last))
 			exit_notify("No valid map\n", 66);

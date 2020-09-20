@@ -24,12 +24,11 @@ void		t_data_init(t_data *data)
 	data->sp_t = 0x0;
 	data->f_t = 0x0;
 	data->c_t = 0x0;
-	data->orien = 0x0;
 	data->plyr_x = 0x0;
 	data->plyr_y = 0x0;
 	data->cf_rcs = 1;
-	data->crnr = CRNR;
-	data->crnr_s = M_PI * 2 - M_PI_6;
+	data->crnr = 0x0;
+	data->crnr_s = 0x0;
 	data->plyr = 0;
 	data->t_map = 0x0;
 	data->sprites = 0x0;
@@ -86,7 +85,7 @@ void		prs_cub3d_fc(char *s, char c, t_data *data)
 	char	*tmp;
 
 	tmp = s;
-	is_valid_data(s, ',', 3, "no valid color!\n");
+	is_valid_data(s, ',', 3, "no valid clr!\n");
 	r = ft_atoi(s);
 	while (*(s - 1) != ',' && *s != '\0')
 		s++;
@@ -95,7 +94,7 @@ void		prs_cub3d_fc(char *s, char c, t_data *data)
 		s++;
 	b = ft_atoi(s + 1);
 	(r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
-	? exit_notify("no valid color!\n", 22) : 0;
+	? exit_notify("no valid clr!\n", 22) : 0;
 	if (c == 'F')
 		data->f_t = create_trgb(0, r, g, b);
 	else

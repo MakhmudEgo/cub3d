@@ -62,6 +62,20 @@ typedef struct s_mlx
 	void *wnd;
 } t_mlx;
 
+typedef struct s_drawspritedata
+{
+	double sp_dr;
+	double sp_dist;
+	int sp_scrn_sz;
+	int h_off;
+	int v_off;
+	int clr;
+	int i;
+	int j;
+	int x;
+	int y;
+} t_sp_data;
+
 typedef struct s_data {
 	t_mlx mlx;
 	t_img img;
@@ -87,7 +101,6 @@ typedef struct s_data {
 	char	*sp_t;
 	int		f_t;
 	int		c_t;
-	char	orien;
 	double 	plyr_x;
 	double 	plyr_y;
 	double	crnr;
@@ -102,13 +115,13 @@ typedef struct s_data {
 
 int		prs_cub3d(char *argv, t_data *data);
 void		create_map(t_list *t_map, t_data *data);
-void		my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void		my_pxl_put(t_img *data, int x, int y, int color);
 void		parse_map(t_data *data);
 void		sp_lstadd_back(t_coors **sprts, t_coors *new);
 t_coors		*sp_lstnew(double x, double y, double l_len);
 int			sp_lstsize(t_coors *lst);
 void		exit_notify(char *s, int code);
-int		get_xpm_color(t_img *data, int x, int y);
+int		get_xpm_clr(t_img *data, int x, int y);
 int				save_screen(t_data *data);
 int		move(int key, t_data *data);
 
