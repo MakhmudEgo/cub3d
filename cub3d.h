@@ -110,5 +110,6 @@ int			sp_lstsize(t_coors *lst);
 void		exit_notify(char *s, int code);
 int		get_xpm_color(t_img *data, int x, int y);
 int				save_screen(t_data *data);
+int		move(int key, t_data *data);
 
 #endif

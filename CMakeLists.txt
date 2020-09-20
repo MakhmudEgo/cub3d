@@ -28,4 +28,4 @@ add_executable(cub3d
         sp_lstnew.c
         sp_lstsize.c
         libft/ft_strncmp.c
-        screen_s.c)
+        screen_s.c move.c)

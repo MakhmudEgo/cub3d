@@ -13,7 +13,7 @@
 NAME = cub3d
 
 SRC = cub3d.c create_map.c parse_cub3dfile.c put_map2d.c sp_lstadd_back.c sp_lstnew.c sp_lstsize.c \
-	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c screen_s.c
+	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c screen_s.c move.c
 
 OSRC = $(SRC:.c=.o)
 

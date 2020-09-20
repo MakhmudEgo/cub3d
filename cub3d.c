@@ -20,68 +20,7 @@ void		my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int		start(int key, t_data *data)
-{
-	short x_u = (data->strt_x + cos(data->crnr) * 21);
-	short y_u = (data->strt_y + sin(data->crnr) * 21);
-	short x_d = (data->strt_x - cos(data->crnr) * 21);
-	short y_d = (data->strt_y - sin(data->crnr) * 21);
-	if (UP)
-	{
-		if ((data->map)[y_u / SZ_PX][x_u / SZ_PX] != '1')
-		{
-			data->strt_x += cos(data->crnr) * 21;
-			data->strt_y += sin(data->crnr) * 21;
-			data->crnr_s = data->crnr - M_PI_6;
-			parse_map(data);
-		}
-	}
-	if (DOWN)
-	{
-		if ((data->map)[y_d / SZ_PX][x_d / SZ_PX] != '1')
-		{
-			data->strt_x -= cos(data->crnr) * 21;
-			data->strt_y -= sin(data->crnr) * 21;
-			data->crnr_s = data->crnr - M_PI_6;
-			parse_map(data);
-		}
-	}
-	if (LEFT)
-	{
-		if ((data->map)[(int)(data->strt_y - cos(data->crnr) * 21)/ SZ_PX][(int)(data->strt_x + sin(data->crnr) * 21) / SZ_PX] != '1')
-		{
-			data->strt_x += sin(data->crnr) * 21;
-			data->strt_y -= cos(data->crnr) * 21;
-			data->crnr_s = data->crnr - M_PI_6;
-			parse_map(data);
-		}
-	}
-	if (RIGHT)
-	{
-		if ((data->map)[(int)(data->strt_y + cos(data->crnr) * 21)/ SZ_PX][(int)(data->strt_x - sin(data->crnr) * 21) / SZ_PX] != '1')
-		{
-			data->strt_x -= sin(data->crnr) * 21;
-			data->strt_y += cos(data->crnr) * 21;
-			data->crnr_s = data->crnr - M_PI_6;
-			parse_map(data);
-		}
-	}
-	if (L_RT)
-	{
-		data->crnr += (data->crnr - 0.5 < 0) ? M_PI * 2 - 0.5 : -0.5;
-		data->crnr_s = data->crnr - M_PI_6;
-		parse_map(data);
-	}
-	if (R_RT)
-	{
-		data->crnr += (data->crnr + 0.5 > M_PI * 2) ? -data->crnr + 0.5 : 0.5;
-		data->crnr_s = data->crnr - M_PI_6;
-		parse_map(data);
-	}
-	if (key == 0x35)
-		exit(123);
-	return 1;
-}
+
 
 void	txtr_init(t_data *data)
 {
@@ -115,6 +54,7 @@ void check_arg_exp(char **s, int argc, t_data *data)
 		exit_notify("No valid exp .cub\n", 55);
 	data->scrn = argc == 3 ? 1 : 0;
 }
+
 int close_wnd()
 {
 	exit(1);
@@ -133,7 +73,7 @@ int main(int argc, char **argv)
 	data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.l_len, &data.img.endian);
 	parse_map(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.wnd, data.img.img, 0, 0);
-	mlx_hook(data.mlx.wnd, 2, 1L, start, &data);
+	mlx_hook(data.mlx.wnd, 2, 1L, move, &data);
 	mlx_hook(data.mlx.wnd, 17, 0L, close_wnd, 0);
 	mlx_loop(data.mlx.mlx);
 	return (0);

@@ -32,7 +32,8 @@ static	void	pixels(t_data *data, int fd)
 		j = 0;
 		while (j < data->x_r)
 		{
-			color = *(int*)(data->img.addr + (i * data->img.l_len + j * (data->img.bpp / 8)));
+			color = *(int*)(data->img.addr +
+					(i * data->img.l_len + j * (data->img.bpp / 8)));
 			write(fd, &color, 3);
 			j++;
 		}
