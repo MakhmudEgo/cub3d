@@ -21,10 +21,10 @@
 # define SZ_PX 64
 # define UP key == 0x7e || key == 0xd
 # define DOWN key == 0x7d || key == 0x1
-# define LEFT key == 0x7b || key == 0
-# define RIGHT key == 0x7c || key == 0x2
-# define L_RT key == 0xc || key == 0x56
-# define R_RT key == 0xe || key == 0x58
+# define LEFT key == 0
+# define RIGHT key == 0x2
+# define L_RT key == 0xc || key == 0x56 || key == 0x7b
+# define R_RT key == 0xe || key == 0x58 || key == 0x7c
 # define CRNR 0.0
 # define M_PI_6 (M_PI/6)
 
@@ -34,7 +34,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <math.h>
-# include "mlx/mlx.h"
 # include "mlx_dylib/mlx.h"
 # include <fcntl.h>
 
@@ -97,6 +96,8 @@ typedef struct s_data {
 	int		plyr;
 	int		scrn;
 	short 	init_sp;
+	int		x_mx;
+	int		y_mx;
 } t_data;
 
 int		prs_cub3d(char *argv, t_data *data);
@@ -107,5 +108,7 @@ void		sp_lstadd_back(t_coors **sprts, t_coors *new);
 t_coors		*sp_lstnew(double x, double y, double l_len);
 int			sp_lstsize(t_coors *lst);
 void		exit_notify(char *s, int code);
+int		get_xpm_color(t_img *data, int x, int y);
+int				save_screen(t_data *data);
 
 #endif

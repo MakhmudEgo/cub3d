@@ -115,29 +115,26 @@ void check_arg_exp(char **s, int argc, t_data *data)
 		exit_notify("No valid exp .cub\n", 55);
 	data->scrn = argc == 3 ? 1 : 0;
 }
-//int closs(t_data *data)
-//{
-//	exit(1);
-//}
+int close_wnd()
+{
+	exit(1);
+}
 
 int main(int argc, char **argv)
 {
 	t_data data;
 
 	(argc < 2 || argc > 3) ? exit_notify("No valid argc\n", 55) : check_arg_exp(argv, argc, &data);
-	prs_cub3d(argv[1], &data) ? exit_notify("No valid arg\n", 55) : 0;
 	data.mlx.mlx = mlx_init();
+	prs_cub3d(argv[1], &data) ? exit_notify("No valid arg\n", 55) : 0;
 	txtr_init(&data);
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, data.x_r, data.y_r, "cub3d");
 	!(data.img.img = mlx_new_image(data.mlx.mlx, data.x_r, data.y_r)) ? exit_notify("No Image\n", 11) : 0;
 	data.img.addr = mlx_get_data_addr(data.img.img, &data.img.bpp, &data.img.l_len, &data.img.endian);
-//	int xx = 0x0;
-//	int yy = 0x0;
-//	mlx_get_screen_size(data.mlx.mlx, &xx, &yy);
 	parse_map(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.wnd, data.img.img, 0, 0);
-//	mlx_hook(data.mlx.mlx, 17, 0L, closs, &data);
-	mlx_hook(data.mlx.wnd, 2, 0L, start, &data);
+	mlx_hook(data.mlx.wnd, 2, 1L, start, &data);
+	mlx_hook(data.mlx.wnd, 17, 0L, close_wnd, 0);
 	mlx_loop(data.mlx.mlx);
 	return (0);
 }

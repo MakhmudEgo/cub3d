@@ -34,6 +34,8 @@ void t_data_init(t_data *data)
 	data->t_map = 0x0;
 	data->sprites = 0x0;
 	data->init_sp = 0x0;
+	data->x_mx = 0x0;
+	data->y_mx = 0x0;
 }
 
 int		create_trgb(int t, int r, int g, int b)
@@ -115,6 +117,10 @@ void prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 		while (s && *s != ' ' && *s != '\0')
 			s++;
 		data->y_r = ft_atoi(s);
+		mlx_get_screen_size(data->mlx.mlx, &data->x_mx, &data->y_mx);
+		data->x_r > data->x_mx ? data->x_r = data->x_mx : 0;
+		data->y_r > data->y_mx ? data->y_r = data->y_mx : 0;
+
 	}
 	else if (*s == 'N' && *(s + 1) == 'O')
 		data->no_t = ft_strtrim(s + 3, " ");

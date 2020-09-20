@@ -13,7 +13,7 @@
 NAME = cub3d
 
 SRC = cub3d.c create_map.c parse_cub3dfile.c put_map2d.c sp_lstadd_back.c sp_lstnew.c sp_lstsize.c \
-	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c screen_s.c
 
 OSRC = $(SRC:.c=.o)
 
@@ -26,9 +26,9 @@ $(NAME): $(SRC)
 	make -C libft bonus
 	make -C mlx
 	make -C mlx_dylib
-	mv libft/libft.a ./
-	mv mlx/libmlx.a ./
-	mv mlx_dylib/libmlx.dylib ./
+	cp libft/libft.a ./
+	cp mlx/libmlx.a ./
+	cp mlx_dylib/libmlx.dylib ./
 	gcc $(FLAGS) ./libft.a ./libmlx.a ./libmlx.dylib -framework OpenGl -framework AppKit $(SRC) -o $(NAME)
 
 bonus: all

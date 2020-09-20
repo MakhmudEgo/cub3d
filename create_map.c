@@ -23,7 +23,12 @@ static void map_fill(char *s, int current, int last, t_data *data)
     s_af = current != last ? ft_strlen(data->map[current + 1]) : 0;
     while (s[n])
     {
-		data->plyr += (ft_strchr("NWES", s[n]) ? 1 : 0);
+		if (ft_strchr("NWES", s[n]))
+		{
+			data->plyr++;
+			data->strt_x = n * SZ_PX + (SZ_PX / 2);
+			data->strt_y = current * SZ_PX + (SZ_PX / 2);
+		}
 		if (((s[n] == '0' || s[n] == 'N') &&
             (current == 0 || current == last
             || s_bf <= n || s_af <= n
