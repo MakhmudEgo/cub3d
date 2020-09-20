@@ -95,8 +95,7 @@ typedef struct s_data {
 	double	cf_rcs;
 	int		plyr;
 	int		scrn;
-	int		max_width_map;
-	int		init_sprts;
+	short 	init_sp;
 } t_data;
 
 int		prs_cub3d(char *argv, t_data *data);

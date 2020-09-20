@@ -138,9 +138,8 @@ void draw_sprite(void **sprites, t_data *data, const double *stn, int n)
 	}
 }
 
-void  **sp_sortlst(t_coors *sprts)
+void  sp_sortlst(t_coors *sprts, void **arr)
 {
-	void	**arr = malloc(sizeof(void *) * sp_lstsize(sprts));
 	int		i;
 	int		j;
 	int		n;
@@ -169,7 +168,6 @@ void  **sp_sortlst(t_coors *sprts)
 		j = 0;
 		i++;
 	}
-	return (arr);
 }
 
 static void get_len_sprts(t_data *data)
@@ -242,7 +240,6 @@ void    parse_map(t_data *data)
 			data->plyr_x = data->strt_x + data->cf_rcs * cos(data->crnr_s);
 			data->plyr_y = data->strt_y + data->cf_rcs * sin(data->crnr_s);
 			data->cf_rcs += 0.25;
-			my_mlx_pixel_put(&data->img, data->plyr_x/8, data->plyr_y/8, 0xffff66);
 			if (data->map[(int)(data->plyr_y / SZ_PX)][(int)(data->plyr_x / SZ_PX)] == '1'
 			||
 			(data->map[(int)((data->plyr_y - 1) / SZ_PX)][(int)((data->plyr_x + 1)/ SZ_PX)] == '1'
@@ -259,35 +256,11 @@ void    parse_map(t_data *data)
 		data->crnr_s += (M_PI/3)/data->x_r;
 		step += (M_PI/3)/data->x_r;
 	}
-	if (!data->init_sprts)
-	{
-		get_len_sprts(data);
-		data->sprites = sp_sortlst(data->sprts);
-		data->init_sprts = 1;
-//	free(data->sprites);
-	}
 	get_len_sprts(data);
+	if (!data->init_sp)
+		data->sprites = malloc(sizeof(void *) * sp_lstsize(data->sprts));
+	data->init_sp = 1;
+	sp_sortlst(data->sprts, data->sprites);
 	draw_sprite(data->sprites, data, stn, sp_lstsize(data->sprts) - 1);
-	x = 0;
-	y = 0;
-	while ((data->map)[y])
-	{
-		while ((data->map)[y][x])
-		{
-			if ((data->map)[y][x] == '1')
-				put_map(x, y, 0xffffff, SZ_PX/8, &data->img);
-			else if ((data->map)[y][x] == '2')
-				put_map(x, y, 0x75c1ff, SZ_PX/8, &data->img);
-			else if (ft_strchr("NSEW", (data->map)[y][x]) && !data->orien)
-			{
-				data->orien = (data->map)[y][x];
-				data->strt_x = x * SZ_PX + (SZ_PX / 2);
-				data->strt_y = y * SZ_PX + (SZ_PX / 2);
-			}
-			x++;
-		}
-		x = 0;
-		y++;
-	}
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.wnd, data->img.img, 0, 0);
 }

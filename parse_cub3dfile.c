@@ -33,8 +33,7 @@ void t_data_init(t_data *data)
 	data->plyr = 0;
 	data->t_map = 0x0;
 	data->sprites = 0x0;
-	data->max_width_map = 0x0;
-	data->init_sprts = 0x0;
+	data->init_sp = 0x0;
 }
 
 int		create_trgb(int t, int r, int g, int b)

@@ -21,8 +21,6 @@ static void map_fill(char *s, int current, int last, t_data *data)
 	n = 0;
     s_bf = current != 0 ? ft_strlen(data->map[current - 1]) : 0;
     s_af = current != last ? ft_strlen(data->map[current + 1]) : 0;
-	data->max_width_map = s_bf > data->max_width_map ? s_bf : data->max_width_map;
-	data->max_width_map = s_af > data->max_width_map ? s_bf : data->max_width_map;
     while (s[n])
     {
 		data->plyr += (ft_strchr("NWES", s[n]) ? 1 : 0);
