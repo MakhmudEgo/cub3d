@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void		t_data_init(t_data *data)
+static void		t_data_init(t_data *data)
 {
 	data->map = 0x0;
 	data->x_r = 0x0;
@@ -37,19 +37,7 @@ void		t_data_init(t_data *data)
 	data->y_mx = 0x0;
 }
 
-int			create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-void		exit_notify(char *s, int code)
-{
-	write(2, "Error\n", 6);
-	write(2, s, ft_strlen(s));
-	exit(code);
-}
-
-static void	is_valid_data(const char *s, char c, int n, char *err)
+void			is_valid_data(const char *s, char c, int n, char *err)
 {
 	int i;
 	int j;
@@ -77,7 +65,7 @@ static void	is_valid_data(const char *s, char c, int n, char *err)
 		exit_notify(err, 22);
 }
 
-void		prs_cub3d_fc(char *s, char c, t_data *data)
+static void		prs_cub3d_fc(char *s, char c, t_data *data)
 {
 	int		r;
 	int		g;
@@ -102,27 +90,13 @@ void		prs_cub3d_fc(char *s, char c, t_data *data)
 	free(tmp);
 }
 
-void		get_color(t_data *data, char *s)
-{
-	is_valid_data(++s, ' ', 2, "screen size ko\n");
-	data->x_r = ft_atoi(s);
-	while (s && *s == ' ' && *s != '\0')
-		s++;
-	while (s && *s != ' ' && *s != '\0')
-		s++;
-	data->y_r = ft_atoi(s);
-	mlx_get_screen_size(data->mlx.mlx, &data->x_mx, &data->y_mx);
-	data->x_r > data->x_mx ? data->x_r = data->x_mx : 0;
-	data->y_r > data->y_mx ? data->y_r = data->y_mx : 0;
-}
-
-void		prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
+static void		prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 {
 	char *tmp;
 
 	tmp = s;
 	if (*s == 'R')
-		get_color(data, s);
+		get_scrn_sz(data, s);
 	else if (*s == 'N' && *(s + 1) == 'O')
 		data->no_t = ft_strtrim(s + 3, " ");
 	else if (*s == 'S' && *(s + 1) == 'O')
@@ -141,7 +115,7 @@ void		prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 		free(tmp);
 }
 
-int			prs_cub3d(char *argv, t_data *data)
+int				prs_cub3d(char *argv, t_data *data)
 {
 	char	*line;
 	int		fd;

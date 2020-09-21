@@ -12,8 +12,9 @@
 
 NAME = cub3d
 
-SRC = cub3d.c create_map.c parse_cub3dfile.c put_map2d.c sp_lstadd_back.c sp_lstnew.c sp_lstsize.c \
-	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c screen_s.c move.c
+SRC = cub3d.c create_map.c parse_cub3dfile.c put.c sp_lstadd_back.c sp_lstnew.c sp_lstsize.c \
+	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c screen_s.c move.c \
+	colors_and_my_pxl_put.c errors.c draw_wall.c draw_sprites.c sp_data_init.c
 
 OSRC = $(SRC:.c=.o)
 

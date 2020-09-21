@@ -37,92 +37,102 @@
 # include "mlx_dylib/mlx.h"
 # include <fcntl.h>
 
-typedef struct  s_img
+typedef struct				s_img
 {
-	void *img;
-	char *addr;
-	int bpp;
-	int l_len;
-	int endian;
-	int w_xpm;
-	int h_xpm;
-} t_img;
+	void					*img;
+	char					*addr;
+	int						bpp;
+	int						l_len;
+	int						endian;
+	int						w_xpm;
+	int						h_xpm;
+}							t_img;
 
-typedef struct s_coordisntsprites
+typedef struct				s_crdstsprts
 {
-	double x;
-	double y;
-	double l_len;
-	struct s_coordisntsprites *next;
-} t_coors;
+	double					x;
+	double					y;
+	double					l_len;
+	struct s_crdstsprts		*next;
+}							t_coors;
 
-typedef struct s_mlx
+typedef struct				s_mlx
 {
-	void *mlx;
-	void *wnd;
-} t_mlx;
+	void					*mlx;
+	void					*wnd;
+}							t_mlx;
 
-typedef struct s_drawspritedata
+typedef struct				s_drawspritedata
 {
-	double sp_dr;
-	double sp_dist;
-	int sp_scrn_sz;
-	int h_off;
-	int v_off;
-	int clr;
-	int i;
-	int j;
-	int x;
-	int y;
-} t_sp_data;
+	double					sp_dr;
+	double					sp_dist;
+	int						sp_scrn_sz;
+	int						h_off;
+	int						v_off;
+	int						clr;
+	int						i;
+	int						j;
+	int						x;
+	int						y;
+}							t_sp_data;
 
-typedef struct s_data {
-	t_mlx mlx;
-	t_img img;
-	t_coors *sprts;
-	t_img txtr_no;
-	t_img txtr_we;
-	t_img txtr_so;
-	t_img txtr_ea;
-	t_img txtr_sp;
-	double strt_x;
-	double strt_y;
+typedef struct				s_data {
+	t_mlx					mlx;
+	t_img					img;
+	t_coors					*sprts;
+	t_img					txtr_no;
+	t_img					txtr_we;
+	t_img					txtr_so;
+	t_img					txtr_ea;
+	t_img					txtr_sp;
+	double					strt_x;
+	double					strt_y;
+	t_list					*t_map;
+	void					**sprites;
+	char					**map;
+	int						x_r;
+	int						y_r;
+	char					*no_t;
+	char					*so_t;
+	char					*we_t;
+	char					*ea_t;
+	char					*sp_t;
+	int						f_t;
+	int						c_t;
+	double					plyr_x;
+	double					plyr_y;
+	double					crnr;
+	double					crnr_s;
+	double					cf_rcs;
+	int						plyr;
+	int						scrn;
+	short					init_sp;
+	int						x_mx;
+	int						y_mx;
+}							t_data;
 
-	t_list *t_map;
-	void **sprites;
-
-	char	**map;
-	int		x_r;
-	int		y_r;
-	char	*no_t;
-	char	*so_t;
-	char	*we_t;
-	char	*ea_t;
-	char	*sp_t;
-	int		f_t;
-	int		c_t;
-	double 	plyr_x;
-	double 	plyr_y;
-	double	crnr;
-	double	crnr_s;
-	double	cf_rcs;
-	int		plyr;
-	int		scrn;
-	short 	init_sp;
-	int		x_mx;
-	int		y_mx;
-} t_data;
-
-int		prs_cub3d(char *argv, t_data *data);
-void		create_map(t_list *t_map, t_data *data);
-void		my_pxl_put(t_img *data, int x, int y, int color);
-void		parse_map(t_data *data);
-void		sp_lstadd_back(t_coors **sprts, t_coors *new);
-t_coors		*sp_lstnew(double x, double y, double l_len);
-int			sp_lstsize(t_coors *lst);
-void		exit_notify(char *s, int code);
-int		get_xpm_clr(t_img *data, int x, int y);
-int				save_screen(t_data *data);
-int		move(int key, t_data *data);
+int							prs_cub3d(char *argv, t_data *data);
+void						create_map(t_list *t_map, t_data *data);
+void						my_pxl_put(t_img *data, int x, int y, int color);
+void						parse_map(t_data *data);
+void						sp_lstadd_back(t_coors **sprts, t_coors *new);
+t_coors						*sp_lstnew(double x, double y, double l_len);
+int							sp_lstsize(t_coors *lst);
+void						exit_notify(char *s, int code);
+void						draw_wall(t_data *data, int x);
+int							get_xpm_clr(t_img *data, int x, int y);
+int							save_screen(t_data *data);
+int							move(int key, t_data *data);
+void						get_scrn_sz(t_data *data, char *s);
+void						is_valid_data(const char *s, char c,
+							int n, char *err);
+int							create_trgb(int t, int r, int g, int b);
+void						exit_notify(char *s, int code);
+int							vget_xpm_color(t_img *data, int x, int y);
+void						get_len_sprts(t_data *data);
+void						draw_sprite(void **sprites, t_data *data,
+							const double *stn, int n);
+void						sort_arr_sprt(void **arr, int n);
+void						sp_data_init(t_sp_data *data);
 
 #endif
