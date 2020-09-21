@@ -23,7 +23,7 @@ add_executable(cub3d
         cub3d.c
         parse_cub3dfile.c
         create_map.c
-        put_map2d.c
+        put.c
         sp_lstadd_back.c
         sp_lstnew.c
         sp_lstsize.c

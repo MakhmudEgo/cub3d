@@ -24,6 +24,5 @@ void	sp_lstadd_back(t_coors **sprts, t_coors *new)
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = new;
-//		new->next = NULL;
 	}
 }
