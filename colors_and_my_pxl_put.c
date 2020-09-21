@@ -22,8 +22,8 @@ void		get_scrn_sz(t_data *data, char *s)
 		s++;
 	data->y_r = ft_atoi(s);
 	mlx_get_screen_size(data->mlx.mlx, &data->x_mx, &data->y_mx);
-	data->x_r > data->x_mx ? data->x_r = data->x_mx : 0;
-	data->y_r > data->y_mx ? data->y_r = data->y_mx : 0;
+	data->x_r > data->x_mx ? data->x_r = --data->x_mx : 0;
+	data->y_r > data->y_mx ? data->y_r = --data->y_mx : 0;
 }
 
 int			create_trgb(int t, int r, int g, int b)
