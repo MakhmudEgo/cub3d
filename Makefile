@@ -30,7 +30,6 @@ $(NAME): $(SRC)
 	@cp mlx/libmlx.a ./
 	@cp mlx_dylib/libmlx.dylib ./
 	@gcc $(FLAGS) ./libft/libft.a ./mlx/libmlx.a ./mlx_dylib/libmlx.dylib -framework OpenGl -framework AppKit $(SRC) -o $(NAME)
-	./$(NAME) cub3d.cub
 
 bonus: all
 

@@ -22,8 +22,8 @@ static void		t_data_init(t_data *data)
 	data->we_t = 0x0;
 	data->ea_t = 0x0;
 	data->sp_t = 0x0;
-	data->f_t = 0x0;
-	data->c_t = 0x0;
+	data->f_t = -1;
+	data->c_t = -1;
 	data->plyr_x = 0x0;
 	data->plyr_y = 0x0;
 	data->cf_rcs = 1;
@@ -90,28 +90,51 @@ static void		prs_cub3d_fc(char *s, char c, t_data *data)
 	free(tmp);
 }
 
+static int is_valid_file_arg(const char *s)
+{
+/*	if ((*s == 'R' && data->x_r) || (*s == 'N' && *(s + 1) == 'O' && data->no_t)
+		|| (*s == 'S' && *(s + 1) == 'O' && data->so_t) || (*s == 'W' && *(s + 1) == 'E' && data->we_t)
+		|| (*s == 'E' && *(s + 1) == 'A' && data->ea_t) || (*s == 'S' && *(s + 1) != 'O' && data->so_t)
+		|| (*s == 'F' && data->f_t != -1) || (*s == 'C' && data->c_t != -1))
+		exit_notify("double arg\n", 43);*/
+//	if ((*s == 'R' && !data->x_r) || (*s == 'N' && *(s + 1) == 'O' && !data->no_t)
+//		|| (*s == 'S' && *(s + 1) == 'O' && !data->so_t) || (*s == 'W' && *(s + 1) == 'E' && !data->we_t)
+//		|| (*s == 'E' && *(s + 1) == 'A' && !data->ea_t) || (*s == 'S' && *(s + 1) != 'O' && !data->sp_t)
+//		|| (*s == 'F' && data->f_t == -1) || (*s == 'C' && data->c_t == -1))
+//	{
+//		write(1, s, ft_strlen(s));
+//		exit_notify("double arg\n", 43);
+//	}
+	if (*s == 'R' || (*s == 'N' && *(s + 1) == 'O')
+		|| (*s == 'S' && *(s + 1) == 'O') || (*s == 'W' && *(s + 1) == 'E')
+		|| (*s == 'E' && *(s + 1) == 'A') || (*s == 'S' && *(s + 1) != 'O')
+	 	|| *s == 'F' || *s == 'C')
+		return (1);
+	return (0);
+}
+
 static void		prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 {
 	char *tmp;
 
 	tmp = s;
-	if (*s == 'R')
+	if (*s == 'R' && !data->x_r)
 		get_scrn_sz(data, s);
-	else if (*s == 'N' && *(s + 1) == 'O')
+	else if (*s == 'N' && *(s + 1) == 'O' && !data->no_t)
 		data->no_t = ft_strtrim(s + 3, " ");
-	else if (*s == 'S' && *(s + 1) == 'O')
+	else if (*s == 'S' && *(s + 1) == 'O' && !data->so_t)
 		data->so_t = ft_strtrim(s + 3, " ");
-	else if (*s == 'W' && *(s + 1) == 'E')
+	else if (*s == 'W' && *(s + 1) == 'E' && !data->we_t)
 		data->we_t = ft_strtrim(s + 3, " ");
-	else if (*s == 'E' && *(s + 1) == 'A')
+	else if (*s == 'E' && *(s + 1) == 'A' && !data->ea_t)
 		data->ea_t = ft_strtrim(s + 3, " ");
-	else if (*s == 'S' && *(s + 1) != 'O')
+	else if (*s == 'S' && *(s + 1) != 'O' && !data->sp_t)
 		data->sp_t = ft_strtrim(s + 2, " ");
-	else if (*s == 'F' || *s == 'C')
-		prs_cub3d_fc(ft_strtrim(s + 2, " "), *s, data);
+	else if ((*s == 'F' && data->f_t == -1) || (*s == 'C' && data->c_t == -1))
+		prs_cub3d_fc(ft_strtrim(s + 1, " "), *s, data);
 	else
 		ft_lstadd_back(t_map, ft_lstnew(s));
-	if (*tmp != ' ' && *tmp != '1' && *tmp != '0')
+	if (is_valid_file_arg(tmp))
 		free(tmp);
 }
 
