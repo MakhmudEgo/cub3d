@@ -35,6 +35,7 @@ static void		t_data_init(t_data *data)
 	data->init_sp = 0x0;
 	data->x_mx = 0x0;
 	data->y_mx = 0x0;
+	data->sprts = 0x0;
 }
 
 void			is_valid_data(const char *s, char c, int n, char *err)
