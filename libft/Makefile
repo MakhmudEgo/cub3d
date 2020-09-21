@@ -33,25 +33,25 @@ FLAGS = -Wall -Wextra -Werror -c -std=c99
 all: $(NAME) $(OSRC_MAIN)
 
 $(NAME): $(SRC_MAIN) $(HEADER)
-	gcc $(FLAGS) $(SRC_MAIN)
-	ar rc $(NAME) $(OSRC_MAIN)
-	ranlib $(NAME)
+	@gcc $(FLAGS) $(SRC_MAIN)
+	@ar rc $(NAME) $(OSRC_MAIN)
+	@ranlib $(NAME)
 
-bonus: $(OSRC_BONUS) $(SRC_MAIN) $(HEADER)
+bonus: $(OSRC_BONUS) $(HEADER)
 
-$(OSRC_BONUS): $(SRC_BONUS) $(HEADER)
-	gcc $(FLAGS) $(SRC_BONUS)
-	ar rc $(NAME) $(OSRC_BONUS)
-	ranlib $(NAME)
+$(OSRC_BONUS): $(SRC_BONUS) $(SRC_MAIN) $(HEADER)
+	@gcc $(FLAGS) $(SRC_BONUS) $(SRC_MAIN)
+	@ar rc $(NAME) $(OSRC_BONUS) $(OSRC_MAIN)
+	@ranlib $(NAME)
 
 %.o: %.c $(HEADER)
-	gcc $(FLAGS) -c $< -o $@
+	@gcc $(FLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OSRC_MAIN) $(OSRC_BONUS)
+	@rm -f $(OSRC_MAIN) $(OSRC_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

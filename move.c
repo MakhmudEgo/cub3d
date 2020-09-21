@@ -83,6 +83,6 @@ int			move(int key, t_data *data)
 		parse_map(data);
 	}
 	if (key == 0x35)
-		exit(123);
+		exit(0);
 	return (1);
 }

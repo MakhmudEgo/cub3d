@@ -23,33 +23,39 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME) $(OSRC)
 
 $(NAME): $(SRC)
-	make -C libft
-	make -C libft bonus
-	make -C mlx
-	make -C mlx_dylib
-	mv libft/libft.a ./
-	mv mlx/libmlx.a ./
-	mv mlx_dylib/libmlx.dylib ./
-	gcc $(FLAGS) ./libft.a ./libmlx.a ./libmlx.dylib -framework OpenGl -framework AppKit $(SRC) -o $(NAME)
+	@make -C libft bonus
+	@make -C mlx
+	@make -C mlx_dylib
+	@mv libft/libft.a ./
+	@mv mlx/libmlx.a ./
+	@mv mlx_dylib/libmlx.dylib ./
+	@gcc $(FLAGS) ./libft.a ./libmlx.a ./libmlx.dylib -framework OpenGl -framework AppKit $(SRC) -o $(NAME)
+	./$(NAME) cub3d.cub
 
 bonus: all
 
 %.o: %.c $(HEADER)
-	gcc $(FLAGS) -c $< -o $@
+	@gcc $(FLAGS) -c $< -o $@
 
 clean:
-	make -C libft clean
-	rm -f $(OSRC)
+	@make -C libft clean
+	@rm -f $(OSRC)
 
 fclean: clean
-	make -C libft fclean
-	make -C mlx clean
-	make -C mlx_dylib clean
-	rm -f libft.a
-	rm -f libmlx.a
-	rm -f libmlx.dylib
-	rm -f $(NAME)
+	@make -C libft fclean
+	@make -C mlx clean
+	@make -C mlx_dylib clean
+	@rm -f libft.a
+	@rm -f libmlx.a
+	@rm -f libmlx.dylib
+	@rm -f $(NAME)
 
 re: fclean all
+
+run : $(NAME)
+	./$(NAME) cub3d.cub
+
+norm :
+	@norminette *.c *.h
 
 .PHONY: all bonus clean fclean re

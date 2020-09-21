@@ -60,7 +60,7 @@ void	check_arg_exp(char **s, int argc, t_data *data)
 int		close_wnd(int code)
 {
 	if (!code)
-		exit(1);
+		exit(0);
 	return (1);
 }
 
