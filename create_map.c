@@ -47,13 +47,13 @@ void		get_orien(t_data *data, char c)
 	}
 	if (c == N)
 	{
-		data->crnr = M_PI / 2;
-		data->crnr_s = M_PI / 2 - M_PI_6;
+		data->crnr = 3 * M_PI / 2;
+		data->crnr_s = 3* M_PI / 2 - M_PI_6;
 	}
 	if (c == S)
 	{
-		data->crnr = CRNR;
-		data->crnr_s = M_PI * 2 - M_PI_6;
+		data->crnr = M_PI / 2;
+		data->crnr_s = M_PI / 2 - M_PI_6;
 	}
 }
 
