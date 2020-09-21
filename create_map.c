@@ -28,8 +28,7 @@ static int	is_valid_map(t_data *data, int n, int current, int last)
 	|| s[n + 1] == '\0' || n == 0
 	|| (current < last && data->map[current + 1][n] == ' ')
 	|| (s_bf >= n && data->map[current - 1][n] == ' ')))
-	|| !ft_strchr("12 0NWES", s[n])
-	|| (current != last && data->map[current + 1][0] == '\0')
+	|| !ft_strchr("12 0NWES\n", s[n])
 	|| data->plyr > 1);
 }
 

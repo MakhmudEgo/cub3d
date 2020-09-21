@@ -93,19 +93,6 @@ static void		prs_cub3d_fc(char *s, char c, t_data *data)
 
 static int is_valid_file_arg(const char *s)
 {
-/*	if ((*s == 'R' && data->x_r) || (*s == 'N' && *(s + 1) == 'O' && data->no_t)
-		|| (*s == 'S' && *(s + 1) == 'O' && data->so_t) || (*s == 'W' && *(s + 1) == 'E' && data->we_t)
-		|| (*s == 'E' && *(s + 1) == 'A' && data->ea_t) || (*s == 'S' && *(s + 1) != 'O' && data->so_t)
-		|| (*s == 'F' && data->f_t != -1) || (*s == 'C' && data->c_t != -1))
-		exit_notify("double arg\n", 43);*/
-//	if ((*s == 'R' && !data->x_r) || (*s == 'N' && *(s + 1) == 'O' && !data->no_t)
-//		|| (*s == 'S' && *(s + 1) == 'O' && !data->so_t) || (*s == 'W' && *(s + 1) == 'E' && !data->we_t)
-//		|| (*s == 'E' && *(s + 1) == 'A' && !data->ea_t) || (*s == 'S' && *(s + 1) != 'O' && !data->sp_t)
-//		|| (*s == 'F' && data->f_t == -1) || (*s == 'C' && data->c_t == -1))
-//	{
-//		write(1, s, ft_strlen(s));
-//		exit_notify("double arg\n", 43);
-//	}
 	if (*s == 'R' || (*s == 'N' && *(s + 1) == 'O')
 		|| (*s == 'S' && *(s + 1) == 'O') || (*s == 'W' && *(s + 1) == 'E')
 		|| (*s == 'E' && *(s + 1) == 'A') || (*s == 'S' && *(s + 1) != 'O')
