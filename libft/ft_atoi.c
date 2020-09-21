@@ -47,10 +47,10 @@ int			ft_atoi(const char *str)
 		number = (number * 10) + (str[index] - '0');
 		if ((old_number < 0 && number * k > 0)
 			|| (old_number < 0 && lim > 18))
-			return (0);
+			return (-2147483648);
 		if ((old_number > 0 && number * k < 0)
 			|| (old_number > 0 && lim > 18))
-			return (-1);
+			return (2147483647);
 		index++;
 		lim++;
 	}
