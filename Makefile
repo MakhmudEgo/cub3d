@@ -26,10 +26,10 @@ $(NAME): $(SRC)
 	@make -C libft bonus
 	@make -C mlx
 	@make -C mlx_dylib
-	@mv libft/libft.a ./
-	@mv mlx/libmlx.a ./
-	@mv mlx_dylib/libmlx.dylib ./
-	@gcc $(FLAGS) ./libft.a ./libmlx.a ./libmlx.dylib -framework OpenGl -framework AppKit $(SRC) -o $(NAME)
+	@cp libft/libft.a ./
+	@cp mlx/libmlx.a ./
+	@cp mlx_dylib/libmlx.dylib ./
+	@gcc $(FLAGS) ./libft/libft.a ./mlx/libmlx.a ./mlx_dylib/libmlx.dylib -framework OpenGl -framework AppKit $(SRC) -o $(NAME)
 	./$(NAME) cub3d.cub
 
 bonus: all
