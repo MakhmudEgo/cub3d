@@ -54,7 +54,11 @@ re: fclean all
 run : $(NAME)
 	./$(NAME) cub3d.cub
 
+screen : $(NAME)
+	./$(NAME) cub3d.cub --save
+	open screen.bmp
+
 norm :
 	@norminette *.c *.h ./libft/*.c ./libft/*.h
 
-.PHONY: all bonus clean fclean re norm run
+.PHONY: all bonus clean fclean re norm run screen

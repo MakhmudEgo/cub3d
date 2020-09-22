@@ -1,17 +1,17 @@
-R 1000 800
-NO ./texture/lime_stained_glass.xpm
+R        987 789
+NO      ./texture/lime_stained_glass.xpm
 
-SO ./texture/magenta_stained_glass.xpm
+SO    ./texture/magenta_stained_glass.xpm
 
-WE ./texture/pink_stained_glass.xpm
+WE        ./texture/pink_stained_glass.xpm
 
-EA ./texture/orange_stained_glass.xpm
+EA    ./texture/orange_stained_glass.xpm
 
-S ./texture/lpigeon.xpm
+S      ./texture/lpigeon.xpm
 
-F 255,190,200
+F   255,190,200
 
-C 255,210,180
+C     255,210,180
 
 
 
@@ -40,7 +40,7 @@ C 255,210,180
 1111011111111101110000010001
 11110111111111011101010010001
 11000000110101011100000010001
-10002000000000001100000010001
+1000200000000000110000010001
 10000000000000001101010010001
 1111111111111111111111111111111111
 1111111111111111111111111111111111111111
