@@ -22,8 +22,8 @@ void		get_scrn_sz(t_data *data, char *s)
 		s++;
 	data->y_r = ft_atoi(s);
 	mlx_get_screen_size(data->mlx.mlx, &data->x_mx, &data->y_mx);
-	data->x_r <= 0 ? data->x_r = 1 : 0;
-	data->y_r <= 0 ? data->y_r = 1 : 0;
+	data->x_r < 320 ? data->x_r = 320 : 0;
+	data->y_r < 240 ? data->y_r = 240 : 0;
 	data->x_r > data->x_mx ? data->x_r = data->x_mx : 0;
 	data->y_r > data->y_mx ? data->y_r = --data->y_mx : 0;
 }

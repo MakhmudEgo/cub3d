@@ -55,6 +55,6 @@ run : $(NAME)
 	./$(NAME) cub3d.cub
 
 norm :
-	@norminette *.c *.h
+	@norminette *.c *.h ./libft/*.c ./libft/*.h
 
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re norm run

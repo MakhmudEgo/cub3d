@@ -112,7 +112,7 @@ void		parse_map(t_data *data)
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.wnd, data->img.img, 0, 0);
 	if (data->scrn)
 	{
-		save_screen(data);
-		exit(41);
+		screen(data);
+		exit(0);
 	}
 }

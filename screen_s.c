@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static	void	int_to_char(int n, unsigned char *src)
+static void		int_to_char(int n, unsigned char *src)
 {
 	src[0] = (unsigned char)(n);
 	src[1] = (unsigned char)(n >> 8);
@@ -20,58 +20,56 @@ static	void	int_to_char(int n, unsigned char *src)
 	src[3] = (unsigned char)(n >> 24);
 }
 
-static	void	pixels(t_data *data, int fd)
+static void		bmp_hdr(t_data *data, int file_size, int fd)
 {
-	int		i;
-	int		j;
-	int		color;
+	unsigned char bmp[54];
+
+	ft_bzero(bmp, 54);
+	bmp[0] = (unsigned char)('B');
+	bmp[1] = (unsigned char)('M');
+	int_to_char(file_size, bmp + 2);
+	bmp[10] = (unsigned char)(54);
+	bmp[14] = (unsigned char)(40);
+	int_to_char(data->x_r, bmp + 18);
+	int_to_char(data->y_r, bmp + 22);
+	bmp[26] = (unsigned char)(1);
+	bmp[28] = (unsigned char)(24);
+	write(fd, bmp, 54);
+}
+
+static void		get_pxl(t_data *data, int fd)
+{
+	int	i;
+	int	j;
+	int	color;
 
 	i = data->y_r - 1;
-	while (0 <= i)
+	while (i >= 0)
 	{
-		j = 0;
-		while (j < data->x_r)
+		j = -1;
+		while (++j < data->x_r)
 		{
 			color = *(int*)(data->img.addr +
-					(i * data->img.l_len + j * (data->img.bpp / 8)));
+			(i * data->img.l_len + j * (data->img.bpp / 8)));
 			write(fd, &color, 3);
-			j++;
 		}
 		i--;
 	}
 }
 
-static	void	header_bmp(t_data *data, int fd, int filesize)
+int				screen(t_data *data)
 {
-	unsigned	char	arr[54];
-	int					count;
+	int	fd;
+	int	l;
 
-	count = 0;
-	while (count < 54)
-		arr[count++] = 0;
-	arr[0] = 'B';
-	arr[1] = 'M';
-	int_to_char(filesize, &arr[2]);
-	arr[10] = (unsigned char)(54);
-	arr[14] = (unsigned char)(40);
-	int_to_char(data->x_r, &arr[18]);
-	int_to_char(data->y_r, &arr[22]);
-	arr[26] = (unsigned char)(1);
-	arr[28] = (unsigned char)(24);
-	write(fd, arr, 54);
-}
-
-int				save_screen(t_data *data)
-{
-	int		fd;
-	int		filesize;
-
-	filesize = ((data->x_r * data->y_r) * 4) + 54;
-	if (((fd = open("screen.bmp", O_WRONLY | O_CREAT
-				| O_TRUNC | O_APPEND, 0666))) < 0)
-		return (0);
-	header_bmp(data, fd, filesize);
-	pixels(data, fd);
+	while (data->x_r % 4 != 0)
+		data->x_r--;
+	l = 54 + (4 * data->y_r * data->x_r);
+	if (!(fd = open("screen.bmp", O_WRONLY | O_CREAT
+	| O_TRUNC | O_APPEND, 0666)))
+		exit_notify("Failed screenshot\n", 2);
+	bmp_hdr(data, l, fd);
+	get_pxl(data, fd);
 	close(fd);
 	return (1);
 }

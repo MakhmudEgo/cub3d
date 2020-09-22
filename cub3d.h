@@ -121,7 +121,7 @@ int							sp_lstsize(t_coors *lst);
 void						exit_notify(char *s, int code);
 void						draw_wall(t_data *data, int x);
 int							get_xpm_clr(t_img *data, int x, int y);
-int							save_screen(t_data *data);
+int							screen(t_data *data);
 int							move(int key, t_data *data);
 void						get_scrn_sz(t_data *data, char *s);
 void						is_valid_data(const char *s, char c,

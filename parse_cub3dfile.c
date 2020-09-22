@@ -91,16 +91,6 @@ static void		prs_cub3d_fc(char *s, char c, t_data *data)
 	free(tmp);
 }
 
-static int is_valid_file_arg(const char *s)
-{
-	if (*s == 'R' || (*s == 'N' && *(s + 1) == 'O')
-		|| (*s == 'S' && *(s + 1) == 'O') || (*s == 'W' && *(s + 1) == 'E')
-		|| (*s == 'E' && *(s + 1) == 'A') || (*s == 'S' && *(s + 1) != 'O')
-	 	|| *s == 'F' || *s == 'C')
-		return (1);
-	return (0);
-}
-
 static void		prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 {
 	char *tmp;
@@ -122,7 +112,10 @@ static void		prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 		prs_cub3d_fc(ft_strtrim(s + 1, " "), *s, data);
 	else
 		ft_lstadd_back(t_map, ft_lstnew(s));
-	if (is_valid_file_arg(tmp))
+	if (*s == 'R' || (*s == 'N' && *(s + 1) == 'O')
+	|| (*s == 'S' && *(s + 1) == 'O') || (*s == 'W' && *(s + 1) == 'E')
+	|| (*s == 'E' && *(s + 1) == 'A') || (*s == 'S' && *(s + 1) != 'O')
+	|| *s == 'F' || *s == 'C')
 		free(tmp);
 }
 
