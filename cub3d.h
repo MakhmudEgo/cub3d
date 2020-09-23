@@ -32,7 +32,6 @@
 # include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <math.h>
 # include "mlx_dylib/mlx.h"
 # include <fcntl.h>

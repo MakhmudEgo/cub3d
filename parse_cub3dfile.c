@@ -15,8 +15,8 @@
 static void		t_data_init(t_data *data)
 {
 	data->map = 0x0;
-	data->x_r = 0x0;
-	data->y_r = 0x0;
+	data->x_r = -1;
+	data->y_r = -1;
 	data->no_t = 0x0;
 	data->so_t = 0x0;
 	data->we_t = 0x0;
@@ -74,7 +74,7 @@ static void		prs_cub3d_fc(char *s, char c, t_data *data)
 	char	*tmp;
 
 	tmp = s;
-	is_valid_data(s, ',', 3, "no valid clr!\n");
+	is_valid_data(s, ',', 3, "no valid clr!");
 	r = ft_atoi(s);
 	while (*(s - 1) != ',' && *s != '\0')
 		s++;
@@ -83,7 +83,7 @@ static void		prs_cub3d_fc(char *s, char c, t_data *data)
 		s++;
 	b = ft_atoi(s + 1);
 	(r > 255 || g > 255 || b > 255 || r < 0 || g < 0 || b < 0)
-	? exit_notify("no valid clr!\n", 22) : 0;
+	? exit_notify("no valid clr!", 22) : 0;
 	if (c == 'F')
 		data->f_t = create_trgb(0, r, g, b);
 	else
@@ -96,18 +96,18 @@ static void		prs_cub3d_ass(char *s, t_list **t_map, t_data *data)
 	char *tmp;
 
 	tmp = s;
-	if (*s == 'R' && !data->x_r)
+	if (*s == 'R' && data->x_r == -1)
 		get_scrn_sz(data, s);
 	else if (*s == 'N' && *(s + 1) == 'O' && !data->no_t)
-		data->no_t = ft_strtrim(s + 3, " ");
+		data->no_t = ft_strtrim(s + 2, " ");
 	else if (*s == 'S' && *(s + 1) == 'O' && !data->so_t)
-		data->so_t = ft_strtrim(s + 3, " ");
+		data->so_t = ft_strtrim(s + 2, " ");
 	else if (*s == 'W' && *(s + 1) == 'E' && !data->we_t)
-		data->we_t = ft_strtrim(s + 3, " ");
+		data->we_t = ft_strtrim(s + 2, " ");
 	else if (*s == 'E' && *(s + 1) == 'A' && !data->ea_t)
-		data->ea_t = ft_strtrim(s + 3, " ");
+		data->ea_t = ft_strtrim(s + 2, " ");
 	else if (*s == 'S' && *(s + 1) != 'O' && !data->sp_t)
-		data->sp_t = ft_strtrim(s + 2, " ");
+		data->sp_t = ft_strtrim(s + 1, " ");
 	else if ((*s == 'F' && data->f_t == -1) || (*s == 'C' && data->c_t == -1))
 		prs_cub3d_fc(ft_strtrim(s + 1, " "), *s, data);
 	else
@@ -134,12 +134,13 @@ int				prs_cub3d(char *argv, t_data *data)
 		if (*line == '\0')
 			free(line);
 	}
-	n == -1 ? exit_notify("no valid file\n", 98) : 0;
+	n == -1 ? exit_notify("no valid file", 98) : 0;
 	if (*line != '\0')
 		prs_cub3d_ass(line, &data->t_map, data);
 	if (*line == '\0')
 		free(line);
 	create_map(data->t_map, data);
-	data->plyr != 1 ? exit_notify("No Player\n", 12) : 0;
+	data->plyr != 1 ? exit_notify("No Player", 12) : 0;
+	data->x_r == -1 ? exit_notify("No R", 13) : 0;
 	return (0);
 }

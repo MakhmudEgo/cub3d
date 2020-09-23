@@ -14,7 +14,7 @@
 
 void		get_scrn_sz(t_data *data, char *s)
 {
-	is_valid_data(++s, ' ', 2, "screen size ko\n");
+	is_valid_data(++s, ' ', 2, "No valid screen size");
 	data->x_r = ft_atoi(s);
 	while (s && *s == ' ' && *s != '\0')
 		s++;

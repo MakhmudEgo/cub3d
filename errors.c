@@ -16,5 +16,6 @@ void		exit_notify(char *s, int code)
 {
 	write(2, "Error\n", 6);
 	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
 	exit(code);
 }

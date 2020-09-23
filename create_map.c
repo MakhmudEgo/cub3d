@@ -71,7 +71,7 @@ static void	map_fill(char *s, int current, int last, t_data *data)
 			get_orien(data, s[n]);
 		}
 		if (is_valid_map(data, n, current, last))
-			exit_notify("No valid map\n", 66);
+			exit_notify(s, 66);
 		if (s[n] == '2')
 			sp_lstadd_back(&data->sprts, sp_lstnew(n * SZ_PX + (SZ_PX / 2),
 			current * SZ_PX + (SZ_PX / 2), 0));
