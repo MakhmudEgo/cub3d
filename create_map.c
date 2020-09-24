@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:08:31 by mizola            #+#    #+#             */
-/*   Updated: 2020/08/11 20:51:23 by mizola           ###   ########.fr       */
+/*   Updated: 2020/09/24 13:27:01 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	map_fill(char *s, int current, int last, t_data *data)
 			get_orien(data, s[n]);
 		}
 		if (is_valid_map(data, n, current, last))
-			exit_notify(s, 66);
+			exit_notify("No valid file", 66);
 		if (s[n] == '2')
 			sp_lstadd_back(&data->sprts, sp_lstnew(n * SZ_PX + (SZ_PX / 2),
 			current * SZ_PX + (SZ_PX / 2), 0));
