@@ -74,7 +74,7 @@ int		main(int argc, char **argv)
 	prs_cub3d(argv[1], &data) ? exit_notify("No valid arg\n", 55) : 0;
 	txtr_init(&data);
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, data.x_r,
-	data.y_r, "cub3d");
+	data.y_r, "cub3D");
 	!(data.img.img = mlx_new_image(data.mlx.mlx, data.x_r, data.y_r))
 	? exit_notify("No Image\n", 11) : 0;
 	data.img.addr = mlx_get_data_addr(data.img.img,

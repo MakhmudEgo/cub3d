@@ -23,7 +23,8 @@ void		sp_sortlst(t_coors *sprts, void **arr)
 		sprts = sprts->next;
 	}
 	arr[++i] = sprts;
-	sort_arr_sprt(arr, i + 1);
+	arr[++i] = 0x0;
+	sort_arr_sprt(arr, i);
 }
 
 void		wall_fc(t_data *data)
@@ -105,7 +106,9 @@ void		parse_map(t_data *data)
 	raycasting(data, stn);
 	get_len_sprts(data);
 	if (!data->init_sp)
-		data->sprites = malloc(sizeof(void *) * sp_lstsize(data->sprts));
+		data->sprites = malloc(sizeof(void *)
+		* sp_lstsize(data->sprts) + sizeof(void *));
+	(data->sprites == 0x0) ? exit_notify("Malloc failed\n", 33) : 0;
 	data->init_sp = 1;
 	sp_sortlst(data->sprts, data->sprites);
 	draw_sprite(data->sprites, data, stn, sp_lstsize(data->sprts) - 1);

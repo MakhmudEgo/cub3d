@@ -77,15 +77,18 @@ void			get_len_sprts(t_data *data)
 	t_coors *sprts;
 
 	sprts = data->sprts;
-	while (data->sprts->next)
+	if (sprts)
 	{
+		while (data->sprts->next)
+		{
+			data->sprts->l_len = sqrt(pow(data->strt_x - data->sprts->x, 2)
+			+ pow(data->strt_y - data->sprts->y, 2));
+			data->sprts = data->sprts->next;
+		}
 		data->sprts->l_len = sqrt(pow(data->strt_x - data->sprts->x, 2)
 		+ pow(data->strt_y - data->sprts->y, 2));
-		data->sprts = data->sprts->next;
+		data->sprts = sprts;
 	}
-	data->sprts->l_len = sqrt(pow(data->strt_x - data->sprts->x, 2)
-	+ pow(data->strt_y - data->sprts->y, 2));
-	data->sprts = sprts;
 }
 
 void			draw_sprite(void **sprites, t_data *data,
@@ -105,7 +108,7 @@ void			draw_sprite(void **sprites, t_data *data,
 		sp_data.sp_dist = ((t_coors *)(sprites[n]))->l_len;
 		sp_data.sp_scrn_sz = data->y_r / sp_data.sp_dist * 64;
 		sp_data.h_off = (sp_data.sp_dr - data->crnr) * (data->x_r)
-						/ (M_PI / 3) + (data->x_r / 2) - sp_data.sp_scrn_sz / 2;
+		/ (M_PI / 3) + (data->x_r / 2) - sp_data.sp_scrn_sz / 2;
 		sp_data.v_off = data->y_r / 2 - sp_data.sp_scrn_sz / 2;
 		sp_data.i = -1;
 		draw_sprite_as(&sp_data, data, stn);
