@@ -72,13 +72,13 @@ int			move(int key, t_data *data)
 		move_right_and_left(key, data);
 	if (L_RT)
 	{
-		data->crnr += (data->crnr - 0.5 < 0) ? M_PI * 2 - 0.5 : -0.5;
+		data->crnr += (data->crnr - 0.3 < 0) ? M_PI * 2 - 0.3 : -0.3;
 		data->crnr_s = data->crnr - M_PI_6;
 		parse_map(data);
 	}
 	if (R_RT)
 	{
-		data->crnr += (data->crnr + 0.5 > M_PI * 2) ? -data->crnr + 0.5 : 0.5;
+		data->crnr += (data->crnr + 0.3 > M_PI * 2) ? -data->crnr + 0.3 : 0.3;
 		data->crnr_s = data->crnr - M_PI_6;
 		parse_map(data);
 	}

@@ -97,11 +97,6 @@ void		parse_map(t_data *data)
 {
 	double stn[data->x_r];
 
-	mlx_destroy_image(data->mlx.mlx, data->img.img);
-	data->img.img = mlx_new_image(data->mlx.mlx, data->x_r, data->y_r);
-	!data->img.img ? exit_notify("No Image\n", 49) : 0;
-	data->img.addr = mlx_get_data_addr(data->img.img,
-	&data->img.bpp, &data->img.l_len, &data->img.endian);
 	wall_fc(data);
 	raycasting(data, stn);
 	get_len_sprts(data);

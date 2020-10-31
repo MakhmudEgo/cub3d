@@ -34,7 +34,7 @@ $(NAME): $(SRC)
 bonus: all
 
 %.o: %.c $(HEADER)
-	@gcc $(FLAGS) -c $< -o $@
+	gcc $(FLAGS) -c $< -o $@
 
 clean:
 	@make -C libft clean
