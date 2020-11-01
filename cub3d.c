@@ -70,7 +70,7 @@ int		main(int argc, char **argv)
 
 	(argc < 2 || argc > 3) ? exit_notify("No valid argc\n", 55)
 	: check_arg_exp(argv, argc, &data);
-	data.mlx.mlx = mlx_init();
+	!(data.mlx.mlx = mlx_init()) ? exit_notify("error in mlx\n", 13) : 0;
 	prs_cub3d(argv[1], &data) ? exit_notify("No valid arg\n", 55) : 0;
 	txtr_init(&data);
 	data.mlx.wnd = mlx_new_window(data.mlx.mlx, data.x_r,
