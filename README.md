@@ -1,4 +1,8 @@
 # cub3d
+
+[DEPRECATED]
+p.s new Norm 42 
+
 cub3d project school 21 and ecole 42
 
 Use:
